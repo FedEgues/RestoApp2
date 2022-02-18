@@ -16,22 +16,21 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Federico
  */
 @Entity
-public class Zona implements Serializable {
-
+public class Mesa implements Serializable {
+    
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String nombre;
-    private Boolean alta;
-
-    public Zona() {
+    private Integer capacidad;
+    private Boolean disponible;
+    
+    public Mesa() {
     }
 
-    public Zona( String nombre, Boolean alta) {
-        
-        this.nombre = nombre;
-        this.alta = alta;
+    public Mesa( Integer capacidad) {
+       
+        this.capacidad = capacidad;
     }
 
     public String getId() {
@@ -42,20 +41,12 @@ public class Zona implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Integer getCapacidad() {
+        return capacidad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Boolean getAlta() {
-        return alta;
-    }
-
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setCapacidad(Integer capacidad) {
+        this.capacidad = capacidad;
     }
     
     

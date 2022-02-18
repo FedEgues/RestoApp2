@@ -38,8 +38,8 @@ public class Foto implements Serializable {
     public Foto() {
     }
 
-    public Foto(String id, String mime, byte[] contenido) {
-        this.id = id;
+    public Foto( String mime, byte[] contenido) {
+        
         this.mime = mime;
         this.contenido = contenido;
     }

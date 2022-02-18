@@ -39,8 +39,8 @@ public class Resto implements Serializable{
     public Resto() {
     }
 
-    public Resto(String id, String nombre, Zona zona, Plato plato, Foto foto, Mesa mesa, Reserva reserva, Boolean abierto) {
-        this.id = id;
+    public Resto( String nombre, Zona zona, Plato plato, Foto foto, Mesa mesa, Reserva reserva, Boolean abierto) {
+        
         this.nombre = nombre;
         this.zona = zona;
         this.plato = plato;
