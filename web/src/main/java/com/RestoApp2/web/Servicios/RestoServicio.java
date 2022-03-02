@@ -5,8 +5,10 @@
  */
 package com.RestoApp2.web.Servicios;
 
+import com.RestoApp2.web.Entidades.Foto;
 import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Entidades.Zona;
+import com.RestoApp2.web.Repositorios.FotoRepositorio;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
 import com.RestoApp2.web.Repositorios.ZonaRepositorio;
 import java.util.Optional;
@@ -38,13 +40,13 @@ public class RestoServicio {
         
         
         resto.setNombre(nombre);
-        
-        Optional<Zona> respuesta =zR.findById(idZona);
-        if(respuesta.isPresent()){
-            Zona zona = respuesta.get();
-            resto.setZona(zona);
-        }
-        Foto foto = fR.
+//        
+//        Optional<Zona> respuesta =zR.findById(idZona);
+//        if(respuesta.isPresent()){
+//            Zona zona = respuesta.get();
+//            resto.setZona(zona);
+//        }
+        //Foto foto = fR.
         /*Dejo aca voy a necesitar para seguir foto, plato,mesa*/
     }
     

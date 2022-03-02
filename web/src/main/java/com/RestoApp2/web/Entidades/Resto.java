@@ -26,13 +26,13 @@ public class Resto implements Serializable{
     private String id;
     private String nombre;
     private Zona zona;
-    @OneToMany
+//    @OneToMany
     private Plato plato;
     @OneToOne
     private Foto foto;
-    @OneToMany
+//    @OneToMany
     private Mesa mesa;
-    @OneToMany
+//    @OneToMany
     private Reserva reserva;
     private Boolean abierto;
 

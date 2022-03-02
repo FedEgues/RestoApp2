@@ -27,7 +27,7 @@ public class Reserva implements Serializable{
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private List<Plato> carrito;
+ //   private List<Plato> carrito;
     @OneToOne
     private Usuario usuario;
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,7 +37,7 @@ public class Reserva implements Serializable{
     }
 
     public Reserva(List<Plato> carrito, Usuario usuario, Date dia) {
-        this.carrito = carrito;
+//        this.carrito = carrito;
         this.usuario = usuario;
         this.dia = dia;
     }
@@ -50,13 +50,13 @@ public class Reserva implements Serializable{
         this.id = id;
     }
 
-    public List<Plato> getCarrito() {
-        return carrito;
-    }
-
-    public void setCarrito(List<Plato> carrito) {
-        this.carrito = carrito;
-    }
+//    public List<Plato> getCarrito() {
+//        return carrito;
+//    }
+//
+//    public void setCarrito(List<Plato> carrito) {
+//        this.carrito = carrito;
+//    }
 
     public Usuario getUsuario() {
         return usuario;

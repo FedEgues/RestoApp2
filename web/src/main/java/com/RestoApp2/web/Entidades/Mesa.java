@@ -28,10 +28,11 @@ public class Mesa implements Serializable {
     public Mesa() {
     }
 
-    public Mesa( Integer capacidad) {
-       
+    public Mesa(Integer capacidad, Boolean disponible) {
         this.capacidad = capacidad;
+        this.disponible = disponible;
     }
+
 
     public String getId() {
         return id;
@@ -48,6 +49,13 @@ public class Mesa implements Serializable {
     public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
-    
-    
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+        
 }

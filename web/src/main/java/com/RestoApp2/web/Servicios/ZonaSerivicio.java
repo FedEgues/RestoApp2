@@ -8,6 +8,7 @@ package com.RestoApp2.web.Servicios;
 import com.RestoApp2.web.Entidades.Zona;
 import com.RestoApp2.web.Repositorios.ZonaRepositorio;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class ZonaSerivicio {
     @Autowired
     private ZonaRepositorio zR;
 
-    @Autowired
+    @Transactional
     public void registroZona(String nombre) throws ErrorServicio {
 
         Zona zona = new Zona();
@@ -29,7 +30,7 @@ public class ZonaSerivicio {
         zR.save(zona);
     }
 
-    @Autowired
+    @Transactional
     public void actualizarZona(String id, String nombre) throws ErrorServicio {
 
         validacion(nombre);
@@ -40,16 +41,16 @@ public class ZonaSerivicio {
         }
     }
 
-    @Autowired
-    public void darBajaZona(String id) throws ErrorServicio {
-
-        Optional<Zona> respuesta = zR.findById(id);
-        if (respuesta.isPresent()) {
-            Zona zona = respuesta.get();
-            zona.setAlta(false);
-            zR.save(zona);
-        }
-    }
+//    @Autowired
+//    public void darBajaZona(String id) throws ErrorServicio {
+//
+//        Optional<Zona> respuesta = zR.findById(id);
+//        if (respuesta.isPresent()) {
+//            Zona zona = respuesta.get();
+//            zona.setAlta(false);
+//            zR.save(zona);
+//        }
+//    }
 
     
     private void validacion(String nombre) throws ErrorServicio {
