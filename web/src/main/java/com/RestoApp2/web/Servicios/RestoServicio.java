@@ -23,39 +23,67 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class RestoServicio {
-    
+
     @Autowired
     private ZonaRepositorio zR;
     @Autowired
     private RestoRepositorio rR;
     @Autowired
     private FotoServicio fS;
-    
+
     @Transactional
-    public void registroResto(String nombre,String idZona,MultipartFile archivo,Boolean abierto)throws ErrorServicio{
-        validacion(nombre,idZona);
-        
+    public void registroResto(String nombre, String idZona, MultipartFile archivo, Boolean abierto) throws ErrorServicio {
+        validacion(nombre, idZona);
+
         Resto resto = new Resto();
-           
+
         resto.setNombre(nombre);
-        
-        Optional<Zona> respuesta =zR.findById(idZona);
-        if(respuesta.isPresent()){
+
+        Optional<Zona> respuesta = zR.findById(idZona);
+        if (respuesta.isPresent()) {
             Zona zona = respuesta.get();
             resto.setZona(zona);
         }
-        Foto  foto = fS.guardarFoto(archivo);
+        Foto foto = fS.guardarFoto(archivo);
         resto.setFoto(foto);
         /*ver con el html*/
-        resto.setAbierto(abierto);
-       
+        resto.setAbierto(true);
+        rR.save(resto);
+
+    }
+
+    @Transactional
+    public void modificarResto(String idResto, String nombre, String idZona, MultipartFile archivo, Boolean abierto) throws ErrorServicio {
+        validacion(nombre, idZona);
+
+        Optional<Resto> respuesta = rR.findById(idResto);
+        if (respuesta.isPresent()) {
+            Resto resto = respuesta.get();
+            resto.setNombre(nombre);
+            Optional<Zona> respuestaZona = zR.findById(idZona);
+            if (respuestaZona.isPresent()) {
+                Zona zona = respuestaZona.get();
+                resto.setZona(zona);
+            }
+            Foto foto = fS.actualizarFoto(resto.getFoto().getId(), archivo);
+            resto.setAbierto(true);
+            rR.save(resto);
+        }
+
+    }
+    @Transactional
+    public void darDeBaja(String idResto)throws ErrorServicio{
+        Optional<Resto> respuesta = rR.findById(idResto);
+        if (respuesta.isPresent()) {
+            Resto resto = respuesta.get();
+            resto.setAbierto(false);
+            rR.save(resto);
+        }
         
     }
-    
-    
-    
-    private void validacion(String nombre,String idZona)throws ErrorServicio{
-        
+
+    private void validacion(String nombre, String idZona) throws ErrorServicio {
+
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre no puede estar vacío");
         }
@@ -63,7 +91,7 @@ public class RestoServicio {
         si o si vamos a traer una id de alguna zona si no va a ser posible visualizarla en el desplegable
         ,esto puede servir solamente en el caso que queramos guardar un resto y no haber creado las zonas antes supongo
         y no nos permita poner zona null*/
-        Optional<Zona> respuesta =zR.findById(idZona);
+        Optional<Zona> respuesta = zR.findById(idZona);
         if (!respuesta.isPresent()) {
             throw new ErrorServicio("La zona seleccionada no se encontró");
         }
