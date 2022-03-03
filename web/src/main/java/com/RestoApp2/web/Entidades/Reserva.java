@@ -27,7 +27,8 @@ public class Reserva implements Serializable{
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
- //   private List<Plato> carrito;
+//    @OneToOne
+//    private List<Plato> carrito;
     @OneToOne
     private Usuario usuario;
     @Temporal(TemporalType.TIMESTAMP)

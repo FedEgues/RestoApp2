@@ -29,26 +29,29 @@ public class RestoServicio {
     @Autowired
     private RestoRepositorio rR;
     @Autowired
-    private FotoRepositorio fR;
-   
+    private FotoServicio fS;
     
     @Transactional
-    public void registroResto(String nombre,String idZona,MultipartFile foto,Boolean abierto)throws ErrorServicio{
+    public void registroResto(String nombre,String idZona,MultipartFile archivo,Boolean abierto)throws ErrorServicio{
         validacion(nombre,idZona);
         
         Resto resto = new Resto();
-        
-        
+           
         resto.setNombre(nombre);
-//        
-//        Optional<Zona> respuesta =zR.findById(idZona);
-//        if(respuesta.isPresent()){
-//            Zona zona = respuesta.get();
-//            resto.setZona(zona);
-//        }
-        //Foto foto = fR.
-        /*Dejo aca voy a necesitar para seguir foto, plato,mesa*/
+        
+        Optional<Zona> respuesta =zR.findById(idZona);
+        if(respuesta.isPresent()){
+            Zona zona = respuesta.get();
+            resto.setZona(zona);
+        }
+        Foto  foto = fS.guardarFoto(archivo);
+        resto.setFoto(foto);
+        /*ver con el html*/
+        resto.setAbierto(abierto);
+       
+        
     }
+    
     
     
     private void validacion(String nombre,String idZona)throws ErrorServicio{

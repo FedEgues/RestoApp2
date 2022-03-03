@@ -41,16 +41,16 @@ public class ZonaSerivicio {
         }
     }
 
-//    @Autowired
-//    public void darBajaZona(String id) throws ErrorServicio {
-//
-//        Optional<Zona> respuesta = zR.findById(id);
-//        if (respuesta.isPresent()) {
-//            Zona zona = respuesta.get();
-//            zona.setAlta(false);
-//            zR.save(zona);
-//        }
-//    }
+    @Transactional
+    public void darBajaZona(String id) throws ErrorServicio {
+
+        Optional<Zona> respuesta = zR.findById(id);
+        if (respuesta.isPresent()) {
+            Zona zona = respuesta.get();
+            zona.setAlta(false);
+            zR.save(zona);
+        }
+    }
 
     
     private void validacion(String nombre) throws ErrorServicio {

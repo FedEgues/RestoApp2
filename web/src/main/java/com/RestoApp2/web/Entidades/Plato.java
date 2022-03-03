@@ -27,18 +27,22 @@ public class Plato implements Serializable{
     private Boolean alta;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+    @OneToOne
+    private Resto resto;
+    
         
     public Plato() {
     }
 
-    public Plato(String id, String nombre, String descri, Double precio, Foto foto, Boolean alta, Categoria categoria) {
-        this.id = id;
+    public Plato( String nombre, String descri, Double precio, Foto foto, Boolean alta, Categoria categoria, Resto resto) {
+        
         this.nombre = nombre;
         this.descri = descri;
         this.precio = precio;
         this.foto = foto;
         this.alta = alta;
         this.categoria = categoria;
+        this.resto = resto;
     }
 
     public String getId() {
@@ -97,6 +101,12 @@ public class Plato implements Serializable{
         this.categoria = categoria;
     }
 
-    
-    
+    public Resto getResto() {
+        return resto;
+    }
+
+    public void setResto(Resto resto) {
+        this.resto = resto;
+    }
+
 }

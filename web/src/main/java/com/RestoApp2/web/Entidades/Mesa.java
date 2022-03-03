@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -24,15 +25,16 @@ public class Mesa implements Serializable {
     private String id;
     private Integer capacidad;
     private Boolean disponible;
-    
+    @ManyToOne
+    private Resto resto;
     public Mesa() {
     }
 
-    public Mesa(Integer capacidad, Boolean disponible) {
+    public Mesa(Integer capacidad, Boolean disponible, Resto resto) {
         this.capacidad = capacidad;
         this.disponible = disponible;
+        this.resto = resto;
     }
-
 
     public String getId() {
         return id;
@@ -57,5 +59,15 @@ public class Mesa implements Serializable {
     public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
-        
+
+    public Resto getResto() {
+        return resto;
+    }
+
+    public void setResto(Resto resto) {
+        this.resto = resto;
+    }
+
+    
+
 }
