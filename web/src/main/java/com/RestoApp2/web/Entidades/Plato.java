@@ -4,6 +4,8 @@ package com.RestoApp2.web.Entidades;
 import com.RestoApp2.web.Enums.Categoria;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -23,13 +25,14 @@ public class Plato implements Serializable{
     @OneToOne
     private Foto foto;
     private Boolean alta;
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
-
+        
     public Plato() {
     }
 
-    public Plato( String nombre, String descri, Double precio, Foto foto, Boolean alta, Categoria categoria) {
-        
+    public Plato(String id, String nombre, String descri, Double precio, Foto foto, Boolean alta, Categoria categoria) {
+        this.id = id;
         this.nombre = nombre;
         this.descri = descri;
         this.precio = precio;
@@ -93,7 +96,7 @@ public class Plato implements Serializable{
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-    
+
     
     
 }

@@ -2,6 +2,7 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Plato;
+import com.RestoApp2.web.Enums.Categoria;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class PlatoControlador {
             }
         }
         mod.put("editar", plato);
+        mod.put("categorias", Categoria.values());
         mod.put("accion", accion);
         return "platoEditar.html";
     }

@@ -11,6 +11,7 @@
     <div class="card-body">
         <p class="error" th:if= "${error != null}" th:text = ${error}></p>
         <p class="exito" th:if= "${exito != null}" th:text = ${exito}></p>
+        <h2><span th:text="${editar.id == null ? 'Crear' : 'Actualizar'}"></span> Plato</h2>
         <form>
             <div>
                 <p th:if="${error != null}" th:text="${error}" style="color: red;">
@@ -19,13 +20,14 @@
             <div class="px-3 py-3">
                 <label for="exampleInputEmail1" class="form-label">Tipo de plato</label>
                 <select name="categoria" required> 
+                    <option th:each="categoria : {categorias}" th:value="${categoria}" th:selected="${editar.categoria !=null && categoria == editar.categoria}"></option>
                     <!-- <option selected="">Seleccione una opcion</option>  -->
-                    <option></option>
+                    <!-- <option></option> -->
                     <!-- <option name="categoria" value="0">Elija</option> -->
-                    <option name="categoria" value="1">Entrada</option>
+                    <!-- <option name="categoria" value="1">Entrada</option>
                     <option name="categoria" value="2">Principal</option>
                     <option name="categoria" value="3">Postre</option>
-                    <option name="categoria" value="4">Bebida</option>
+                    <option name="categoria" value="4">Bebida</option> -->
                 </select>
             </div>  
             <!-- <input type="text" name="isbn" th:value="${editar.isbn}" placeholder="ISBN" th:disable="${accion == 'Eliminar'}"/>                       -->
