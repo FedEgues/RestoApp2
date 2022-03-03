@@ -24,6 +24,8 @@ public class PlatoControlador {
     public String editarPlato(ModelMap mod,@RequestParam(required = false) String id, @RequestParam(required = false) String accion){
         if (accion == null) {
             accion = "Crear";
+        }else{
+            accion = "Actualizar";
         }
         
         Plato plato = new Plato();
@@ -34,8 +36,10 @@ public class PlatoControlador {
                 mod.put("error", e.getMessage());
             }
         }
+        
+        //pongo en modelo de la vista
         mod.put("editar", plato);
-        mod.put("categorias", Categoria.values());
+        //mod.put("categorias", Categoria.values());
         mod.put("accion", accion);
         return "platoEditar.html";
     }

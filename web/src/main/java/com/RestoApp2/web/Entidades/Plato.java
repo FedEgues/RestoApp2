@@ -22,11 +22,14 @@ public class Plato implements Serializable{
     private String nombre;
     private String descri;
     private Double precio;
+    private Boolean alta;
+    
     @OneToOne
     private Foto foto;
-    private Boolean alta;
-    @Enumerated(EnumType.STRING)
+        
+    //@Enumerated(EnumType.STRING)
     private Categoria categoria;
+    
     @OneToOne
     private Resto resto;
     

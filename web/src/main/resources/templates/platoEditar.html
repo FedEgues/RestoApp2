@@ -20,14 +20,14 @@
             <div class="px-3 py-3">
                 <label for="exampleInputEmail1" class="form-label">Tipo de plato</label>
                 <select name="categoria" required> 
-                    <option th:each="categoria : {categorias}" th:value="${categoria}" th:selected="${editar.categoria !=null && categoria == editar.categoria}"></option>
+                    <!-- <option th:each="categoria : ${categorias}" th:name="${categoria}" th:value="${categoria}" th:selected="${editar.categoria !=null && categoria == editar.categoria}"></option> -->
                     <!-- <option selected="">Seleccione una opcion</option>  -->
-                    <!-- <option></option> -->
-                    <!-- <option name="categoria" value="0">Elija</option> -->
-                    <!-- <option name="categoria" value="1">Entrada</option>
+                    <option></option>
+                    <option name="categoria" value="0">Elija</option>
+                    <option name="categoria" value="1">Entrada</option>
                     <option name="categoria" value="2">Principal</option>
                     <option name="categoria" value="3">Postre</option>
-                    <option name="categoria" value="4">Bebida</option> -->
+                    <option name="categoria" value="4">Bebida</option>
                 </select>
             </div>  
             <!-- <input type="text" name="isbn" th:value="${editar.isbn}" placeholder="ISBN" th:disable="${accion == 'Eliminar'}"/>                       -->
