@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.thymeleaf.org"></html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,9 +17,9 @@
                 <p th:if="${error != null}" th:text="${error}" style="color: red;">
                 <input type="hidden" name="id" th:value="${editar.id}"/>    
             </div>
-            <div class="px-3 py-3">
+            <div class="px-3 py-3" th:if="${editar.id == null}">
                 <label for="exampleInputEmail1" class="form-label">Tipo de plato</label>
-                <select name="categoria" required> 
+                <select name="categoria" required > 
                     <!-- <option th:each="categoria : ${categorias}" th:name="${categoria}" th:value="${categoria}" th:selected="${editar.categoria !=null && categoria == editar.categoria}"></option> -->
                     <!-- <option selected="">Seleccione una opcion</option>  -->
                     <option></option>
@@ -41,18 +41,18 @@
             </div>
             <div class="px-3 py-3">
                 <label for="exampleInputEmail1" class="form-label">Descripcion</label>
-                <textarea type="text" class="form-control" rows="3" name="descri" th:value="${editar.descri}" placeholder="Descripcion" th:disable="${accion == 'Eliminar'}"required></textarea>
+                <textarea type="text" class="form-control" rows="3" name="descri" th:value="${editar.descri}" placeholder="Descripcion" th:disable="${accion == 'Eliminar'}" required></textarea>
             </div>
             <div class="px-3 py-3">
                 <label for="exampleInputEmail1" class="form-label">Ingrese Foto de plato</label>
-                <input type="file" class="form-control" name="archivo" required>
+                <input type="file" class="form-control" name="archivo" th:value="${editar.foto}" required>
             </div>
             <div class="px-3 py-3">
-                <button th:if="${accion == 'Crear'}" type="submit" class="btn btn-success" formaction="/actualizarPlato" formmethod="post">Crear</button>
-                <button th:if="${accion == 'Actualizar'}" type="submit" class="btn btn-success" formaction="/actulizarPlato" formmethod="post">Actualizar</button>
+                <button th:if="${editar.id == null}" type="submit" class="btn btn-success" formaction="/plato/actualizarPlato" formmethod="post">Crear</button>
+                <button th:if="${editar.id != null}" type="submit" class="btn btn-success" formaction="/plato/actualizarPlato" formmethod="post">Actualizar</button>
                 <!-- <button sec:authorize="hasRole('ROLE_ADMIN')" th:if="${accion == 'Eliminar'}" type="submit" class="btn btn-danger" formaction="/libro/eliminar-libro" formmethod="get">Eliminar</button> -->
-                <!-- <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/editarPlato" class="btn btn-primary btn-xl">Volver al Menu</a> -->
+                <!-- <button type="submit" class="btn btn-primary">Guardar</button>-->
+                <a href="/plato/listarPlato" class="btn btn-primary btn-xl">Volver a Listar</a> 
             </div> 
         </form>
     </div>

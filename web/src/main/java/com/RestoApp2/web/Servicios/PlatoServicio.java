@@ -3,8 +3,10 @@ package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Foto;
 import com.RestoApp2.web.Entidades.Plato;
+import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Enums.Categoria;
 import com.RestoApp2.web.Repositorios.PlatoRepositorio;
+import com.RestoApp2.web.Repositorios.RestoRepositorio;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -21,9 +23,12 @@ public class PlatoServicio {
     @Autowired
     private PlatoRepositorio platoRepo;
     
+    @Autowired
+    private RestoRepositorio restoRepo;
+    
 
     @Transactional
-    public void nuevoPlato(MultipartFile archivo, String nombre, String descri, Double precio, Integer categoria) throws ErrorServicio{
+    public void nuevoPlato(MultipartFile archivo, String nombre, String descri, Double precio, Integer categoria, String idResto) throws ErrorServicio{
  
         Plato plato = new Plato();
         plato.setNombre(nombre);
@@ -33,8 +38,7 @@ public class PlatoServicio {
         
         Foto foto = fotoServi.guardarFoto(archivo);
         plato.setFoto(foto);
-
-        
+      
         switch(categoria){
             case 1: 
                 plato.setCategoria(Categoria.ENTRADA);
@@ -51,6 +55,9 @@ public class PlatoServicio {
             default:
                 plato.setCategoria(Categoria.BEBIDA);
         }
+        
+        Resto resto = restoRepo.getOne(idResto);
+        plato.setResto(resto);
         
         platoRepo.save(plato);
     }

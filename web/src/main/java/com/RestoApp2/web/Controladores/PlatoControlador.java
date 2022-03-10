@@ -10,11 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-//@RequestMapping("/plato")
+@RequestMapping("/plato")
 public class PlatoControlador {
     
     @Autowired
@@ -33,24 +34,26 @@ public class PlatoControlador {
             try{
                 plato = platoServi.buscarPorId(id);
             }catch(ErrorServicio e){
-                mod.put("error", e.getMessage());
+                mod.addAttribute("error", e.getMessage());
             }
         }
         
         //pongo en modelo de la vista
         mod.put("editar", plato);
-        //mod.put("categorias", Categoria.values());
         mod.put("accion", accion);
+        
         return "platoEditar.html";
     }
     
     @PostMapping("/actualizarPlato")
     public String actualizarPlato(ModelMap model,MultipartFile archivo, @RequestParam String id, 
                             @RequestParam String nombre, @RequestParam String descri, 
-                            @RequestParam Double precio, @RequestParam Integer categoria){
+                            @RequestParam Double precio, @RequestParam Integer categoria, String idResto){
+        
+       
         try{
-            if (id == null || id.isEmpty()) {
-                platoServi.nuevoPlato(archivo, nombre, descri, precio, categoria);
+            if (id == null) {
+                platoServi.nuevoPlato(archivo, nombre, descri, precio, categoria, idResto);
             }else{
                 platoServi.modificarPlato(archivo, id, nombre, precio, descri);
             }
@@ -66,16 +69,12 @@ public class PlatoControlador {
             model.put("accion", "Actulizar");
             model.put("error", e.getMessage());
             model.put("editar", plato);
-//            model.put("nombre", nombre);
-//            model.put("descripcion", descri);
-//            model.put("precio", precio);
+
             return "platoEditar.html";
         }
-        //model.put("exito", "Plato cargado exitosamente");
-       // return "platoEditar.html";
     }
     
-    @GetMapping("/listaPlato")
+    @GetMapping("/listarlato")
     public String listaPlato(ModelMap modelo){
         modelo.put("platos", platoServi.listaPlato());
         return "platoListar";
