@@ -32,5 +32,31 @@ public class MesaServicio {
         }
         mR.save(mesa);
     }
-
+    
+    @Transactional
+    public void modificarMesa(String idMesa, Integer capacidad)throws ErrorServicio{
+        
+        Optional<Mesa> respuesta = mR.findById(idMesa);
+        if (respuesta.isPresent()) {
+            Mesa mesa = respuesta.get();
+            mesa.setCapacidad(capacidad);
+            mR.save(mesa);
+        }else{
+            throw new ErrorServicio("No se encontro la mesa a modificar");
+        }
+    }
+    @Transactional
+    public void darBajaMesa(String idMesa)throws ErrorServicio{
+        
+        Optional<Mesa> respuesta = mR.findById(idMesa);
+        if(respuesta.isPresent()){
+            Mesa mesa = respuesta.get();
+            mesa.setDisponible(false);
+            mR.save(mesa);
+        }else{
+            throw new ErrorServicio("No se encontro la mesa a modificar");
+        }
+        
+    }
+    
 }

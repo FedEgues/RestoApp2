@@ -71,15 +71,28 @@ public class RestoServicio {
         }
 
     }
+
     @Transactional
-    public void darDeBaja(String idResto)throws ErrorServicio{
+    public void darDeBaja(String idResto) throws ErrorServicio {
         Optional<Resto> respuesta = rR.findById(idResto);
         if (respuesta.isPresent()) {
             Resto resto = respuesta.get();
             resto.setAbierto(false);
             rR.save(resto);
         }
-        
+
+    }
+
+    public Resto buscarResto(String id) throws ErrorServicio {
+
+        Optional<Resto> respuesta = rR.findById(id);
+        if (respuesta.isPresent()) {
+            Resto resto = respuesta.get();
+            return resto;
+        } else {
+            throw new ErrorServicio("No se encontro el restaurante búscado.");
+        }
+
     }
 
     private void validacion(String nombre, String idZona) throws ErrorServicio {

@@ -7,6 +7,7 @@ package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Zona;
 import com.RestoApp2.web.Repositorios.ZonaRepositorio;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @author Federico
  */
 @Service
-public class ZonaSerivicio {
+public class ZonaServicio {
 
     @Autowired
     private ZonaRepositorio zR;
@@ -27,6 +28,7 @@ public class ZonaSerivicio {
 
         Zona zona = new Zona();
         zona.setNombre(nombre);
+        zona.setAlta(true);
         zR.save(zona);
     }
 
@@ -37,7 +39,10 @@ public class ZonaSerivicio {
         Optional<Zona> respuesta = zR.findById(id);
 
         if (respuesta.isPresent()) {
-
+         Zona zona =respuesta.get();
+         zona.setNombre(nombre);
+         
+         zR.save(zona);
         }
     }
 
@@ -50,6 +55,20 @@ public class ZonaSerivicio {
             zona.setAlta(false);
             zR.save(zona);
         }
+    }
+    
+     public Zona buscarPorId(String id) throws ErrorServicio{
+        Optional<Zona> rta = zR.findById(id);
+        if (rta.isPresent()) {
+            Zona zona = rta.get();
+            return zona;
+        }else{
+            throw new ErrorServicio("Zona no encontrada");
+        }
+    }
+    public List<Zona> listarZonas(){
+        
+       return zR.findAll();
     }
 
     
