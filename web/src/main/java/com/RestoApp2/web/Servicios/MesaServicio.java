@@ -18,12 +18,12 @@ public class MesaServicio {
     private MesaRepositorio mR;
 
     @Transactional
-    public void crearMesa(Integer capacidad, Boolean disponible, String idResto) throws ErrorServicio {
+    public void crearMesa(Integer capacidad, Boolean disponible, String idUsuario) throws ErrorServicio {
 
         Mesa mesa = new Mesa();
         mesa.setCapacidad(capacidad);
         mesa.setDisponible(true);
-        Optional<Resto> respuesta = rR.findById(idResto);
+        Optional<Resto> respuesta = rR.findById(idUsuario);
         if (respuesta.isPresent()) {
             Resto resto = respuesta.get();
             mesa.setResto(resto);

@@ -25,8 +25,8 @@
 
                 <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
                 <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
-                <!--<input type="hidden" th:if="${!zona.id==null}" name="id" th:value="${zona.id}"/>  -->
-
+                
+                <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}"/>
 
                 <div class="mb-3">
                     <label class="form-label">Ingrese el nombre de su Restaurante</label>

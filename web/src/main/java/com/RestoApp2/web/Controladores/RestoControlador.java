@@ -40,10 +40,10 @@ public class RestoControlador {
     }
     
     @PostMapping("/persistirResto")
-    public String crearResto(ModelMap model,MultipartFile archivo,@RequestParam String nombre,@RequestParam String idZona){
+    public String crearResto(ModelMap model,MultipartFile archivo,@RequestParam String idUsuario,@RequestParam String nombre,@RequestParam String idZona){
         
         try{
-            rS.registroResto(nombre, idZona, archivo, Boolean.TRUE);
+            rS.registroResto(idUsuario,nombre, idZona, archivo, Boolean.TRUE);
         }catch(ErrorServicio e){
             model.put("Error",e.getMessage());
             model.put("nombre",nombre);
@@ -56,5 +56,6 @@ public class RestoControlador {
         return "restoCrear.html";
         
     }
+    
     
 }

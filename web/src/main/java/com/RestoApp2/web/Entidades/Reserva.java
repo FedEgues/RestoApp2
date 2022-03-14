@@ -11,6 +11,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,26 +24,26 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Federico
  */
 @Entity
-public class Reserva implements Serializable{
-    
+public class Reserva implements Serializable {
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-//    @OneToOne
-//    private List<Plato> carrito;
-    @OneToOne
+    
+   // @OneToMany
+    private Plato platos;
+
+    @ManyToOne
     private Usuario usuario;
+    
+    @OneToOne
+    private Resto resto;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date dia;
 
     public Reserva() {
-    }
-
-    public Reserva(List<Plato> carrito, Usuario usuario, Date dia) {
-//        this.carrito = carrito;
-        this.usuario = usuario;
-        this.dia = dia;
     }
 
     public String getId() {
@@ -51,13 +54,13 @@ public class Reserva implements Serializable{
         this.id = id;
     }
 
-//    public List<Plato> getCarrito() {
-//        return carrito;
-//    }
-//
-//    public void setCarrito(List<Plato> carrito) {
-//        this.carrito = carrito;
-//    }
+    public Plato getPlatos() {
+        return platos;
+    }
+
+    public void setPlatos(Plato platos) {
+        this.platos = platos;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -67,6 +70,14 @@ public class Reserva implements Serializable{
         this.usuario = usuario;
     }
 
+    public Resto getResto() {
+        return resto;
+    }
+
+    public void setResto(Resto resto) {
+        this.resto = resto;
+    }
+
     public Date getDia() {
         return dia;
     }
@@ -74,8 +85,5 @@ public class Reserva implements Serializable{
     public void setDia(Date dia) {
         this.dia = dia;
     }
-
-   
-    
     
 }

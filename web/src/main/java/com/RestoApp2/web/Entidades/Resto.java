@@ -22,8 +22,6 @@ import org.hibernate.annotations.GenericGenerator;
 public class Resto implements Serializable{
     
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String nombre;
     private Zona zona;

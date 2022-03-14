@@ -32,31 +32,31 @@ public class RestoServicio {
     private FotoServicio fS;
 
     @Transactional
-    public void registroResto(String nombre, String idZona, MultipartFile archivo, Boolean abierto) throws ErrorServicio {
+    public void registroResto(String idUsuario, String nombre, String idZona, MultipartFile archivo, Boolean abierto) throws ErrorServicio {
         validacion(nombre, idZona);
 
-        Resto resto = new Resto();
-
-        resto.setNombre(nombre);
-
-        Optional<Zona> respuesta = zR.findById(idZona);
+        Optional<Resto> respuesta = rR.findById(idUsuario);
         if (respuesta.isPresent()) {
-            Zona zona = respuesta.get();
-            resto.setZona(zona);
+            Resto resto = respuesta.get();
+            resto.setNombre(nombre);
+            Optional<Zona> respZona = zR.findById(idZona);
+            if (respZona.isPresent()) {
+                Zona zona = respZona.get();
+                resto.setZona(zona);
+            }
+            Foto foto = fS.guardarFoto(archivo);
+            resto.setFoto(foto);
+            resto.setAbierto(true);
+            rR.save(resto);
         }
-        Foto foto = fS.guardarFoto(archivo);
-        resto.setFoto(foto);
-        /*ver con el html*/
-        resto.setAbierto(true);
-        rR.save(resto);
 
     }
 
     @Transactional
-    public void modificarResto(String idResto, String nombre, String idZona, MultipartFile archivo, Boolean abierto) throws ErrorServicio {
+    public void modificarResto(String idUsuario, String nombre, String idZona, MultipartFile archivo, Boolean abierto) throws ErrorServicio {
         validacion(nombre, idZona);
 
-        Optional<Resto> respuesta = rR.findById(idResto);
+        Optional<Resto> respuesta = rR.findById(idUsuario);
         if (respuesta.isPresent()) {
             Resto resto = respuesta.get();
             resto.setNombre(nombre);
