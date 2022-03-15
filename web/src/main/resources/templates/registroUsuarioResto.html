@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
-    <title>Zona</title>
+    <title>Usuario Resto</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,13 +20,11 @@
 
  <div class="container">
     <div class="card-body">
-        <form action="/usuario/registroUsuarioResto" method="POST">
+        <form action="/registrarUsuarioResto" method="POST">
 
             <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
             <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
             <!--<input type="hidden" th:if="${!zona.id==null}" name="id" th:value="${zona.id}"/>  --> 
-
-
             
             <div class="mb-3">
                 <label class="form-label">Ingrese su nombre</label>
@@ -38,7 +36,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Ingrese su email</label>
-                <input type="email" class="form-control" name="email" placeholder="Ingrese su email" th:value="${email}">
+                <input type="email" class="form-control" name="mail" placeholder="Ingrese su email" th:value="${mail}">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Ingrese su clave</label>
@@ -49,8 +47,8 @@
                 <input type="password" class="form-control" name="clave2">
             </div>
              
-            <button type="submit" class="btn btn-primary">Ingresar</button>
-            
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <a href="/registro" class="btn btn-primary btn-xl">Volver</a>
         </form>
     </div>
 </div>

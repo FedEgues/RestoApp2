@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
-    <title>Zona</title>
+    <title>RestoApp</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,44 +13,30 @@
 </head>
 
 <body>
-    <br>
- <!-- Esta linea de spam me genera el texto que es dinamico, si es null va a poner 'Crear' si no es nulo me va a poner 'Actualizar'-->
- <h2>CREAR ZONA</h2>
-    
-
-
-    <div class="container">
-        <div class="card-body">
-            <form action="/zona/persistirZona" method="POST">
-
-                <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
-                <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
-                <!--<input type="hidden" th:if="${!zona.id==null}" name="id" th:value="${zona.id}"/>  --> 
-
-
-                <div class="mb-3">
-                    <label class="form-label">Ingrese el nombre de la Zona</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre aqui">
-                    
-                </div>
-                 
-                <button type="submit" class="btn btn-primary">Ingresar</button>
-                
-            </form>
+<!--logo Y BOTONES DE REGISTRO Y INICIO-->
+<div>
+    <header>
+        <div>
+            <p> RESTO APP</p>
         </div>
-    </div>
+
+        <div>
+            <a sec:authorize="!isAuthenticated()" href="/registro"><button type="button" class="btn btn-outline-secondary">Registrate</button></a>
+            <a sec:authorize="!isAuthenticated()" href="/login"><button type="button" class="btn btn-outline-secondary">Iniciar Sesión</button></a>
+            <a sec:authorize="isAuthenticated()" href="/logout"><button type="button" class="btn btn-outline-secondary">Cerrar Sesión</button></a>
+        </div>
+
+        <div class="fs-2 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-fill" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+            </svg>
+            <!-- <p class='usuario'>@Usuario</p> -->
+            <p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></p>
+        </div>
+
+    </header>    
 
 
-
-
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>
