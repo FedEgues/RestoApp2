@@ -25,13 +25,18 @@
             <a sec:authorize="!isAuthenticated()" href="/login"><button type="button" class="btn btn-outline-secondary">Iniciar Sesión</button></a>
             <a sec:authorize="isAuthenticated()" href="/logout"><button type="button" class="btn btn-outline-secondary">Cerrar Sesión</button></a>
         </div>
-
+        
         <div class="fs-2 mb-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-fill" viewBox="0 0 16 16">
             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
             </svg>
             <!-- <p class='usuario'>@Usuario</p> -->
             <p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></p>
+        </div>
+
+        <div th:if="${session.usuariosession != null}">
+            <a href="/resto/crearResto">Crear Resto</a>
+            <a href="/plato/editarPlato">Crear Plato</a>
         </div>
 
     </header>    

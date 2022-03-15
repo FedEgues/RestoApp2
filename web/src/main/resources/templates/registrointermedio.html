@@ -14,7 +14,9 @@
 
 <body>
     <br>
- <h2>ELIJE TIPO USUARIO</h2>
+    <div class="card-header">
+        Elija tipo de usuario
+      </div>
     <div>
         <a sec:authorize="!isAuthenticated()" href="/registroUsuario"><button type="button" class="btn btn-outline-secondary">Usuario</button></a>
         <a sec:authorize="!isAuthenticated()" href="/registroUsuarioResto"><button type="button" class="btn btn-outline-secondary">Restaurante</button></a>

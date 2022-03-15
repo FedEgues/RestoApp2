@@ -15,7 +15,8 @@
         <form>
             <div>
                 <p th:if="${error != null}" th:text="${error}" style="color: red;">
-                <input type="hidden" name="id" th:value="${editar.id}"/>    
+                <input type="hidden" name="id" th:value="${editar.id}"/>
+                <input type="hidden" name="idResto" th:value="${session.usuariosession.id}"/>    
             </div>
             <div class="px-3 py-3" th:if="${editar.id == null}">
                 <label for="exampleInputEmail1" class="form-label">Tipo de plato</label>
