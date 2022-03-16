@@ -53,7 +53,7 @@ public class ConfiguracionDeSeguridad extends WebSecurityConfigurerAdapter{
                                 .permitAll()    
                             .and().logout()
                                 .logoutUrl("/logout")                   //URl de salida, con que URL el usuario se va deslogear del sistema     
-                                .logoutSuccessUrl("/")
+                                .logoutSuccessUrl("/?logout")
                                 .permitAll();
         http.csrf().disable();
     }

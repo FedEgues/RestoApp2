@@ -16,7 +16,11 @@ public class MainControlador {
     @Autowired UsuarioServicio usuServi;
     
     @GetMapping("/")
-    public String index(){
+    public String index(@RequestParam(required = false)String logout,ModelMap modelo){
+         if (logout !=null) {
+            modelo.put("logout","Ha cerrado sesión");
+        }
+       
         return "index";
     }
     
@@ -60,7 +64,7 @@ public class MainControlador {
             modeloUsu.put("error", e.getMessage());
             modeloUsu.put("nombre", nombre);
             modeloUsu.put("apellido", apellido);
-            modeloUsu.put("mail", mail);
+            modeloUsu.put("mail", mail); 
             modeloUsu.put("clave1", clave1);
             modeloUsu.put("clave2", clave2);
             return "registroUsuarioResto";
@@ -70,7 +74,12 @@ public class MainControlador {
     }
     
     @GetMapping("/login")
-    public String login(){
-        return "login";
+    public String login(@RequestParam(required = false)String error,ModelMap modelo){
+        if (error != null) {
+            modelo.put("error","Usuario o clave incorreto");
+        }  
+     
+        
+        return "login.html";
     }
 }
