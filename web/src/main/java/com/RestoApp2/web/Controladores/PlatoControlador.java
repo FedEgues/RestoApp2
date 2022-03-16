@@ -22,7 +22,8 @@ public class PlatoControlador {
     private PlatoServicio platoServi;
     
     @GetMapping("/editarPlato")
-    public String editarPlato(ModelMap mod,@RequestParam(required = false) String id, @RequestParam(required = false) String accion){
+    public String editarPlato(ModelMap mod,@RequestParam(required = false) String id, 
+                                           @RequestParam(required = false) String accion){
         if (accion == null) {
             accion = "Crear";
         }else{
@@ -46,7 +47,7 @@ public class PlatoControlador {
     }
     
     @PostMapping("/actualizarPlato")
-    public String actualizarPlato(ModelMap model,MultipartFile archivo, @RequestParam String id, 
+    public String actualizarPlato(ModelMap model,MultipartFile archivo, @RequestParam(required = false) String id, 
                             @RequestParam String nombre, @RequestParam String descri, 
                             @RequestParam Double precio, @RequestParam Integer categoria, String idResto){
         

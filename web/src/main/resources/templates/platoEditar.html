@@ -18,6 +18,9 @@
                 <input type="hidden" name="id" th:value="${editar.id}"/>
                 <input type="hidden" name="idResto" th:value="${session.usuariosession.id}"/>    
             </div>
+            <di>
+                <input type="text" name="idResto" th:value="${session.usuariosession.id}" readonly/>
+            </di>
             <div class="px-3 py-3" th:if="${editar.id == null}">
                 <label for="exampleInputEmail1" class="form-label">Tipo de plato</label>
                 <select name="categoria" required > 
@@ -30,8 +33,7 @@
                     <option name="categoria" value="3">Postre</option>
                     <option name="categoria" value="4">Bebida</option>
                 </select>
-            </div>  
-            <!-- <input type="text" name="isbn" th:value="${editar.isbn}" placeholder="ISBN" th:disable="${accion == 'Eliminar'}"/>                       -->
+            </div>                  
             <div class="px-3 py-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre del plato</label>
                 <input type="text" class="form-control" name="nombre" th:value="${editar.nombre}" placeholder="Nombre" th:disable="${accion == 'Eliminar'}" required>
