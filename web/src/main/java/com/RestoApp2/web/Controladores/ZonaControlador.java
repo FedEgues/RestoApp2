@@ -9,10 +9,12 @@ import com.RestoApp2.web.Entidades.Zona;
 import com.RestoApp2.web.Repositorios.ZonaRepositorio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,25 +50,54 @@ public class ZonaControlador {
         modelo.put("exito","La zona fue ingresada con éxito.");
         return "zonaCrear";
     }
+    
+    @GetMapping("/listarZonas")
+    public String listarZonas(ModelMap modelo){
+        List<Zona> zonas = zR.findAll();
+        modelo.put("zonas",zonas);
+        return "zonaListar.html";
+        
+    }
+    @GetMapping("/modificarZona/{id}")
+    public String modificarZona(ModelMap modelo,@PathVariable("id") String id){
+        try{
+            Zona zona =zS.buscarPorId(id);
+            modelo.put("zona",zona);
+        }catch(ErrorServicio e){
+            modelo.put("error",e.getMessage());
+            
+        }
+        return "zonaEditar.html";
+    }
 
     @PostMapping("/actualizarZona")
-    public String acutalizarZona(ModelMap modelo, @RequestParam(required = false) String idZona, @RequestParam String nombre) {
+    public String acutalizarZona(ModelMap modelo, @RequestParam String id, @RequestParam String nombre) {
 
-        try {
-            if (idZona == null || idZona.isEmpty()) {
-                zS.registroZona(nombre);
-            } else {
-                zS.actualizarZona(idZona, nombre);
-            }
-            return "zonaEditar.html";
+       try{
+                zS.actualizarZona(id, nombre);
+                List<Zona> zonas = zR.findAll();
+            modelo.put("exito","La zona fue modificada con éxito");
+            modelo.put("zonas",zonas);
+            return "zonaListar.html";
+           
+            
+            
         } catch (ErrorServicio e) {
-            Zona zona = new Zona();
-            zona.setNombre(nombre);
-            modelo.put("editar", zona);
-            modelo.put("Accion", "Actualizar");
-            modelo.put("error", e.getMessage());
-            modelo.put("exito", "Zona actualizada con éxito");
-            return "zonaEditar.html";
+            modelo.put("error",e.getMessage());
+            List<Zona> zonas = zR.findAll();
+            modelo.put("zonas",zonas);
+            return "zonaListar.html";
         }
+    }
+    @GetMapping("/bajaZona/{id}")
+    public String bajaZona(ModelMap modelo,@PathVariable("id")String id){
+         try{
+            zS.darBajaZona(id);
+             return "redirect:zona/listarZonas/";
+        }catch(ErrorServicio e){
+            modelo.put("error",e.getMessage());
+             return "redirect:zona/listarZonas/";
+        }
+         
     }
 }

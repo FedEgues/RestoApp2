@@ -5,12 +5,16 @@
  */
 package com.RestoApp2.web.Controladores;
 
+import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.UsuarioServicio;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,5 +73,48 @@ public class UsuarioControlador {
         return "registroUsuarioResto.html";
 
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SELLER')")
+    @GetMapping("/editarPerfil/{id}")
+    public String editarPerfil(HttpSession session,ModelMap model,@PathVariable("id")String id) {
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "index.html";/*Medida de seguridad*/
+        }
+       
+        try {
+            Usuario usuario = uS.buscarUsuarioPorId(login.getId());
+            
+            model.put("usuario", usuario);
+            return "modificarUsuario.html";
+        } catch (ErrorServicio error) {
+            model.put("error", error.getMessage());
+            return "index.html";
+        }
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SELLER')")
+    @PostMapping("/actualizarPerfil")
+    public String actualizarPerfil(HttpSession session,ModelMap modelo,@RequestParam String id,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String clave1,@RequestParam String clave2){
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "index.html";/*Medida de seguridad*/
+        }
+        try{
+            uS.actualizarUsuario(id, nombre, mail, apellido, clave1, clave2);
+            modelo.put("exito","El usuario fue modificado con éxito");
+            return "redirect:/";
+        }catch(ErrorServicio error){
+            modelo.put("error",error);
+            return "index.html";
+        }
+        
+        
+    }
+
+    
 
 }

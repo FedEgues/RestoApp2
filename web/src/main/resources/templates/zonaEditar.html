@@ -15,27 +15,29 @@
 <body>
     <br>
  <!-- Esta linea de spam me genera el texto que es dinamico, si es null va a poner 'Crear' si no es nulo me va a poner 'Actualizar'-->
- <h2><span th:text="${editar.id == null ? 'Crear' : 'Actualizar'}"></span> ZONA</h2>
+ <h2>ZONA</h2>
     
 
 
     <div class="container">
         <div class="card-body">
             <form action="/zona/actualizarZona" method="POST">
-
+                <input type="hidden" name="id" th:value="${zona.id}"/>
                 <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
                 <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
                 <!--<input type="hidden" th:if="${!zona.id==null}" name="id" th:value="${zona.id}"/>  --> 
 
 
                 <div class="mb-3">
-                    <label class="form-label">Ingrese el nombre de la Zona</label>
-                    <input type="text" class="form-control" name="nombre" th:value="${editar.id == null ? '' : 'editar.id'}">
+                    <label class="form-label">Va a modificar el nombre de la siguiente zona: <spam th:text="${zona.nombre}"></spam></label>
+                    <br>
+                    <label class="form-label">Ingrese el nuevo nombre de la Zona</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="Nombre de la nueva zona" required>
                     
                 </div>
                  
                 <button type="submit" class="btn btn-primary">Ingresar</button>
-                
+                <button class="btn btn-primary" type="button"><a href="/" style="color:aliceblue">Volver al Menu</a></button>
             </form>
         </div>
     </div>

@@ -79,7 +79,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registroUsuarioUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(/*nombre, apellido, mail,*/ clave1, clave2);
+        validar(/*nombre, apellido, mail,*/clave1, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
@@ -96,7 +96,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registroRestoUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(/*nombre, apellido, mail,*/ clave1, clave2);
+        validar(/*nombre, apellido, mail,*/clave1, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
@@ -119,7 +119,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registroAdminUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(/*nombre, apellido, mail,*/ clave1, clave2);
+        validar(/*nombre, apellido, mail,*/clave1, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
@@ -148,13 +148,14 @@ public class UsuarioServicio implements UserDetailsService {
          String value = Optional.ofNullable(nullName).orElseThrow(NullPointerException::new);
          */
  /*Pongo la validación previa a todo el proceso para no continuar el codigo si ya no cumple con los requisitos minimos*/
-        validar(/*nombre, apellido, mail,*/ clave1, clave1);
+        validar(/*nombre, apellido, mail,*/clave1, clave1);
         Optional<Usuario> respuesta = uR.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
 
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
+            usuario.setMail(mail);
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(clave1);
             uR.save(usuario);
@@ -180,7 +181,18 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
-    private void validar(/*String nombre, String apellido, String mail,*/ String clave1, String clave2) throws ErrorServicio {
+    public Usuario buscarUsuarioPorId(String id) throws ErrorServicio {
+
+        try {
+            Usuario usuario = uR.getById(id);
+            return usuario;
+        } catch (Exception e) {
+            throw new ErrorServicio("El usuario buscado no se encontro.");
+        }
+
+    }
+
+    private void validar(/*String nombre, String apellido, String mail,*/String clave1, String clave2) throws ErrorServicio {
 
         if (clave1 == null || clave1.isEmpty()) {
             throw new ErrorServicio("La clave no puede estar vacia");

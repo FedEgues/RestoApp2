@@ -25,7 +25,14 @@ public class ZonaServicio {
 
     @Transactional
     public void registroZona(String nombre) throws ErrorServicio {
-
+         
+        List<Zona> zonas = zR.findAll();
+        for (Zona zona : zonas) {
+            if (zona.getNombre().equals(nombre)) {
+                throw new ErrorServicio("La zona ya se encuentra en la base de datos.");
+            }
+        }
+       
         Zona zona = new Zona();
         zona.setNombre(nombre);
         zona.setAlta(true);
@@ -35,7 +42,13 @@ public class ZonaServicio {
     @Transactional
     public void actualizarZona(String id, String nombre) throws ErrorServicio {
 
-        validacion(nombre);
+      
+        List<Zona> zonas = zR.findAll();
+        for (Zona zona : zonas) {
+            if (zona.getNombre().equals(nombre)) {
+                throw new ErrorServicio("La zona ya se encuentra en la base de datos.");
+            }
+        }
         Optional<Zona> respuesta = zR.findById(id);
 
         if (respuesta.isPresent()) {
@@ -72,10 +85,5 @@ public class ZonaServicio {
     }
 
     
-    private void validacion(String nombre) throws ErrorServicio {
-
-        if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre de la zona no puede estar vacío");
-        }
-    }
+   
 }
