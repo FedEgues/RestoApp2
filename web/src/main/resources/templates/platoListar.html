@@ -29,8 +29,8 @@
                                 <td th:text="${plato.categoria}"></td>
                                 <td th:text="${plato.foto}"></td>
                                 <td>
-                                    <a th:href="@{/editarPlato}+'?id='+${plato.id}" class="btn btn-success btn-xl">Editar</a>
-                                    <a th:href="@{/libro/eliminar-plato}+'?id='+${plato.id}" class="btn btn-danger btn-xl">Eliminar</a>
+                                    <a th:href="@{/plato/modPlato}+'?id='+${plato.id}" class="btn btn-success btn-xl">Editar</a>
+                                    <a th:href="@{/plato/eliminar-plato}+'?id='+${plato.id}" class="btn btn-danger btn-xl">Eliminar</a>
                                     <!-- <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/editar-libro}+'?id='+${libro.id}" class="btn btn-success btn-xl">Editar</a>
                                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/eliminar-libro}+'?id='+${libro.id}" class="btn btn-danger btn-xl">Eliminar</a> -->
                                     <!--<a th:href="@{/libro/editar-libro}+'?id='+${libro.id, accion=Actualizar}" class="btn btn-success btn-xl">Editar</a>
