@@ -43,6 +43,12 @@ public class PlatoControlador {
         return "platoCrear";
     }
     
+    @GetMapping("/listarPlato")
+    public String listaPlato(ModelMap modelo){
+        modelo.put("platos", platoServi.listaPlato());
+        return "platoListar";
+    }
+    
 //    @GetMapping("/editarPlato")
 //    public String editarPlato(ModelMap mod,@RequestParam(required = false) String id, 
 //                                           @RequestParam(required = false) String accion){
@@ -96,11 +102,7 @@ public class PlatoControlador {
 //        }
 //    }
     
-    @GetMapping("/listarlato")
-    public String listaPlato(ModelMap modelo){
-        modelo.put("platos", platoServi.listaPlato());
-        return "platoListar";
-    }
+    
     
     
 }

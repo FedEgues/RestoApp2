@@ -12,6 +12,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -25,7 +26,6 @@ public class PlatoServicio {
     
     @Autowired
     private RestoRepositorio restoRepo;
-    
 
     @Transactional
     public void nuevoPlato(MultipartFile archivo, String nombre, String descri, Double precio, Integer categoria, String idResto) throws ErrorServicio{
@@ -112,6 +112,7 @@ public class PlatoServicio {
     }
     
     public List<Plato> listaPlato(){
+        
         return platoRepo.findAll();
     }
     

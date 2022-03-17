@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Resto;
@@ -82,40 +77,15 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
-    private void validar(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-
-        if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre no puede estar vacío");
-        }
-        if (apellido == null || apellido.isEmpty()) {
-            throw new ErrorServicio("El apellido no puede estar vacío");
-        }
-        if (mail == null || mail.isEmpty()) {
-            throw new ErrorServicio("El mail no puede estar vacío");
-        }
-        if (clave1 == null || clave1.isEmpty()) {
-            throw new ErrorServicio("La clave no puede estar vacia");
-        }
-        if (clave1.length() < 4) {
-            throw new ErrorServicio("La clave no puede tener menos de 4 dígitos");
-        }
-        if (clave1.equals(clave2)) {
-            
-        }else{
-            throw new ErrorServicio("Las claves deben ser iguales");
-        }
-
-    }
-
     @Transactional
     public void registroUsuarioUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(nombre, apellido, mail, clave1, clave2);
+        validar(/*nombre, apellido, mail,*/ clave1, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-      
+
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         usuario.setClave(encriptada);
         usuario.setAlta(new Date());
@@ -126,20 +96,19 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registroRestoUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(nombre, apellido, mail, clave1, clave2);
+        validar(/*nombre, apellido, mail,*/ clave1, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-      
+
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         usuario.setClave(encriptada);
         usuario.setAlta(new Date());
 
         usuario.setRol(Role.SELLER);
-        
-        
+
         uR.save(usuario);
         /*Crear el nuevo resto, este resto tendra el mismo del id del usuario que se esta creando.*/
         String idUsuario = uR.buscarPorMail(mail).getId();
@@ -150,13 +119,13 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registroAdminUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(nombre, apellido, mail, clave1, clave2);
+        validar(/*nombre, apellido, mail,*/ clave1, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-     
+
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         usuario.setClave(encriptada);
         usuario.setAlta(new Date());
@@ -179,7 +148,7 @@ public class UsuarioServicio implements UserDetailsService {
          String value = Optional.ofNullable(nullName).orElseThrow(NullPointerException::new);
          */
  /*Pongo la validación previa a todo el proceso para no continuar el codigo si ya no cumple con los requisitos minimos*/
-        validar(nombre, apellido, mail, clave1, clave1);
+        validar(/*nombre, apellido, mail,*/ clave1, clave1);
         Optional<Usuario> respuesta = uR.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
@@ -209,6 +178,30 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("El usuario buscado no fue encontrado");
         }
 
+    }
+
+    private void validar(/*String nombre, String apellido, String mail,*/ String clave1, String clave2) throws ErrorServicio {
+
+        if (clave1 == null || clave1.isEmpty()) {
+            throw new ErrorServicio("La clave no puede estar vacia");
+        }
+        if (clave1.length() < 4) {
+            throw new ErrorServicio("La clave no puede tener menos de 4 dígitos");
+        }
+        if (clave1.equals(clave2)) {
+
+        } else {
+            throw new ErrorServicio("Las claves deben ser iguales");
+        }
+//        if (nombre == null || nombre.isEmpty()) {
+//            throw new ErrorServicio("El nombre no puede estar vacío");
+//        }
+//        if (apellido == null || apellido.isEmpty()) {
+//            throw new ErrorServicio("El apellido no puede estar vacío");
+//        }
+//        if (mail == null || mail.isEmpty()) {
+//            throw new ErrorServicio("El mail no puede estar vacío");
+//        }
     }
 
 }
