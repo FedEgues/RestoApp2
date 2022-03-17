@@ -14,6 +14,7 @@
                     <table class="table table-light table-hover">
                         <thead>
                             <tr class="bg-blue">
+                                <th>Id Plato</th>
                                 <th>Nombre</th>
                                 <th>Valor</th>
                                 <th>Descripcion</th>
@@ -23,13 +24,14 @@
                         </thead>
                         <tbody>
                             <tr th:each="plato : ${platos}">
+                                <td th:text="${plato.id}"></td>
                                 <td th:text="${plato.nombre}"></td>
                                 <td th:text="${plato.precio}"></td>
                                 <td th:text="${plato.descri}"></td>
                                 <td th:text="${plato.categoria}"></td>
                                 <td th:text="${plato.foto}"></td>
                                 <td>
-                                    <a th:href="@{/plato/modPlato}+'?id='+${plato.id}" class="btn btn-success btn-xl">Editar</a>
+                                    <a th:href="@{/plato/modPlato/}+'?id='+${plato.id}" class="btn btn-success btn-xl">Editar</a>
                                     <a th:href="@{/plato/eliminar-plato}+'?id='+${plato.id}" class="btn btn-danger btn-xl">Eliminar</a>
                                     <!-- <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/editar-libro}+'?id='+${libro.id}" class="btn btn-success btn-xl">Editar</a>
                                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/eliminar-libro}+'?id='+${libro.id}" class="btn btn-danger btn-xl">Eliminar</a> -->

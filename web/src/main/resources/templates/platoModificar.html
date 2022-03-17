@@ -24,7 +24,7 @@
             <p class="exito" th:if= "${exito != null}" th:text = ${exito}></p>
             <br>
             <div class="card">
-                <form action="/plato/modifiplato" method="POST" enctype="multipart/form-data">
+                <form action="/plato/modificarPlato" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="idPlato" th:value="${id}"/>
                     <div class="mb-3">
                         <h2>Ingrese los nuevos valores </h2>

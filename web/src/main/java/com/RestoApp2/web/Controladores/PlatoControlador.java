@@ -65,8 +65,21 @@ public class PlatoControlador {
         return "platoModificar";
     }
 
-//    @PostMapping("/modificarPlato")
-//    public String modificarPlato(){
-//
-//    }
+    @PostMapping("/modificarPlato")
+    public String modifiPlato(ModelMap model, MultipartFile archivo, @RequestParam String idPlato, 
+                            @RequestParam String nombre, @RequestParam Double precio, 
+                            @RequestParam String descri) throws ErrorServicio {
+        try {
+            platoServi.modificarPlato(archivo, idPlato, nombre, precio, descri);
+        } catch (ErrorServicio ex) {
+            model.put("error", ex.getMessage());
+            model.put("nombre", nombre);
+            model.put("precio", precio);
+            model.put("descri", descri);
+            return "platoModificar";
+            //en el form poner th:value="${nombre.variable}" para conservar los datos l
+        }
+        model.put("exito", "El plato fue modificado con éxito");
+        return "redirect:/";
+    }
 }
