@@ -19,7 +19,7 @@
     
     <div class="container">
         <div class="card-body">
-            <form action="/actualizarPerfil" method="POST">
+            <form action="/usuario/actualizarPerfil" method="POST">
                 <p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.id}"></p> 
 
                 <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>

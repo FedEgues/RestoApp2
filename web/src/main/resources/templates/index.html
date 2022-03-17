@@ -41,12 +41,9 @@
             <a sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a>
             <a sec:authorize="hasAnyRole('ROLE_SELLER')" href="/resto/crearResto">Crear Resto</a>
             <a sec:authorize="hasAnyRole('ROLE_SELLER')"href="/plato/crearPlato">Crear Plato</a>
-<<<<<<< Updated upstream
             <a sec:authorize="hasAnyRole('ROLE_SELLER')"href="/plato/listarPlato">Listar Plato</a>
-=======
             <a sec:authorize="hasAnyRole('ROLE_ADMIN')"href="/zona/crearZona">Crear Zona</a>
             <a sec:authorize="hasAnyRole('ROLE_ADMIN')"href="/zona/listarZonas">Listar Zonas Cargadas</a>
->>>>>>> Stashed changes
         </div>
 
     </header>    
