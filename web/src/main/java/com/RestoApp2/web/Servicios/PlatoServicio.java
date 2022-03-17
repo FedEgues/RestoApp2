@@ -56,7 +56,7 @@ public class PlatoServicio {
                 plato.setCategoria(Categoria.BEBIDA);
         }
         
-        Resto resto = restoRepo.getOne(idResto);
+        Resto resto = restoRepo.getById(idResto);
         plato.setResto(resto);
         
         platoRepo.save(plato);

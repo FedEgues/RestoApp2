@@ -4,10 +4,9 @@ package com.RestoApp2.web.Entidades;
 import com.RestoApp2.web.Enums.Categoria;
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,7 +29,7 @@ public class Plato implements Serializable{
     //@Enumerated(EnumType.STRING)
     private Categoria categoria;
     
-    @OneToOne
+    @ManyToOne
     private Resto resto;
     
         

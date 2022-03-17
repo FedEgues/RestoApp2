@@ -36,7 +36,7 @@
 
         <div th:if="${session.usuariosession != null}">
             <a sec:authorize="hasAnyRole('ROLE_SELLER')" href="/resto/crearResto">Crear Resto</a>
-            <a sec:authorize="hasAnyRole('ROLE_SELLER')"href="/plato/editarPlato">Crear Plato</a>
+            <a sec:authorize="hasAnyRole('ROLE_SELLER')"href="/plato/crearPlato">Crear Plato</a>
         </div>
 
     </header>    
