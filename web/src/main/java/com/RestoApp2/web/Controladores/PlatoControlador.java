@@ -1,10 +1,9 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Plato;
-import com.RestoApp2.web.Enums.Categoria;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
-import javax.websocket.server.PathParam;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -45,9 +44,17 @@ public class PlatoControlador {
     }
 
     @GetMapping("/listarPlato")
-    public String listaPlato(ModelMap modelo) {
-        modelo.put("platos", platoServi.listaPlato());
-        return "platoListar";
+    public String listaPlato(ModelMap modelo) {        
+        List<Plato> platos = platoServi.buscarPlatosActivos();
+        modelo.put("platos", platos);
+        return "platoListar.html";
+    }
+    
+    @GetMapping("/listarPlatoInactivos")
+    public String listaPlatoInactivos(ModelMap modelo) {        
+        List<Plato> platos = platoServi.buscarPlatosInactivos();
+        modelo.put("platos", platos);
+        return "platoListarInactivos.html";
     }
 
     @GetMapping("/modPlato/{id}")
@@ -81,5 +88,29 @@ public class PlatoControlador {
         }
         model.put("exito", "El plato fue modificado con éxito");
         return "redirect:/";
+    }
+    
+    @GetMapping("/baja/{id}")
+    public String baja(@PathVariable("id") String id, ModelMap model){
+        try{
+            platoServi.bajaPlato(id);
+        }catch(ErrorServicio e){
+            model.put("error", e.getMessage());
+             return "redirect:/plato/listarPlato";
+        }
+        model.put("exito", "Plato dado de baja correctamente");
+        return "redirect:/";
+    }
+    
+    @GetMapping("/alta/{id}")
+    public String alta(@PathVariable("id") String id, ModelMap model){
+        try{
+            platoServi.altaPlato(id);
+        }catch(ErrorServicio e){
+            model.put("error", e.getMessage());
+             return "redirect:/plato/listarPlatoInactivos";
+        }
+        model.put("exito", "Plato dado de baja correctamente");
+        return "redirect:/plato/listarPlato";
     }
 }
