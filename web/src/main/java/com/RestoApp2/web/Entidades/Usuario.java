@@ -35,23 +35,20 @@ public class Usuario implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date alta;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date baja;
-
+    
     @Enumerated(EnumType.STRING)
     private Role rol;
 
     public Usuario() {
     }
 
-    public Usuario( String nombre, String apellido, String mail, String clave, Date alta, Date baja, Role rol) {
-        
+    public Usuario(String id, String nombre, String apellido, String mail, String clave, Date alta, Role rol) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.clave = clave;
         this.alta = alta;
-        this.baja = baja;
         this.rol = rol;
     }
 
@@ -103,14 +100,6 @@ public class Usuario implements Serializable {
         this.alta = alta;
     }
 
-    public Date getBaja() {
-        return baja;
-    }
-
-    public void setBaja(Date baja) {
-        this.baja = baja;
-    }
-
     public Role getRol() {
         return rol;
     }
@@ -118,7 +107,6 @@ public class Usuario implements Serializable {
     public void setRol(Role rol) {
         this.rol = rol;
     }
-    
-    
+
 
 }

@@ -69,6 +69,19 @@ public class ZonaServicio {
             zR.save(zona);
         }
     }
+    @Transactional
+    public void eliminarZona(String id) throws ErrorServicio {
+
+        Optional<Zona> respuesta = zR.findById(id);
+        if (respuesta.isPresent()) {
+            Zona zona = respuesta.get();
+           
+            zR.delete(zona);
+        }else{
+            throw new ErrorServicio("No se encontró la zona buscada");
+        }
+            
+    }
     
     @Transactional
     public void darAltaZona(String id) throws ErrorServicio {

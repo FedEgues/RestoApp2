@@ -173,8 +173,8 @@ public class UsuarioServicio implements UserDetailsService {
         Optional<Usuario> respuesta = uR.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
-            usuario.setBaja(new Date());
-            uR.save(usuario);
+           
+            uR.delete(usuario);
         } else {
             throw new ErrorServicio("El usuario buscado no fue encontrado");
         }

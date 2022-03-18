@@ -11,6 +11,7 @@ import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Federico
  */
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 @RequestMapping("/zona")
 public class ZonaControlador {
 
@@ -37,7 +39,7 @@ public class ZonaControlador {
 
         return "zonaCrear.html";
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/persistirZona")
     public String Zona(ModelMap modelo, @RequestParam String nombre) {
 
@@ -50,7 +52,7 @@ public class ZonaControlador {
         modelo.put("exito","La zona fue ingresada con éxito.");
         return "zonaCrear";
     }
-    
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/listarZonas")
     public String listarZonas(ModelMap modelo){
         List<Zona> zonas = zR.findAll();
@@ -58,6 +60,7 @@ public class ZonaControlador {
         return "zonaListar.html";
         
     }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/modificarZona/{id}")
     public String modificarZona(ModelMap modelo,@PathVariable("id") String id){
         try{
@@ -69,7 +72,7 @@ public class ZonaControlador {
         }
         return "zonaEditar.html";
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/actualizarZona")
     public String acutalizarZona(ModelMap modelo, @RequestParam String id, @RequestParam String nombre) {
 
@@ -89,6 +92,7 @@ public class ZonaControlador {
             return "zonaListar.html";
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/bajaZona/{id}")
     public String bajaZona(ModelMap modelo,@PathVariable("id")String id){
          try{
@@ -100,7 +104,8 @@ public class ZonaControlador {
         }
          
     }
-       @GetMapping("/altaZona/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/altaZona/{id}")
     public String altaZona(ModelMap modelo,@PathVariable("id")String id){
          try{
             zS.darAltaZona(id);
@@ -111,4 +116,17 @@ public class ZonaControlador {
         }
          
     }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/eliminarZona/{id}")
+    public String eliminarZona(ModelMap modelo,@PathVariable("id")String id){
+        try{
+            zS.eliminarZona(id);
+            modelo.put("exito","Se eliminó la zona con éxito");
+             return "redirect:/zona/listarZonas/";
+        }catch(ErrorServicio error){
+            modelo.put("error",error.getMessage());
+             return "redirect:/zona/listarZonas/";
+        }
+    }
+    
 }
