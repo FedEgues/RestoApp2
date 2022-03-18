@@ -35,10 +35,6 @@
                     <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" th:value="${usuario.apellido}" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Ingrese su email</label>
-                    <input type="email" class="form-control" name="mail" placeholder="Ingrese su email" th:value="${usuario.mail}" required>
-                </div> 
-                <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ingrese su clave</label>
                     <input type="password" class="form-control" name="clave1" required>
                 </div>
@@ -50,6 +46,8 @@
                 <button type="submit" class="btn btn-primary">Enviar</button>
                 <a href="/" class="btn btn-primary btn-xl">Volver</a>
             </form>
+            <br>
+            <a class="btn btn-danger" th:href="@{/usuario/bajaPerfil/}+${session.usuariosession.id}">BAJA USUARIO</a>
         </div>
     </div>
 

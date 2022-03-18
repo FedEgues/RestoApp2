@@ -93,10 +93,21 @@ public class ZonaControlador {
     public String bajaZona(ModelMap modelo,@PathVariable("id")String id){
          try{
             zS.darBajaZona(id);
-             return "redirect:zona/listarZonas/";
+             return "redirect:/zona/listarZonas/";
         }catch(ErrorServicio e){
             modelo.put("error",e.getMessage());
-             return "redirect:zona/listarZonas/";
+             return "redirect:/zona/listarZonas/";
+        }
+         
+    }
+       @GetMapping("/altaZona/{id}")
+    public String altaZona(ModelMap modelo,@PathVariable("id")String id){
+         try{
+            zS.darAltaZona(id);
+             return "redirect:/zona/listarZonas/";
+        }catch(ErrorServicio e){
+            modelo.put("error",e.getMessage());
+             return "redirect:/zona/listarZonas/";
         }
          
     }

@@ -135,7 +135,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void actualizarUsuario(String id, String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
+    public void actualizarUsuario(String id, String nombre, String apellido, String clave1, String clave2) throws ErrorServicio {
         /*Optional es un objeto contenedor que puede o no contener un valor no nulo.
         Si el valor es presente, isPresent() devuelve true y get() retorna el valor.
         Si es  null y no utilizamos Optional<>, puede provocar la exception NullPointerException
@@ -155,7 +155,7 @@ public class UsuarioServicio implements UserDetailsService {
 
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setMail(mail);
+            
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(clave1);
             uR.save(usuario);

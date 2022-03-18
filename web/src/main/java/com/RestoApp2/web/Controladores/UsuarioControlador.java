@@ -97,14 +97,14 @@ public class UsuarioControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SELLER')")
     @PostMapping("/actualizarPerfil")
-    public String actualizarPerfil(HttpSession session,ModelMap modelo,@RequestParam String id,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String mail,@RequestParam String clave1,@RequestParam String clave2){
+    public String actualizarPerfil(HttpSession session,ModelMap modelo,@RequestParam String id,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String clave1,@RequestParam String clave2){
         
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "index.html";/*Medida de seguridad*/
         }
         try{
-            uS.actualizarUsuario(id, nombre, mail, apellido, clave1, clave2);
+            uS.actualizarUsuario(id, nombre,apellido, clave1, clave2);
             modelo.put("exito","El usuario fue modificado con éxito");
             return "redirect:/";
         }catch(ErrorServicio error){
@@ -114,6 +114,23 @@ public class UsuarioControlador {
         
         
     }
+     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SELLER')")
+     @GetMapping("/bajaPerfil/{id}")
+     public String bajaPerfil(HttpSession session,ModelMap modelo,@PathVariable("id") String id){
+         
+          Usuario login = (Usuario) session.getAttribute("usuariosession");
+          if (login == null || !login.getId().equals(id)) {
+            return "index.html";/*Medida de seguridad*/
+          }
+          
+         try{
+             uS.darBajaUsuario(id);
+             return "confirmacionDelUsuario.html";
+         }catch(ErrorServicio error){
+             modelo.put("error",error.getMessage());
+             return "redirect:/usuario/editarPerfil";
+         }
+     }
 
     
 

@@ -70,6 +70,17 @@ public class ZonaServicio {
         }
     }
     
+    @Transactional
+    public void darAltaZona(String id) throws ErrorServicio {
+
+        Optional<Zona> respuesta = zR.findById(id);
+        if (respuesta.isPresent()) {
+            Zona zona = respuesta.get();
+            zona.setAlta(true);
+            zR.save(zona);
+        }
+    }
+    
      public Zona buscarPorId(String id) throws ErrorServicio{
         Optional<Zona> rta = zR.findById(id);
         if (rta.isPresent()) {
