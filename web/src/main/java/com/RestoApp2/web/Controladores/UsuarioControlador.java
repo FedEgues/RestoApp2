@@ -125,7 +125,7 @@ public class UsuarioControlador {
           
          try{
              uS.darBajaUsuario(id);
-             return "confirmacionDelUsuario.html";
+             return "confirmacionDeUsuario.html";
          }catch(ErrorServicio error){
              modelo.put("error",error.getMessage());
              return "redirect:/usuario/editarPerfil";

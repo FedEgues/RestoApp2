@@ -69,6 +69,7 @@
                 <tr>
                     <th>Zonas dadas de baja</th>
                     <th>Dar Alta</th>
+                    <th>Eliminar</th>
                    
                 </tr>
             </thead>
@@ -79,7 +80,10 @@
                     <td th:text="${Zona.nombre}"></td>
 
                     <td>
-                        <a class="btn btn-danger" th:href="@{/zona/altaZona/} + ${Zona.id}">Alta</a>
+                        <a class="btn btn-success" th:href="@{/zona/altaZona/} + ${Zona.id}">Alta</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/zona/eliminarZona/} + ${Zona.id}">Eliminar</a>
                     </td>
 
 
