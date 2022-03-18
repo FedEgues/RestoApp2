@@ -109,10 +109,6 @@ public class PlatoServicio {
         }
     }
 
-    public List<Plato> listaPlato() {
-        return platoRepo.findAll();
-    }
-
     public Plato buscarPorId(String id) throws ErrorServicio {
         Optional<Plato> rta = platoRepo.findById(id);
         if (rta.isPresent()) {
@@ -121,6 +117,14 @@ public class PlatoServicio {
         } else {
             throw new ErrorServicio("Plato NO ENCOMTRADO");
         }
+    }
+
+    public List<Plato> listaPlato() {
+        return platoRepo.findAll();
+    }
+
+    public List<Plato> listaPlatoResto(String idResto) {
+        return platoRepo.buscarPlatoResto(idResto);
     }
 
     public List<Plato> buscarPlatosActivos() {

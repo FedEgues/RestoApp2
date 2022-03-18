@@ -18,4 +18,7 @@ public interface PlatoRepositorio extends JpaRepository<Plato, String>{
     
     @Query("SELECT c FROM Plato c WHERE c.alta = false")
     public List<Plato> buscarPlatosInactivos();
+    
+    @Query("SELECT c FROM Plato c WHERE c.resto.id = :idResto and c.alta = true")
+    public List<Plato> buscarPlatoResto(@Param("idResto") String idResto);
 }

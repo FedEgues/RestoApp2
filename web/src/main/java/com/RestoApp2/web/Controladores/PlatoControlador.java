@@ -42,19 +42,19 @@ public class PlatoControlador {
         modelo.put("exito", "Plato creado con exito");
         return "platoCrear";
     }
-
-    @GetMapping("/listarPlato")
-    public String listaPlato(ModelMap modelo) {        
-        List<Plato> platos = platoServi.buscarPlatosActivos();
+    
+    @GetMapping("/listarPlatoResto/{idResto}")
+    public String listaPlatoResto(ModelMap modelo, @PathVariable("idResto") String idResto){
+        List<Plato> platos = platoServi.listaPlatoResto(idResto);
         modelo.put("platos", platos);
-        return "platoListar.html";
+        return "platoListar";
     }
     
     @GetMapping("/listarPlatoInactivos")
     public String listaPlatoInactivos(ModelMap modelo) {        
         List<Plato> platos = platoServi.buscarPlatosInactivos();
         modelo.put("platos", platos);
-        return "platoListarInactivos.html";
+        return "platoListarInactivos";
     }
 
     @GetMapping("/modPlato/{id}")
@@ -96,10 +96,10 @@ public class PlatoControlador {
             platoServi.bajaPlato(id);
         }catch(ErrorServicio e){
             model.put("error", e.getMessage());
-             return "redirect:/plato/listarPlato";
+             return "platoListar";
         }
         model.put("exito", "Plato dado de baja correctamente");
-        return "redirect:/";
+        return "platoListar";
     }
     
     @GetMapping("/alta/{id}")
@@ -108,9 +108,18 @@ public class PlatoControlador {
             platoServi.altaPlato(id);
         }catch(ErrorServicio e){
             model.put("error", e.getMessage());
-             return "redirect:/plato/listarPlatoInactivos";
+             return "platoListarInactivos";
         }
-        model.put("exito", "Plato dado de baja correctamente");
-        return "redirect:/plato/listarPlato";
+        model.put("exito", "Plato dado de alta correctamente");
+        return "platoListarInactivos";
     }
+    
+    //Listar platos activos que lo reemplace agregandole el idResto 
+    //para que me muestre los platos activos de un resto en particular
+    //    @GetMapping("/listarPlato")
+//    public String listaPlato(ModelMap modelo) {        
+//        List<Plato> platos = platoServi.buscarPlatosActivos();
+//        modelo.put("platos", platos);
+//        return "platoListar.html";
+//    }
 }

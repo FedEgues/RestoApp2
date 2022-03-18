@@ -8,7 +8,12 @@
         <title>Modificar Plato</title>
     </head>
     <body>
-        <section class="container">  
+        <section class="container"> 
+            <div class="px-3 py-3">
+                <h1>Modificar Platos</h1>               
+                <p class="error" th:if= "${error != null}" th:text = ${error}></p>
+                <p class="exito" th:if= "${exito != null}" th:text = ${exito}></p>
+            </div> 
             <div class="card" style="width: 18rem;">
                 <!--Esto es para mostrar los datos antes de ser modificados-->
                 <img th:if="${plato.foto != null}" th:src="${'/foto/fotoPlato?id=' + plato.id}" class="card-img-top" alt="...">
@@ -20,9 +25,9 @@
                 </div>
             </div>
 
-            <p class="error" th:if= "${error != null}" th:text = ${error}></p>
+            <!-- <p class="error" th:if= "${error != null}" th:text = ${error}></p>
             <p class="exito" th:if= "${exito != null}" th:text = ${exito}></p>
-            <br>
+            <br> -->
             <div class="card">
                 <form action="/plato/modificarPlato" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="idPlato" th:value="${id}"/>
@@ -30,19 +35,19 @@
                         <h2>Ingrese los nuevos valores </h2>
 
                         <label for="exampleInputEmail1" class="form-label">Nombre plato</label>
-                        <input type="text" class="form-control" name="nombre" th:value="${nombre}" >
+                        <input type="text" class="form-control" name="nombre" th:value="${nombre}" required>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Precio del plato</label>
-                        <input type="text" class="form-control" name="precio" th:value="${precio}">
+                        <input type="text" class="form-control" name="precio" th:value="${precio}" required>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Descripcion</label>
-                        <textarea type="text" class="form-control" rows="5" name="descrip"  th:value="${descrip}" ></textarea>
+                        <textarea type="text" class="form-control" rows="5" name="descri"  th:value="${descri}" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Ingrese Foto de plato</label>
-                        <input type="file" class="form-control" name="archivo">
+                        <input type="file" class="form-control" name="archivo" required>
                     </div>
                     <button type="submit" class="btn btn-primary"  th:href="@{/plato/listarPlato}">Guardar</button>
                     <!-- <button type="submit" class="btn btn-primary"  th:href="@{/plato/listarDeResto/} + ${session.usuariosession.id}">Guardar</button> -->
@@ -51,8 +56,6 @@
                 </div>
             </div>
         </div>
-
-
     </section>
 
     <!--PIE-->

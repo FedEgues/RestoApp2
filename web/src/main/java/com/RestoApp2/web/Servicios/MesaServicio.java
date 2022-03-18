@@ -4,6 +4,7 @@ import com.RestoApp2.web.Entidades.Mesa;
 import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Repositorios.MesaRepositorio;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,50 +14,65 @@ import org.springframework.stereotype.Service;
 public class MesaServicio {
 
     @Autowired
-    private RestoRepositorio rR;
+    private RestoRepositorio restoRepo;
     @Autowired
-    private MesaRepositorio mR;
+    private MesaRepositorio mesaRepo;
 
     @Transactional
-    public void crearMesa(Integer capacidad, Boolean disponible, String idUsuario) throws ErrorServicio {
+    public void crearMesa(Integer capacidad, String idResto) throws ErrorServicio {
 
         Mesa mesa = new Mesa();
         mesa.setCapacidad(capacidad);
         mesa.setDisponible(true);
-        Optional<Resto> respuesta = rR.findById(idUsuario);
-        if (respuesta.isPresent()) {
-            Resto resto = respuesta.get();
-            mesa.setResto(resto);
-        } else {
-            throw new ErrorServicio("No se encontro el restaurante al cuál quiere asociar su mesa");
-        }
-        mR.save(mesa);
+        
+        Resto resto = restoRepo.getById(idResto);
+        mesa.setResto(resto);
+        
+        mesaRepo.save(mesa);
     }
     
     @Transactional
     public void modificarMesa(String idMesa, Integer capacidad)throws ErrorServicio{
-        
-        Optional<Mesa> respuesta = mR.findById(idMesa);
+        Optional<Mesa> respuesta = mesaRepo.findById(idMesa);
         if (respuesta.isPresent()) {
             Mesa mesa = respuesta.get();
             mesa.setCapacidad(capacidad);
-            mR.save(mesa);
+            mesaRepo.save(mesa);
         }else{
             throw new ErrorServicio("No se encontro la mesa a modificar");
         }
     }
+    
+    public List<Mesa> listarMesaResto(String idResto){
+        return mesaRepo.buscarMesaResto(idResto);
+    }
+    
+    public List<Mesa> buscarMesasInactivas() {
+        return mesaRepo.buscarMesasInactivas();
+    }
+    
     @Transactional
-    public void darBajaMesa(String idMesa)throws ErrorServicio{
-        
-        Optional<Mesa> respuesta = mR.findById(idMesa);
-        if(respuesta.isPresent()){
-            Mesa mesa = respuesta.get();
-            mesa.setDisponible(false);
-            mR.save(mesa);
-        }else{
-            throw new ErrorServicio("No se encontro la mesa a modificar");
+    public void bajaMesa(String id) throws ErrorServicio {
+        Optional<Mesa> rta = mesaRepo.findById(id);
+        if (rta.isPresent()) {
+            Mesa mesa = rta.get();
+            mesa.setDisponible(Boolean.FALSE);
+            mesaRepo.save(mesa);
+        } else {
+            throw new ErrorServicio("Mesa NO ENCOMTRADA");
         }
-        
+    }
+
+    @Transactional
+    public void altaMesa(String id) throws ErrorServicio {
+        Optional<Mesa> rta = mesaRepo.findById(id);
+        if (rta.isPresent()) {
+            Mesa mesa = rta.get();
+            mesa.setDisponible(Boolean.TRUE);
+            mesaRepo.save(mesa);
+        } else {
+            throw new ErrorServicio("Mesa NO ENCOMTRADA");
+        }
     }
     
 }
