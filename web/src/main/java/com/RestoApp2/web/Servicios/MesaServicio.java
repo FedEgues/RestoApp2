@@ -61,7 +61,7 @@ public class MesaServicio {
         } else {
             throw new ErrorServicio("Mesa NO ENCOMTRADA");
         }
-    }
+    }   
 
     @Transactional
     public void altaMesa(String id) throws ErrorServicio {
@@ -70,6 +70,16 @@ public class MesaServicio {
             Mesa mesa = rta.get();
             mesa.setDisponible(Boolean.TRUE);
             mesaRepo.save(mesa);
+        } else {
+            throw new ErrorServicio("Mesa NO ENCOMTRADA");
+        }
+    }
+    
+    public Mesa buscarPorId(String id) throws ErrorServicio {
+        Optional<Mesa> rta = mesaRepo.findById(id);
+        if (rta.isPresent()) {
+            Mesa mesa = rta.get();
+            return mesa;
         } else {
             throw new ErrorServicio("Mesa NO ENCOMTRADA");
         }

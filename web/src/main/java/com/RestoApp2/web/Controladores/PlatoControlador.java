@@ -20,6 +20,15 @@ public class PlatoControlador {
 
     @Autowired
     private PlatoServicio platoServi;
+    
+    @GetMapping("/restoInicio")
+    public String index(@RequestParam(required = false)String logout,ModelMap modelo){
+         if (logout !=null) {
+            modelo.put("logout","Ha cerrado sesión");
+        }
+       
+        return "restoInicio";
+    }
 
     @GetMapping("/crearPlato")
     public String crearPlato() {
@@ -40,7 +49,7 @@ public class PlatoControlador {
             return "platoCrear";
         }
         modelo.put("exito", "Plato creado con exito");
-        return "platoCrear";
+        return "restoInicio";
     }
     
     @GetMapping("/listarPlatoResto/{idResto}")
@@ -87,7 +96,7 @@ public class PlatoControlador {
             //en el form poner th:value="${nombre.variable}" para conservar los datos l
         }
         model.put("exito", "El plato fue modificado con éxito");
-        return "redirect:/";
+        return "restoInicio";
     }
     
     @GetMapping("/baja/{id}")
@@ -99,7 +108,7 @@ public class PlatoControlador {
              return "platoListar";
         }
         model.put("exito", "Plato dado de baja correctamente");
-        return "platoListar";
+        return "restoInicio";
     }
     
     @GetMapping("/alta/{id}")
@@ -111,7 +120,7 @@ public class PlatoControlador {
              return "platoListarInactivos";
         }
         model.put("exito", "Plato dado de alta correctamente");
-        return "platoListarInactivos";
+        return "restoInicio";
     }
     
     //Listar platos activos que lo reemplace agregandole el idResto 

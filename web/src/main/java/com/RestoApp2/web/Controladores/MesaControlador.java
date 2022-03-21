@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/mesa")
@@ -19,6 +20,15 @@ public class MesaControlador {
 
     @Autowired
     private MesaServicio mesaServi;
+    
+    @GetMapping("/restoInicio")
+    public String index(@RequestParam(required = false)String logout,ModelMap modelo){
+         if (logout !=null) {
+            modelo.put("logout","Ha cerrado sesión");
+        }
+       
+        return "restoInicio";
+    }
 
     @GetMapping("/crearMesa")
     public String crearMesa(ModelMap modelo) {
@@ -37,7 +47,7 @@ public class MesaControlador {
         return "mesaCrear";
 
     }
-    
+        
     @GetMapping("/listarMesaResto/{idResto}")
     public String listarMesaResto(ModelMap modelo ,@PathVariable("idResto") String idResto){
         List<Mesa> mesas = mesaServi.listarMesaResto(idResto);
@@ -52,16 +62,18 @@ public class MesaControlador {
         return "mesaListarInactivas";
     }
     
+        
     @GetMapping("/baja/{id}")
     public String baja(@PathVariable("id") String id, ModelMap model){
         try{
             mesaServi.bajaMesa(id);
         }catch(ErrorServicio e){
             model.put("error", e.getMessage());
-             return "mesaListar";
+             return "restoInicio";
         }
         model.put("exito", "Mesa dada de baja correctamente");
-        return "mesaListar";
+        return "inicioResto";
+        //return "redirect:/mesa/listarMesaResto/{idResto}";
     }
     
     @GetMapping("/alta/{id}")
@@ -73,6 +85,6 @@ public class MesaControlador {
              return "mesaListarInactivas";
         }
         model.put("exito", "Mesa dada de alta correctamente");
-        return "mesaListarInactivas";
+        return "restoInicio";
     }
 }

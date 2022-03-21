@@ -53,7 +53,7 @@ public class RestoControlador {
         }
         model.put("exito","El restaurant fue creado con éxito.");
         model.put("zonas",zS.listarZonas());
-        return "restoCrear.html";
+        return "restoInicio.html";
         
     }
     

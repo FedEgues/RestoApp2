@@ -14,7 +14,7 @@
                     <table class="table table-light table-hover">
                         <thead>
                             <tr class="bg-blue">
-                                <th>Id Plato</th>
+                                <th>Id Mesa</th>
                                 <th>Capacidad</th>
                                 <th>Disponibilidad</th>
                                 <th>Alta</th>
@@ -26,13 +26,13 @@
                                 <td th:text="${mesa.capacidad}"></td>
                                 <td th:text="${mesa.disponible}"></td>
                                 <td>
-                                    <a th:href="@{/mesa/modMesa/}+${mesa.id}" class="btn btn-success btn-xl">Editar</a>
+                                    <!-- <a th:href="@{/mesa/modMesa/}+${mesa.id}" class="btn btn-success btn-xl">Editar</a> -->
                                     <a th:href="@{/mesa/baja/}+${mesa.id}" class="btn btn-danger btn-xl">Baja</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <a href="/" class="btn btn-primary btn-xl">Volver</a>
+                    <a href="/mesa/restoInicio" class="btn btn-primary btn-xl">Volver</a>
                     <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/mesa/listarMesasInactivas">Listar Mesas Inactivas</a>
                 </div>
             </main>

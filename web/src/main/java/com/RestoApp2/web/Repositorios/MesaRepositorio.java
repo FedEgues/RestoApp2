@@ -23,4 +23,8 @@ public interface MesaRepositorio extends JpaRepository<Mesa, String>{
     @Query("SELECT c FROM Mesa c WHERE c.disponible = false")
     public List<Mesa> buscarMesasInactivas(); 
     
+    @Query("SELECT c FROM Mesa c WHERE c.resto.id = :idResto")
+    public String idResto(@Param("idResto") String idResto);
+    
+    
 }
