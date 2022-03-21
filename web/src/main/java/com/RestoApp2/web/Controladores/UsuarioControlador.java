@@ -106,6 +106,10 @@ public class UsuarioControlador {
         try{
             uS.actualizarUsuario(id, nombre,apellido, clave1, clave2);
             modelo.put("exito","El usuario fue modificado con éxito");
+            Usuario usuario = uS.buscarUsuarioPorId(id); /*Esto se hace para que al momento de actualizar, tambien se actualice el usuario que esta cargando en la session
+                                                         ya que por defecto estan cargados los datos del usuario que ingreso a modificar sus atributos*/
+            
+            session.setAttribute("usuariosession",usuario);
             return "redirect:/";
         }catch(ErrorServicio error){
             modelo.put("error",error);
