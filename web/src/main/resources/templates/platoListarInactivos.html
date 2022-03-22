@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="plato : ${platos}">
+                            <tr th:each="plato : ${platos}" th:if="${plato.alta!=true}">
                                 <td th:text="${plato.id}"></td>
                                 <td th:text="${plato.nombre}"></td>
                                 <td th:text="${plato.precio}"></td>
@@ -43,7 +43,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a href="/" class="btn btn-primary btn-xl">Volver</a>
+                    <a href="/plato/restoInicio" class="btn btn-primary btn-xl">Volver</a>
                 </div>
             </main>
         </div>

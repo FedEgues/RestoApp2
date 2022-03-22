@@ -31,7 +31,7 @@ public class Reserva implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
-   // @OneToMany
+    //@OneToMany
     private Plato platos;
 
     @ManyToOne

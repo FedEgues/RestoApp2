@@ -12,12 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface PlatoRepositorio extends JpaRepository<Plato, String>{
     @Query("SELECT p FROM Plato p WHERE p.id = :id")
     public List<Plato> buscarPlatoId(@Param("id") String id);
-    
-    @Query("SELECT c FROM Plato c WHERE c.alta = true")
-    public List<Plato> buscarPlatosActivos();
-    
-    @Query("SELECT c FROM Plato c WHERE c.alta = false")
-    public List<Plato> buscarPlatosInactivos();
+        
+    @Query("SELECT c FROM Plato c WHERE c.resto.id = :idResto and c.alta = false")
+    public List<Plato> buscarPlatosInactivos(@Param("idResto") String idResto);
     
     @Query("SELECT c FROM Plato c WHERE c.resto.id = :idResto and c.alta = true")
     public List<Plato> buscarPlatoResto(@Param("idResto") String idResto);

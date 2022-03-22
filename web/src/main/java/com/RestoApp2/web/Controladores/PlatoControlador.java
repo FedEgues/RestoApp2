@@ -1,9 +1,11 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Plato;
+import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,8 +62,9 @@ public class PlatoControlador {
     }
     
     @GetMapping("/listarPlatoInactivos")
-    public String listaPlatoInactivos(ModelMap modelo) {        
-        List<Plato> platos = platoServi.buscarPlatosInactivos();
+    public String listaPlatoInactivos(ModelMap modelo, HttpSession session) {  
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        List<Plato> platos = platoServi.listaPlatosInactivos(usuario.getId());
         modelo.put("platos", platos);
         return "platoListarInactivos";
     }
@@ -100,27 +103,35 @@ public class PlatoControlador {
     }
     
     @GetMapping("/baja/{id}")
-    public String baja(@PathVariable("id") String id, ModelMap model){
+    public String baja(@PathVariable("id") String id,HttpSession session, ModelMap model){
         try{
             platoServi.bajaPlato(id);
         }catch(ErrorServicio e){
             model.put("error", e.getMessage());
              return "platoListar";
         }
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        
         model.put("exito", "Plato dado de baja correctamente");
-        return "restoInicio";
+        List<Plato> platos = platoServi.listaPlatoResto(usuario.getId());
+        model.put("platos", platos);
+        return "platoListar";
     }
     
     @GetMapping("/alta/{id}")
-    public String alta(@PathVariable("id") String id, ModelMap model){
+    public String alta(@PathVariable("id") String id,HttpSession session, ModelMap model){
         try{
             platoServi.altaPlato(id);
         }catch(ErrorServicio e){
             model.put("error", e.getMessage());
              return "platoListarInactivos";
         }
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        
         model.put("exito", "Plato dado de alta correctamente");
-        return "restoInicio";
+        List<Plato> platos = platoServi.listaPlatosInactivos(usuario.getId());
+        model.put("platos", platos);
+        return "platoListarInactivos";
     }
     
     //Listar platos activos que lo reemplace agregandole el idResto 
