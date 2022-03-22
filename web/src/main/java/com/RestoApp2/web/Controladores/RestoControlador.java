@@ -5,11 +5,15 @@
  */
 package com.RestoApp2.web.Controladores;
 
+import com.RestoApp2.web.Entidades.Resto;
+import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Entidades.Zona;
+import com.RestoApp2.web.Repositorios.RestoRepositorio;
 import com.RestoApp2.web.Repositorios.ZonaRepositorio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,32 +36,44 @@ public class RestoControlador {
     private RestoServicio rS;
     @Autowired
     private ZonaServicio zS;
-    
+    @Autowired
+    private RestoRepositorio rR;
                   
-    @GetMapping("/crearResto")
-    public String crearResto(ModelMap model){
+    @GetMapping("/modificarResto")
+    public String crearResto(ModelMap model,HttpSession session){
+        
+        Usuario usuario = (Usuario)session.getAttribute("usuariosession");
+        Resto resto =  rR.getById(usuario.getId());
+        
+        
+        model.put("resto",resto); 
         model.put("zonas",zS.listarZonas());
-     
-        return "restoCrear.html";
+        
+        return "restoModificar.html";
     }
     
-    @PostMapping("/persistirResto")
-    public String crearResto(ModelMap model,MultipartFile archivo,@RequestParam String idUsuario,@RequestParam String nombre,@RequestParam String idZona){
-        
+    @PostMapping("/restoModificado")
+    public String crearResto(HttpSession session,ModelMap model,MultipartFile archivo,@RequestParam String idUsuario,@RequestParam String nombre,@RequestParam String idZona){
+        Usuario usuario = (Usuario)session.getAttribute("usuariosession");
+        Resto resto =  rR.getById(usuario.getId());
+      
         try{
-            rS.registroResto(idUsuario,nombre, idZona, archivo, Boolean.TRUE);
+            rS.modificarResto(idUsuario,nombre, idZona, archivo, Boolean.TRUE);
         }catch(ErrorServicio e){
-            model.put("Error",e.getMessage());
-            model.put("nombre",nombre);
-            model.put("idZona",idZona);
+            model.put("error",e.getMessage());
+            
+           
             model.put("zonas",zS.listarZonas());
-            return "restoCrear.html";
+             model.put("resto",resto);  
+            return "restoModificar.html";
         }
-        model.put("exito","El restaurant fue creado con éxito.");
-        model.put("zonas",zS.listarZonas());
-        return "restoInicio.html";
+        model.put("exito","El restaurant modificado con éxito.");
+        
+        return "index.html";
         
     }
+    
+    
     
     
 }

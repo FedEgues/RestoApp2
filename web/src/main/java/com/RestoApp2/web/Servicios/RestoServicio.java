@@ -64,9 +64,17 @@ public class RestoServicio {
             if (respuestaZona.isPresent()) {
                 Zona zona = respuestaZona.get();
                 resto.setZona(zona);
+
+                
+                if(resto.getFoto()!=null){
+                Foto foto = fS.actualizarFoto(resto.getFoto().getId(), archivo);
+                resto.setFoto(foto);
+                
+                }else{
+                Foto primeraFoto = fS.guardarFoto(archivo);
+                resto.setFoto(primeraFoto);
+                }
             }
-            Foto foto = fS.actualizarFoto(resto.getFoto().getId(), archivo);
-            resto.setAbierto(true);
             rR.save(resto);
         }
 

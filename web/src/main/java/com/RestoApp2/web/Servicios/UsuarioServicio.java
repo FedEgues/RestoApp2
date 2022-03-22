@@ -112,7 +112,9 @@ public class UsuarioServicio implements UserDetailsService {
         uR.save(usuario);
         /*Crear el nuevo resto, este resto tendra el mismo del id del usuario que se esta creando.*/
         String idUsuario = uR.buscarPorMail(mail).getId();
-        Resto resto = new Resto(null, null, null, null, true);
+        Resto resto = new Resto();
+        resto.setAbierto(true);
+        resto.setFoto(null);
         resto.setId(idUsuario);
         rR.save(resto);
     }

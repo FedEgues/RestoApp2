@@ -37,12 +37,11 @@ public class FotoServicio {
                 Optional<Foto> rta = fotoRepo.findById(idFoto);
                 if (rta.isPresent()) {
                     foto = rta.get();
+                    foto.setMime(archivo.getContentType());
+                    foto.setContenido(archivo.getBytes());
+                    return fotoRepo.save(foto);
                 }
-                
-                foto.setMime(archivo.getContentType());
-                foto.setContenido(archivo.getBytes());
-                
-                return fotoRepo.save(foto);
+                                                
             }catch(Exception e){
                 System.out.println("Error al cargar la foto: "+e.getMessage());
             }

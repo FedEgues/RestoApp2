@@ -28,7 +28,7 @@ public class MesaControlador {
             modelo.put("logout","Ha cerrado sesión");
         }
        
-        return "restoInicio";
+        return "index";
     }
 
     @GetMapping("/crearMesa")
@@ -70,10 +70,10 @@ public class MesaControlador {
             mesaServi.bajaMesa(id);
         }catch(ErrorServicio e){
             model.put("error", e.getMessage());
-             return "restoInicio";
+             return "index";
         }
         model.put("exito", "Mesa dada de baja correctamente");
-        return "inicioResto";
+        return "index";
         //return "redirect:/mesa/listarMesaResto/{idResto}";
     }
     
@@ -86,6 +86,6 @@ public class MesaControlador {
              return "mesaListarInactivas";
         }
         model.put("exito", "Mesa dada de alta correctamente");
-        return "restoInicio";
+        return "index";
     }
 }
