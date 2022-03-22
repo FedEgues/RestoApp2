@@ -47,8 +47,8 @@ public class MesaServicio {
         return mesaRepo.buscarMesaResto(idResto);
     }
     
-    public List<Mesa> buscarMesasInactivas() {
-        return mesaRepo.buscarMesasInactivas();
+    public List<Mesa> buscarMesasInactivas(String idResto) {
+        return mesaRepo.buscarMesasInactivas(idResto);
     }
     
     @Transactional

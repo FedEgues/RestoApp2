@@ -30,6 +30,7 @@ public class FotoServicio {
         return null;
     }
     
+    @Transactional
     public Foto actualizarFoto(String idFoto, MultipartFile archivo){
         if (archivo!=null) {
             try{

@@ -52,7 +52,7 @@ public class PlatoControlador {
             return "platoCrear";
         }
         modelo.put("exito", "Plato creado con exito");
-        return "restoInicio";
+        return "index";
     }
     
     @GetMapping("/listarPlatoResto/{idResto}")

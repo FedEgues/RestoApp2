@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.RestoApp2.web.Entidades;
 
 import java.io.Serializable;
@@ -14,23 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author Federico
- */
 @Entity
 public class Foto implements Serializable {
-    
-    
-       
+           
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")    
     private String id;
     private String mime;
    
-    
-    
     @Lob //identifica que el tipo de dato es pesado
     @Basic (fetch = FetchType.LAZY) //carga el contenido solo cuando lo pedimos
     private byte [] contenido;    

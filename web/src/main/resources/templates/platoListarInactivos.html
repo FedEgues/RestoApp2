@@ -9,8 +9,8 @@
             <main>
                 <div class="px-3 py-3">
                     <h1>Lista de platos</h1>               
-                    <p class="error" th:if= "${error != null}" th:text = ${error}></p>
-                    <p class="exito" th:if= "${exito != null}" th:text = ${exito}></p>
+                    <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
+                    <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
                     <table class="table table-light table-hover">
                         <thead>
                             <tr class="bg-blue">
