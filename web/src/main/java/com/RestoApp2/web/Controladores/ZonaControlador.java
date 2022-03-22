@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author Federico
  */
-@Controller
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+@Controller
 @RequestMapping("/zona")
 public class ZonaControlador {
 

@@ -11,6 +11,7 @@ import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Federico
  */
+@PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN')")
 @Controller
 @RequestMapping("/resto")
 public class RestoControlador {

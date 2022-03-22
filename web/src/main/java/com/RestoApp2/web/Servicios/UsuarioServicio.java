@@ -157,7 +157,7 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setApellido(apellido);
             
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
-            usuario.setClave(clave1);
+            usuario.setClave(encriptada);
             uR.save(usuario);
         } else {
             throw new ErrorServicio("El usuario no se encontró");
