@@ -7,7 +7,9 @@ package com.RestoApp2.web.Entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,7 +34,7 @@ public class Reserva implements Serializable {
     private String id;
     
     //@OneToMany
-    private Plato platos;
+    private TreeMap<Integer,Plato> platos;
 
     @ManyToOne
     private Usuario usuario;
@@ -54,13 +56,19 @@ public class Reserva implements Serializable {
         this.id = id;
     }
 
-    public Plato getPlatos() {
+    public TreeMap<Integer, Plato> getPlatos() {
         return platos;
     }
 
-    public void setPlatos(Plato platos) {
+    public void setPlatos(TreeMap<Integer, Plato> platos) {
         this.platos = platos;
     }
+
+   
+
+    
+   
+   
 
     public Usuario getUsuario() {
         return usuario;
