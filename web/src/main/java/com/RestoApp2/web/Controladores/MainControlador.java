@@ -2,6 +2,7 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Servicios.ErrorServicio;
+import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainControlador {
     
-    @Autowired UsuarioServicio usuServi;
+    @Autowired 
+    UsuarioServicio usuServi;
+    
+    @Autowired
+    RestoServicio restoServi;
     
     @GetMapping("/")
     public String index(@RequestParam(required = false)String logout,ModelMap modelo){
-         if (logout !=null) {
+        if (logout !=null) {
             modelo.put("logout","Ha cerrado sesión");
         }
-       
+        modelo.put("restos", restoServi.listaResto());
         return "index";
     }
     

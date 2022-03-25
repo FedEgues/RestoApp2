@@ -54,7 +54,7 @@ public class PlatoControlador {
         modelo.put("exito", "Plato creado con exito");
         return "index";
     }
-    
+        
     @GetMapping("/listarPlatoResto/{idResto}")
     public String listaPlatoResto(ModelMap modelo, @PathVariable("idResto") String idResto){
         List<Plato> platos = platoServi.listaPlatoResto(idResto);

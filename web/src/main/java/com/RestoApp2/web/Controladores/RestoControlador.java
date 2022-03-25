@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Entidades.Usuario;
-import com.RestoApp2.web.Entidades.Zona;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
-import com.RestoApp2.web.Repositorios.ZonaRepositorio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
+import com.RestoApp2.web.Servicios.PlatoServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
 import javax.servlet.http.HttpSession;
@@ -19,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +34,9 @@ public class RestoControlador {
     private ZonaServicio zS;
     @Autowired
     private RestoRepositorio rR;
+    
+    @Autowired
+    private PlatoServicio platoServi;
                   
     @GetMapping("/modificarResto")
     public String crearResto(ModelMap model,HttpSession session){
@@ -73,7 +72,11 @@ public class RestoControlador {
         
     }
     
-    
+    @GetMapping("/verPlatos/{id}")
+    public String verPlatos(@PathVariable("id") String id, ModelMap model){        
+        model.put("platos", platoServi.listaPlatoResto(id));
+        return "resto1";
+    }
     
     
 }
