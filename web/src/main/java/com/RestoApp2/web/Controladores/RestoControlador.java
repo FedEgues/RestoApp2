@@ -75,7 +75,7 @@ public class RestoControlador {
     @GetMapping("/verPlatos/{id}")
     public String verPlatos(@PathVariable("id") String id, ModelMap model){        
         model.put("platos", platoServi.listaPlatoResto(id));
-        return "resto1";
+        return "menu";
     }
     
     
