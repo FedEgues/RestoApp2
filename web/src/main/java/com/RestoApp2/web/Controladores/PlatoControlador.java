@@ -4,6 +4,7 @@ import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-//@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SELLER')")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SELLER', 'ROLE_USER')")
 @Controller
 @RequestMapping("/plato")
 public class PlatoControlador {
@@ -143,20 +144,13 @@ public class PlatoControlador {
         return "platoUnitario";
     }
     
-    @PostMapping("/carrito/{id}")
-    public String carrito(@PathVariable("id") String id, ModelMap modelo){
-        return "";
+    @GetMapping("/carrito/{id}")
+    public String listaCarrito(@PathVariable("id") String id, ModelMap modelo){
+        Plato plato = platoServi.platoUnitario(id);
+        List<Plato> carrito= new ArrayList<>();
+        carrito.add(plato);
+        modelo.put("carrito", carrito);
+        return "menu";
     }
     
-
-
-
-//Listar platos activos que lo reemplace agregandole el idResto 
-    //para que me muestre los platos activos de un resto en particular
-    //    @GetMapping("/listarPlato")
-//    public String listaPlato(ModelMap modelo) {        
-//        List<Plato> platos = platoServi.buscarPlatosActivos();
-//        modelo.put("platos", platos);
-//        return "platoListar.html";
-//    }
 }

@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Federico
  */
-//@PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_USER')")
 @Controller
 @RequestMapping("/resto")
 public class RestoControlador {
