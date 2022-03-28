@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SELLER')")
+
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SELLER')")
 @Controller
 @RequestMapping("/plato")
 public class PlatoControlador {
@@ -69,7 +70,7 @@ public class PlatoControlador {
         modelo.put("platos", platos);
         return "platoListarInactivos";
     }
-
+    
     @GetMapping("/modPlato/{id}")
     public String modPlato(@PathVariable("id") String id, ModelMap model) {
         try {
@@ -135,7 +136,22 @@ public class PlatoControlador {
         return "platoListarInactivos";
     }
     
-    //Listar platos activos que lo reemplace agregandole el idResto 
+    @GetMapping("/verPlato/{id}")
+    public String verUnPlato(@PathVariable("id") String id, ModelMap modelo){
+        Plato plato = platoServi.platoUnitario(id);
+        modelo.put("platos", plato);
+        return "platoUnitario";
+    }
+    
+    @PostMapping("/carrito/{id}")
+    public String carrito(@PathVariable("id") String id, ModelMap modelo){
+        return "";
+    }
+    
+
+
+
+//Listar platos activos que lo reemplace agregandole el idResto 
     //para que me muestre los platos activos de un resto en particular
     //    @GetMapping("/listarPlato")
 //    public String listaPlato(ModelMap modelo) {        

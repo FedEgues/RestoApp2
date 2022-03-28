@@ -4,7 +4,6 @@ package com.RestoApp2.web.Servicios;
 import com.RestoApp2.web.Entidades.Foto;
 import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Entidades.Zona;
-import com.RestoApp2.web.Repositorios.FotoRepositorio;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
 import com.RestoApp2.web.Repositorios.ZonaRepositorio;
 import java.util.List;
@@ -118,4 +117,5 @@ public class RestoServicio {
     public List<Resto> listaResto(){
         return rR.findAll();
     }
+    
 }

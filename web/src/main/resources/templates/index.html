@@ -53,7 +53,7 @@
     </section>
     <br><br>
     <section>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${session.usuariosession != null}">
             <div th:each="resto :${restos}" class="container" >
                 <!-- cartas de los diferentes restaruantes-->
                 <div class="flex-item">
@@ -71,15 +71,13 @@
                         </ul>
                         <div class="card-body">
                             <!-- <a class="btn btn-success" th:href="@{/Reserva/crearReserva/} + ${Restaurante.id}">Reservar <i class="fa fa-edit"></i></a> -->
-                            <a class="btn btn-success" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/plato/listarPlatoResto/} + ${resto.id}">Ver Menu <i class="fa fa-edit"></i></a>
-                        </div>
+                            <a class="btn btn-success" sec:authorize="hasRole('ROLE_USER')" th:href="@{/resto/menu/}+${resto.id}">Ver Menu <i class="fa fa-edit"></i></a>
+                        </div>                                                                 
                     </div>
                 </div>
             </div>
 
         </div>
-
-
     </section>
 
 

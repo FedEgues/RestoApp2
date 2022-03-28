@@ -1,6 +1,7 @@
 
 package com.RestoApp2.web.Controladores;
 
+import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
@@ -8,6 +9,7 @@ import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Federico
  */
-@PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN')")
+//@PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN')")
 @Controller
 @RequestMapping("/resto")
 public class RestoControlador {
@@ -72,9 +74,10 @@ public class RestoControlador {
         
     }
     
-    @GetMapping("/verPlatos/{id}")
-    public String verPlatos(@PathVariable("id") String id, ModelMap model){        
-        model.put("platos", platoServi.listaPlatoResto(id));
+    @GetMapping("/menu/{id}")
+    public String menu(@PathVariable("id") String id, ModelMap model){ 
+        List<Plato> platos = platoServi.listaPlatoResto(id);
+        model.put("platos", platos);
         return "menu";
     }
     

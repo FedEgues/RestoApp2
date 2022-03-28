@@ -130,5 +130,9 @@ public class PlatoServicio {
     public List<Plato> listaPlatosInactivos(String idResto) {
         return platoRepo.buscarPlatosInactivos(idResto);
     }
+    
+    public Plato platoUnitario(String id){
+        return platoRepo.getById(id);
+    }
 
 }
