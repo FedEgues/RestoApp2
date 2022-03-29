@@ -38,32 +38,24 @@
                         <div class="row menu-container">
                             <!--TODOS SIN FILTROS-->
                             <!-- <div class="col-lg-6 menu-item filter-entrada" th:each="plato :${platos}" >  -->
-                                <table class="table table-light table-hover">
-                                    <thead>
-                                        <tr class="bg-blue">
-                                            <td>Nombre</td>
-                                            <td>Precio</td>
-                                            <td>Ver</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody th:each="plato :${platos}">
-                                        <tr>
-                                            <td th:text="${plato.nombre}"></td>
-                                            <td th:text="${plato.precio}"></td>
-                                            <td><a th:href="@{/plato/verPlato/}+${plato.id}" class="btn btn-success btn-xl">Ver</a></td>
-                                        </tr>
-                                    </tbody>
-                                    
-                                </table>
-                                <!-- <div class="menu-content">
-                                    <a th:text="${plato.nombre}"></a>
-                                    <a>$<span th:text="${plato.precio}"></span></a>                                                                   
-                                </div> -->
-                                <!-- <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="200" height="200">  -->
-                                
-                                <!-- <a th:href="@{/plato/verPlato/}+${plato.id}" class="btn btn-success btn-xl">Ver</a> -->
-                                <!-- <label for="exampleInputEmail1" class="form-label">Cantidad</label> -->                           
-                            </div>    
+                            <table class="table table-light table-hover">
+                                <thead>
+                                    <tr class="bg-blue">
+                                        <td>Nombre</td>
+                                        <td>Precio</td>
+                                        <td>Ver</td>
+                                    </tr>
+                                </thead>
+                                <tbody th:each="plato :${platos}">
+                                    <tr>
+                                        <td th:text="${plato.nombre}"></td>
+                                        <td th:text="${plato.precio}"></td>
+                                        <td><a th:href="@{/plato/verPlato/}+${plato.id}" class="btn btn-success btn-xl">Ver</a></td>
+                                    </tr>
+                                </tbody>   
+                            </table> 
+                            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" th:href="@{/plato/verCarrito}">Ver Carrito</a>                            
+                        </div>    
 <!--*************************************************************************************************************************************************************************************************-->
                                             <!--Entrada-->
                             <div class="col-lg-6 menu-item filter-entrada" th:if="${plato.categoria == 'ENTRADA'}" th:each="plato :${platos}" >

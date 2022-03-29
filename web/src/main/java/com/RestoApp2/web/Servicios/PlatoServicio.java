@@ -6,6 +6,7 @@ import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Enums.Categoria;
 import com.RestoApp2.web.Repositorios.PlatoRepositorio;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -131,8 +132,5 @@ public class PlatoServicio {
         return platoRepo.buscarPlatosInactivos(idResto);
     }
     
-    public Plato platoUnitario(String id){
-        return platoRepo.getById(id);
-    }
 
 }

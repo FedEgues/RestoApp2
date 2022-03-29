@@ -25,13 +25,13 @@ public class PlatoControlador {
 
     @Autowired
     private PlatoServicio platoServi;
-    
+
     @GetMapping("/restoInicio")
-    public String index(@RequestParam(required = false)String logout,ModelMap modelo){
-         if (logout !=null) {
-            modelo.put("logout","Ha cerrado sesión");
+    public String index(@RequestParam(required = false) String logout, ModelMap modelo) {
+        if (logout != null) {
+            modelo.put("logout", "Ha cerrado sesión");
         }
-       
+
         return "restoInicio";
     }
 
@@ -56,22 +56,22 @@ public class PlatoControlador {
         modelo.put("exito", "Plato creado con exito");
         return "index";
     }
-        
+
     @GetMapping("/listarPlatoResto/{idResto}")
-    public String listaPlatoResto(ModelMap modelo, @PathVariable("idResto") String idResto){
+    public String listaPlatoResto(ModelMap modelo, @PathVariable("idResto") String idResto) {
         List<Plato> platos = platoServi.listaPlatoResto(idResto);
         modelo.put("platos", platos);
         return "platoListar";
     }
-    
+
     @GetMapping("/listarPlatoInactivos")
-    public String listaPlatoInactivos(ModelMap modelo, HttpSession session) {  
+    public String listaPlatoInactivos(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
         List<Plato> platos = platoServi.listaPlatosInactivos(usuario.getId());
         modelo.put("platos", platos);
         return "platoListarInactivos";
     }
-    
+
     @GetMapping("/modPlato/{id}")
     public String modPlato(@PathVariable("id") String id, ModelMap model) {
         try {
@@ -88,9 +88,9 @@ public class PlatoControlador {
     }
 
     @PostMapping("/modificarPlato")
-    public String modifiPlato(ModelMap model, MultipartFile archivo, @RequestParam String idPlato, 
-                            @RequestParam String nombre, @RequestParam Double precio, 
-                            @RequestParam String descri) throws ErrorServicio {
+    public String modifiPlato(ModelMap model, MultipartFile archivo, @RequestParam String idPlato,
+            @RequestParam String nombre, @RequestParam Double precio,
+            @RequestParam String descri) throws ErrorServicio {
         try {
             platoServi.modificarPlato(archivo, idPlato, nombre, precio, descri);
         } catch (ErrorServicio ex) {
@@ -104,53 +104,64 @@ public class PlatoControlador {
         model.put("exito", "El plato fue modificado con éxito");
         return "restoInicio";
     }
-    
+
     @GetMapping("/baja/{id}")
-    public String baja(@PathVariable("id") String id,HttpSession session, ModelMap model){
-        try{
+    public String baja(@PathVariable("id") String id, HttpSession session, ModelMap model) {
+        try {
             platoServi.bajaPlato(id);
-        }catch(ErrorServicio e){
+        } catch (ErrorServicio e) {
             model.put("error", e.getMessage());
-             return "platoListar";
+            return "platoListar";
         }
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-        
+
         model.put("exito", "Plato dado de baja correctamente");
         List<Plato> platos = platoServi.listaPlatoResto(usuario.getId());
         model.put("platos", platos);
         return "platoListar";
     }
-    
+
     @GetMapping("/alta/{id}")
-    public String alta(@PathVariable("id") String id,HttpSession session, ModelMap model){
-        try{
+    public String alta(@PathVariable("id") String id, HttpSession session, ModelMap model) {
+        try {
             platoServi.altaPlato(id);
-        }catch(ErrorServicio e){
+        } catch (ErrorServicio e) {
             model.put("error", e.getMessage());
-             return "platoListarInactivos";
+            return "platoListarInactivos";
         }
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-        
+
         model.put("exito", "Plato dado de alta correctamente");
         List<Plato> platos = platoServi.listaPlatosInactivos(usuario.getId());
         model.put("platos", platos);
         return "platoListarInactivos";
     }
-    
+
     @GetMapping("/verPlato/{id}")
-    public String verUnPlato(@PathVariable("id") String id, ModelMap modelo){
-        Plato plato = platoServi.platoUnitario(id);
+    public String verUnPlato(@PathVariable("id") String id, ModelMap modelo) {
+        Plato plato;
+        try {
+            plato = platoServi.buscarPorId(id);
+        } catch (ErrorServicio e) {
+            //plato=null;
+            return "menu";
+        }
         modelo.put("platos", plato);
         return "platoUnitario";
     }
-    
+
     @GetMapping("/carrito/{id}")
-    public String listaCarrito(@PathVariable("id") String id, ModelMap modelo){
-        Plato plato = platoServi.platoUnitario(id);
-        List<Plato> carrito= new ArrayList<>();
-        carrito.add(plato);
+    public String listaCarrito(@PathVariable("id") String id, ModelMap modelo) {
+        List<Plato> carrito = new ArrayList<>();
+        try {
+            Plato plato = platoServi.buscarPorId(id);
+            carrito.add(plato);
+        }catch(ErrorServicio e){
+            modelo.put("error", "No se pudo agregar el carrito");
+            return "menu";
+        }
         modelo.put("carrito", carrito);
-        return "menu";
+        return "carrito";
     }
-    
+
 }

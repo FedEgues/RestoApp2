@@ -16,6 +16,7 @@
                 <td>Precio</td>
                 <td>Descripcion</td>
                 <td>Foto</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -23,11 +24,11 @@
                 <td th:text="${plato.nombre}"></td>
                 <td th:text="${plato.precio}"></td>
                 <td th:text="${plato.descri}"></td>
-                <td><img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="50" height="50"> </td>
+                <td><img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="50" height="50"></td>
+                <td><a th:href="@{/carrito//}+${plato.id}" class="btn btn-success btn-xl">Agregar</a></td>
             </tr>
         </tbody>
     </table>
-    <a href="/" class="btn btn-primary btn-xl">Agregar al Carrito</a>
     <a href="/" class="btn btn-primary btn-xl">Volver</a>
 </body>
 </html>
