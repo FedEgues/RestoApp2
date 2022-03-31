@@ -17,6 +17,7 @@
                 <div class="card-header">
                     Menu
                 </div>
+            
                 <div class="card-body">
                     <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
                     <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
@@ -50,7 +51,7 @@
                                     <tr>
                                         <td th:text="${plato.nombre}"></td>
                                         <td th:text="${plato.precio}"></td>
-                                        <td><a th:href="@{/plato/verPlato/}+${plato.id}" class="btn btn-success btn-xl">Ver</a></td>
+                                        <td><a th:href="@{/plato/verPlato/}+${plato.id}+'/var/'+${idResto}" class="btn btn-success btn-xl">Ver</a></td>
                                     </tr>
                                 </tbody>   
                             </table> 
@@ -60,8 +61,8 @@
                                             <!--Entrada-->
                             <div class="col-lg-6 menu-item filter-entrada" th:if="${plato.categoria == 'ENTRADA'}" th:each="plato :${platos}" >
                                 <div class="menu-content">
-                                    <a th:text="${plato.nombre}"></a>
-                                    <a>$<span th:text="${plato.precio}"></span></a>                                                                   
+                                    <p th:text="${plato.nombre}"></p>
+                                    <p>$<span th:text="${plato.precio}"></span></p>                                                                   
                                 </div>
                                 <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="200" height="200"> 
                                 <br>

@@ -40,9 +40,9 @@ public class MesaControlador {
     }
 
     @PostMapping("/guardarMesa")
-    public String guardarMesa(ModelMap modelo, @RequestParam Integer capacidad, @RequestParam String idResto) {
+    public String guardarMesa(ModelMap modelo, @RequestParam Integer capacidad,@RequestParam String denominacion, @RequestParam String idResto) {
         try {
-            mesaServi.crearMesa(capacidad, idResto);
+            mesaServi.crearMesa(capacidad,denominacion, idResto);
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             return "crearMesa";

@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,8 +28,8 @@ public class FotoControlador {
     @Autowired
     private RestoServicio restoServi;
 
-    @GetMapping("/platoFoto")
-    public ResponseEntity<byte[]> platoFoto(@RequestParam String id) {
+    @GetMapping("/platoFoto/{id}")
+    public ResponseEntity<byte[]> platoFoto(@PathVariable("id") String id) {
         try {
             Plato plato = platoServi.buscarPorId(id);
             if (plato.getFoto() == null) {
@@ -46,8 +47,8 @@ public class FotoControlador {
         }
     }
     
-    @GetMapping("/restoFoto")
-    public ResponseEntity<byte[]> fotoResto(@RequestParam String id) {     
+    @GetMapping("/restoFoto/{id}")
+    public ResponseEntity<byte[]> fotoResto(@PathVariable("id") String id) {     
         try {
             Resto resto = restoServi.buscarResto(id);
             if (resto.getFoto() == null) {

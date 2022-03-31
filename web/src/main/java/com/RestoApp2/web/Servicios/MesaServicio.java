@@ -19,12 +19,12 @@ public class MesaServicio {
     private MesaRepositorio mesaRepo;
 
     @Transactional
-    public void crearMesa(Integer capacidad, String idResto) throws ErrorServicio {
+    public void crearMesa(Integer capacidad,String denominacion, String idResto) throws ErrorServicio {
 
         Mesa mesa = new Mesa();
         mesa.setCapacidad(capacidad);
         mesa.setDisponible(true);
-        
+        mesa.setDenominacion(denominacion);
         Resto resto = restoRepo.getById(idResto);
         mesa.setResto(resto);
         
@@ -32,11 +32,12 @@ public class MesaServicio {
     }
     
     @Transactional
-    public void modificarMesa(String idMesa, Integer capacidad)throws ErrorServicio{
+    public void modificarMesa(String idMesa, Integer capacidad,String denominacion)throws ErrorServicio{
         Optional<Mesa> respuesta = mesaRepo.findById(idMesa);
         if (respuesta.isPresent()) {
             Mesa mesa = respuesta.get();
             mesa.setCapacidad(capacidad);
+            mesa.setDenominacion(denominacion);
             mesaRepo.save(mesa);
         }else{
             throw new ErrorServicio("No se encontro la mesa a modificar");

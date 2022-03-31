@@ -137,8 +137,8 @@ public class PlatoControlador {
         return "platoListarInactivos";
     }
 
-    @GetMapping("/verPlato/{id}")
-    public String verUnPlato(@PathVariable("id") String id, ModelMap modelo) {
+    @GetMapping("/verPlato/{idPlato}/var/{idResto}")
+    public String verUnPlato(@PathVariable("idPlato") String id,@PathVariable("idResto")String idResto, ModelMap modelo) {
         Plato plato;
         try {
             plato = platoServi.buscarPorId(id);
@@ -147,6 +147,7 @@ public class PlatoControlador {
             return "menu";
         }
         modelo.put("platos", plato);
+        modelo.put("idResto",idResto);
         return "platoUnitario";
     }
 
