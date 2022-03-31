@@ -61,6 +61,7 @@ public class PlatoControlador {
     public String listaPlatoResto(ModelMap modelo, @PathVariable("idResto") String idResto) {
         List<Plato> platos = platoServi.listaPlatoResto(idResto);
         modelo.put("platos", platos);
+
         return "platoListar";
     }
 

@@ -9,8 +9,8 @@
             <main>
                 <div class="px-3 py-3">
                     <h1>Lista de platos</h1>               
-                    <p class="error" th:if= "${error != null}" th:text = ${error}></p>
-                    <p class="exito" th:if= "${exito != null}" th:text = ${exito}></p>
+                    <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
+                    <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
                     <table class="table table-light table-hover">
                         <thead>
                             <tr class="bg-blue">
@@ -35,16 +35,12 @@
                                 <td>
                                     <a th:href="@{/plato/modPlato/}+${plato.id}" class="btn btn-success btn-xl">Editar</a>
                                     <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/plato/baja/}+${plato.id}" class="btn btn-danger btn-xl">Baja</a>
-                                    <!-- <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/editar-libro}+'?id='+${libro.id}" class="btn btn-success btn-xl">Editar</a>
-                                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/eliminar-libro}+'?id='+${libro.id}" class="btn btn-danger btn-xl">Eliminar</a> -->
-                                    <!--<a th:href="@{/libro/editar-libro}+'?id='+${libro.id, accion=Actualizar}" class="btn btn-success btn-xl">Editar</a>
-                                    <a th:href="@{/libro/editar-libro}+'?id='+${libro.id, accion=Eliminar}" class="btn btn-danger btn-xl">Eliminar</a>-->
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <a href="/" class="btn btn-primary btn-xl">Volver</a>
-                    <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')"href="/plato/listarPlatoInactivos">Listar Platos Inactivos </a>
+                    <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" th:href="@{/plato/listarPlatoInactivos}">Listar Platos Inactivos </a>                                                                                            
                 </div>
             </main>
         </div>

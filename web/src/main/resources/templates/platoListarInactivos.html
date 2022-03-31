@@ -33,17 +33,12 @@
                                 <td th:text="${plato.foto.id}"></td>
                                 <td th:text="${plato.alta}"></td>
                                 <td>
-                                    <!-- <a th:href="@{/plato/modPlato/}+${plato.id}" class="btn btn-success btn-xl">Editar</a> -->
                                     <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/plato/alta/}+${plato.id}" class="btn btn-danger btn-xl">ALta</a>
-                                    <!-- <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/editar-libro}+'?id='+${libro.id}" class="btn btn-success btn-xl">Editar</a>
-                                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/libro/eliminar-libro}+'?id='+${libro.id}" class="btn btn-danger btn-xl">Eliminar</a> -->
-                                    <!--<a th:href="@{/libro/editar-libro}+'?id='+${libro.id, accion=Actualizar}" class="btn btn-success btn-xl">Editar</a>
-                                    <a th:href="@{/libro/editar-libro}+'?id='+${libro.id, accion=Eliminar}" class="btn btn-danger btn-xl">Eliminar</a>-->
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <a href="/" class="btn btn-primary btn-xl">Volver</a>
+                    <a th:href="@{/plato/listarPlatoResto/}+${session.usuariosession.id}" class="btn btn-primary btn-xl">Volver</a>
                 </div>
             </main>
         </div>

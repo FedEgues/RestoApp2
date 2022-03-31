@@ -13,7 +13,6 @@
 </head>
 
 <body>
-<!--logo Y BOTONES DE REGISTRO Y INICIO-->
 <div>
     <header>
         <div>
@@ -53,7 +52,7 @@
     </section>
     <br><br>
     <section>
-        <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${session.usuariosession != null}">
+        <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
             <div th:each="resto :${restos}" class="container" >
                 <!-- cartas de los diferentes restaruantes-->
                 <div class="flex-item">
@@ -66,8 +65,8 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Abierto: <span th:text="${resto.abierto}"></span></li>
-                            <!-- <li class="list-group-item">Mesas Disponibles: <span th:text="${Restaurante.mesas}"></span></li>
-                            <li class="list-group-item">Ubicacion: <span th:text="${Restaurante.zona.nombre}"></span></li> -->
+                            <!-- <li class="list-group-item">Mesas Disponibles: <span th:text="${Restaurante.mesas}"></span></li> -->
+                            <li class="list-group-item">Ubicacion: <span th:text="${resto.zona.nombre}"></span></li>
                         </ul>
                         <div class="card-body">
                             <!-- <a class="btn btn-success" th:href="@{/Reserva/crearReserva/} + ${Restaurante.id}">Reservar <i class="fa fa-edit"></i></a> -->
@@ -76,11 +75,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
-
-
 </body>
 
 </html>
