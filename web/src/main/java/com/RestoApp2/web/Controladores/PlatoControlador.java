@@ -138,15 +138,16 @@ public class PlatoControlador {
         return "platoListarInactivos";
     }
 
-    @GetMapping("/verPlato/{idPlato}/var/{idResto}")
-    public String verUnPlato(@PathVariable("idPlato") String id,@PathVariable("idResto")String idResto, ModelMap modelo) {
+    @GetMapping("/verPlato/{idPlato}/var/{idResto}/car/{idCarrito}")
+    public String verUnPlato(@PathVariable("idCarrito")String idCarrito,@PathVariable("idPlato") String idPlato,@PathVariable("idResto")String idResto, ModelMap modelo) {
         Plato plato;
         try {
-            plato = platoServi.buscarPorId(id);
+            plato = platoServi.buscarPorId(idPlato);
         } catch (ErrorServicio e) {
             //plato=null;
             return "menu";
         }
+        modelo.put("idCarrito",idCarrito);
         modelo.put("platos", plato);
         modelo.put("idResto",idResto);
         return "platoUnitario";

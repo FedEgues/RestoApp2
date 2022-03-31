@@ -6,8 +6,10 @@ import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Repositorios.CarritoRepositorio;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +29,12 @@ public class CarritoServicio {
     private RestoServicio rS;
     @Autowired
     private PlatoServicio pS;
-
+    
+    @Transactional
     public Carrito crearCarrito(String idResto, String idUsuario) throws ErrorServicio {
         /*Cuando el usuario entra a ver un restaurante automaticamente se crea un carrito
          este solo tiene el idResto y idUsuario, , previendo que es un usuario User, y no vamos
-         a poder acceder luego de fácil al idResto
+         a poder acceder luego de fácil forma al idResto
         El carrito id lo vamos a tener que ir pasando en los parametros en los botones del html
         por eso preveo solo pasar este parametro y ya dejar seteado idResto e idUsuario 
         para mejor acceso.*/
@@ -46,22 +49,27 @@ public class CarritoServicio {
         cR.save(carrito);
         return carrito;
     }
-
+    @Transactional
     public Carrito agregarPlato(String idCarrito, String idPlato, Integer cantidad) throws ErrorServicio {
         /*Cuando el usuario agrega platos a su reserva*/
-        Optional<Carrito> respuesta = cR.findById(idPlato);
+        Optional<Carrito> respuesta = cR.findById(idCarrito);
         LinkedHashMap<String, Integer> platos = new LinkedHashMap();
         if (respuesta.isPresent()) {
             Carrito carrito = respuesta.get();
+            if(carrito.getListaDePlatos()== null){
             platos.put(idPlato, cantidad);
-            carrito.setListaDePlatos(platos);
+            carrito.setListaDePlatos(platos);}
+            if(carrito.getListaDePlatos()!=null){
+              LinkedHashMap platos1 = carrito.getListaDePlatos();
+              platos1.put(idPlato,cantidad);
+            }
             cR.save(carrito);
             return carrito;
         } else {
             throw new ErrorServicio("No se encontró el carrito.");
         }
     }
-
+   @Transactional
     public Carrito modificarCantidadPlato(String idCarrito,String idPlato,Integer nuevaCantidad)throws ErrorServicio {
      /*Este método lo pense por si el usuario quiere modificar el número de platos*/
       Optional<Carrito> respuesta = cR.findById(idPlato);
@@ -117,19 +125,25 @@ public class CarritoServicio {
             throw new ErrorServicio("No se encontró el carrito.");
         }
     }
-    
-    public void eliminarCarrito(String idCarrito) throws ErrorServicio {
-        /*Esto se aplica solo cuando el usuario entra a mirar un restaurante y no le convence
-         y decide salir del resto para mirar otro, asi no se crean y quedan carritos vacios.
-        Esto lo pondria una vez que el usuario vuelve a la pagina principal sin hacer reserva*/
-        Optional<Carrito> respuesta = cR.findById(idCarrito);
+    @Transactional
+    public void eliminarCarritos() {
+        /*Borra todos los carritos esto pasa cuando salis de algun restaurante y decidis buscar en otro.
+        Como medida extra borra cualquier otro carrito ante cualquier error de la BD*/
+       
+        cR.deleteAll();
+        
+
+    }
+    public Carrito buscarCarrito(String id)throws ErrorServicio{
+        
+        Optional<Carrito> respuesta = cR.findById(id);
         if (respuesta.isPresent()) {
             Carrito carrito = respuesta.get();
-            cR.deleteById(idCarrito);
-        } else {
-            throw new ErrorServicio("El carrito a eliminar no fue encontrado");
+            return carrito;
+        }else{
+            throw new ErrorServicio("No se encontró el carrito");
         }
-
+        
     }
 
 }

@@ -17,7 +17,11 @@
                 <div class="card-header">
                     Menu
                 </div>
-            
+            <!-- Variables que estan cargadas segun ModelMap
+            model.put("platos", platos);
+            model.put("idResto", idResto);
+            model.put("carrito",carrito);
+            -->
                 <div class="card-body">
                     <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
                     <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
@@ -51,7 +55,7 @@
                                     <tr>
                                         <td th:text="${plato.nombre}"></td>
                                         <td th:text="${plato.precio}"></td>
-                                        <td><a th:href="@{/plato/verPlato/}+${plato.id}+'/var/'+${idResto}" class="btn btn-success btn-xl">Ver</a></td>
+                                        <td><a th:href="${'/plato/verPlato/'+plato.id+'/var/'+idResto+'/car/'+carrito.id}" class="btn btn-success btn-xl">Ver</a></td>
                                     </tr>
                                 </tbody>   
                             </table> 
@@ -106,7 +110,7 @@
                     </div>
             </div>
             <div >
-            <a href="/" class="btn btn-primary btn-xl">Volver</a>
+            <a th:href="${'/?id=' + session.usuariosession.id}" class="btn btn-primary btn-xl">Volver</a><span>Al volver se perdera lo guardado en el carrito</span>
             </div>
         </section>
     </body>

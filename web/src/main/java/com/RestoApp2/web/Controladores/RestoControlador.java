@@ -1,14 +1,18 @@
 package com.RestoApp2.web.Controladores;
 
+import com.RestoApp2.web.Entidades.Carrito;
 import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
+import com.RestoApp2.web.Servicios.CarritoServicio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +40,8 @@ public class RestoControlador {
     private ZonaServicio zS;
     @Autowired
     private RestoRepositorio rR;
+    @Autowired
+    private CarritoServicio cS;
 
     @Autowired
     private PlatoServicio platoServi;
@@ -72,12 +78,30 @@ public class RestoControlador {
 
     }
 
-    @GetMapping("/menu/{id}")
-    public String menu(@PathVariable("id") String id, ModelMap model) {
-        List<Plato> platos = platoServi.listaPlatoResto(id);
-        model.put("platos", platos);
-        model.put("idResto", id);
-        return "menu";
+    @GetMapping("/menu/{idResto}/car/{idCarrito}")   
+    public String menu(HttpSession session,@PathVariable("idCarrito")String idCarrito,@PathVariable("idResto") String idResto, ModelMap model) {
+        try {
+            List<Plato> platos = platoServi.listaPlatoResto(idResto);
+            Usuario usuario =(Usuario) session.getAttribute("usuariosession");
+            if(idCarrito.equals("0")){
+               Carrito carrito =  cS.crearCarrito(idResto, usuario.getId());
+               model.put("carrito",carrito);
+            }else{
+                Carrito carrito = cS.buscarCarrito(idCarrito);
+                model.put("carrito",carrito);
+            }
+            
+            model.put("platos", platos);
+            model.put("idResto", idResto);
+            
+            model.put("exito","Se creó y cargo el carrito con éxito.");
+            return "menu";
+        } catch (ErrorServicio ex) {
+            Logger.getLogger(RestoControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           model.put("error","no se pudo crear carrito");
+           return "menu";
+        
     }
 
 }

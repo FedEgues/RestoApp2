@@ -28,15 +28,16 @@
                 <td th:text="${plato.descri}"></td>
                 <td>
                     <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto/' + plato.id}"
-                        class="rounded float-start" alt="se rompio" width="50">
+                        class="rounded float-start"  width="50">
                 </td>
                 <td>
-                    <a th:href="@{/carrito/}+${plato.id}" class="btn btn-success btn-xl">Agregar</a>
+                    <a th:href="${'/carrito/agregar/'+plato.id+'/car/'+idCarrito+'/res/'+idResto}" class="btn btn-success btn-xl">Agregar</a>
                 </td>
             </tr>
         </tbody>
+        
     </table>
-    <a th:href="@{/resto/menu/}+${idResto}" class="btn btn-primary btn-xl">Volver</a>
+    <a th:href="${'/resto/menu/'+idResto+'/car/'+idCarrito}" class="btn btn-primary btn-xl">Volver</a>
 </body>
 
 </html>

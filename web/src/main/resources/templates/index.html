@@ -70,7 +70,7 @@
                         </ul>
                         <div class="card-body">
                             <!-- <a class="btn btn-success" th:href="@{/Reserva/crearReserva/} + ${Restaurante.id}">Reservar <i class="fa fa-edit"></i></a> -->
-                            <a class="btn btn-success" sec:authorize="hasRole('ROLE_USER')" th:href="@{/resto/menu/}+${resto.id}">Ver Menu <i class="fa fa-edit"></i></a>
+                            <a class="btn btn-success" sec:authorize="hasRole('ROLE_USER')" th:href="${'/resto/menu/'+resto.id+'/car/'+0}">Ver Menu <i class="fa fa-edit"></i></a>
                         </div>                                                                 
                     </div>
                 </div>
