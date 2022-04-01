@@ -17,32 +17,17 @@
                 <div class="card-header">
                     Menu
                 </div>
-            <!-- Variables que estan cargadas segun ModelMap
-            model.put("platos", platos);
-            model.put("idResto", idResto);
-            model.put("carrito",carrito);
-            -->
+                <!-- Variables que estan cargadas segun ModelMap
+                model.put("platos", platos);
+                model.put("idResto", idResto);
+                model.put("carrito",carrito);
+                -->
                 <div class="card-body">
                     <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
                     <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
 
-                    <!-- ======= Menu Section ======= -->
-                    <!--Filtro de categorias que no funciona aun-->
-                    <!-- <div class="container menu">
-                        <div class="row">
-                            <div class="col-lg-12 d-flex justify-content-center">
-                                <ul id="menu-flters">
-                                    <li data-filter=".filter-entrada" class="filter-active">Entrada</li>
-                                    <li data-filter=".filter-principal">Principal</li>
-                                    <li data-filter=".filter-bebida">Bebidas</li>
-                                    <li data-filter=".filter-postre">Postre</li>
-                                </ul>
-                            </div>
-                        </div> -->
-
                         <div class="row menu-container">
                             <!--TODOS SIN FILTROS-->
-                            <!-- <div class="col-lg-6 menu-item filter-entrada" th:each="plato :${platos}" >  -->
                             <table class="table table-light table-hover">
                                 <thead>
                                     <tr class="bg-blue">
@@ -59,58 +44,12 @@
                                     </tr>
                                 </tbody>   
                             </table> 
-                            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" th:href="@{/plato/verCarrito}">Ver Carrito</a>                            
                         </div>    
-<!--*************************************************************************************************************************************************************************************************-->
-                                            <!--Entrada-->
-                            <div class="col-lg-6 menu-item filter-entrada" th:if="${plato.categoria == 'ENTRADA'}" th:each="plato :${platos}" >
-                                <div class="menu-content">
-                                    <p th:text="${plato.nombre}"></p>
-                                    <p>$<span th:text="${plato.precio}"></span></p>                                                                   
-                                </div>
-                                <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="200" height="200"> 
-                                <br>
-                                <!-- <label for="exampleInputEmail1" class="form-label">Cantidad</label> -->
-                                                            
-                            </div>
-                                            <!--Principal-->
-                            <div class="col-lg-6 menu-item filter-principal" th:if="${plato.categoria == 'PRINCIPAL'}" th:each="plato :${platos}" >
-                                <div class="menu-content">
-                                    <a th:text="${plato.nombre}"></a>
-                                    <a>$<span th:text="${plato.precio}"></span></a>                                                                   
-                                </div>
-                                <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="200" height="200"> 
-                                <br>
-                                <!-- <label for="exampleInputEmail1" class="form-label">Cantidad</label> -->
-                                                            
-                            </div>                             
-                                            <!--Bebidas-->
-                            <div class="col-lg-6 menu-item filter-bebida" th:if="${plato.categoria == 'BEBIDA'}" th:each="plato :${platos}" >
-                                <div class="menu-content">
-                                    <a th:text="${plato.nombre}"></a>
-                                    <a>$<span th:text="${plato.precio}"></span></a>                                    
-                                </div>
-                                <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="200" height="200"> <br>
-                                <!-- <label for="exampleInputEmail1" class="form-label">Cantidad</label> -->
-                               
-                            </div>
-                                            <!--Postres-->
-                            <div class="col-lg-6 menu-item filter-postre" th:if="${plato.categoria == 'POSTRE'}" th:each="plato :${platos}" >
-                                <div class="menu-content">
-                                    <a th:text="${plato.nombre}"></a>
-                                    <a>$<span th:text="${plato.precio}"></span></a>                                    
-                                </div>
-                                <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="200" height="200"> <br>
-                                <label for="exampleInputEmail1" class="form-label"></label>
-                                
-                            </div>
-                            
-                        </div>
-                    <!-- ======= End Menu Section ======= -->
-                    </div>
+                </div>
             </div>
             <div >
-            <a th:href="${'/?id=' + session.usuariosession.id}" class="btn btn-primary btn-xl">Volver</a><span>Al volver se perdera lo guardado en el carrito</span>
+                <a th:href="@{/plato/verCarrito}" class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">Ver Carrito</a>                            
+                <a th:href="${'/?id=' + session.usuariosession.id}" class="btn btn-primary btn-xl">Volver</a><span>Al volver se perdera lo guardado en el carrito</span>
             </div>
         </section>
     </body>
