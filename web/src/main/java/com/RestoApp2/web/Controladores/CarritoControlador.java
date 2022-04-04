@@ -1,11 +1,14 @@
-
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Carrito;
+import com.RestoApp2.web.Entidades.Orden;
 import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Servicios.CarritoServicio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
+import com.RestoApp2.web.Servicios.OrdenServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
+import com.RestoApp2.web.Servicios.UsuarioServicio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,36 +24,78 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/carrito")
 public class CarritoControlador {
-    
-@Autowired
-CarritoServicio carritoServicio;
-@Autowired
-PlatoServicio platoServi;
-    
-@GetMapping("/agregar/{idPlato}/car/{idCarrito}/res/{idResto}")
-public String agregarPlatoCarrito(ModelMap modelo,@PathVariable("idResto")String idResto,@PathVariable("idPlato")String idPlato,@PathVariable("idCarrito")String idCarrito){
-  
-    try {
-        Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
-        carritoServicio.agregarPlato(idCarrito,idPlato,1);
-        List<Plato> platos = platoServi.listaPlatoResto(idResto);
-        
-        modelo.put("platos", platos);
-        modelo.put("idResto",carrito.getResto().getId());
-        modelo.put("carrito",carrito);
-        modelo.put("exito","Se cargo el plato con éxito.");
-        
-        return "menu";
-    } catch (ErrorServicio ex) {
-        
-        
-        List<Plato> platos = platoServi.listaPlatoResto(idResto);
-        modelo.put("error",ex.getMessage());
-        modelo.put("platos", platos);
-        modelo.put("idResto",idResto);
-      return "menu";  
+
+    @Autowired
+    CarritoServicio carritoServicio;
+    @Autowired
+    PlatoServicio platoServi;
+    @Autowired
+    UsuarioServicio usuarioServicio;
+    @Autowired
+    OrdenServicio ordenServicio;
+
+    @GetMapping("/agregar/{idPlato}/{idCarrito}")
+    public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
+        System.out.println("HASTA ACA LLEGO BIEN?");
+        try {
+            System.out.println("Hasta aca llego bien0");
+            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
+            System.out.println("Hasta aca llego bien1");
+            Orden orden = ordenServicio.crearOrden(idPlato, 1);
+            System.out.println("Hasta aca llego bien2");
+            carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
+            System.out.println("Hasta aca llego bien3");
+
+            List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+            System.out.println("Hasta aca llego bien4");
+
+            modelo.put("platos", platos);
+            modelo.put("idResto", carrito.getResto().getId());
+            modelo.put("carritoId", carrito.getId());
+            modelo.put("exito", "Se cargo el plato con éxito.");
+
+            return "menu";
+        } catch (ErrorServicio ex) {
+            Carrito carrito;
+            try {
+                carrito = carritoServicio.buscarCarrito(idCarrito);
+                List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+                modelo.put("error", ex.getMessage());
+                modelo.put("platos", platos);
+                modelo.put("idResto", carrito.getResto().getId());
+                return "menu";
+            } catch (ErrorServicio ex1) {
+                modelo.put("error", ex1.getMessage());
+                return "index";
+
+            }
+
+        }
+
     }
-    
-}
-    
+
+    @GetMapping("/verCarrito/{id}")
+    public String listaCarrito(@PathVariable("id") String id, ModelMap modelo) {
+
+        try {
+
+            Carrito carrito = carritoServicio.buscarCarritoIdUsuario(id);
+            String idResto = carrito.getResto().getId();
+            String idCarrito = carrito.getId();
+            ArrayList<String> IdOrdenes = carrito.getIdOrden();
+            ArrayList<Orden> ordenes = new ArrayList();
+            for (String IdOrdene : IdOrdenes) {
+                Orden orden = ordenServicio.buscarOrden(IdOrdene);
+                ordenes.add(orden);
+            }
+            modelo.put("listaOrdenes", ordenes);
+            modelo.put("idResto", idResto);
+            modelo.put("idCarrito", idCarrito);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+        }
+
+        return "carrito";
+    }
+
 }

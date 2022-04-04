@@ -10,26 +10,30 @@
     
     </head>
 <body>
+    <span th:text="${session.usuariosession.nombre}"></span>
+
+    <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
+    <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
     <table class="table table-light table-hover">
         <thead>
             <tr class="bg-blue">
-                <th>Plato</th>
-                <th>Precio</th>
-                <th>Descripcion</th>
+                <th>Plato id</th>
+                <!-- <th>Precio</th>
+                <th>Descripcion</th> -->
+                <th>Cantidad</th>
                 <!-- <th>Foto</th> -->
                 <!-- <th>Eliminar</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr th:each="carrito :${carrito}">
-                <td th:text="${carrito.nombre}"></td>
-                <td th:text="${carrito.precio}"></td>
-                <td th:text="${carrito.descri}"></td>
-                <!-- <td><img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto?id=' + plato.id}" class="rounded float-start" alt="..." width="50" height="50"></td> -->
-                <!-- <a th:href="@{/plato/carrito/}+${plato.id}" class="btn btn-primary btn-xl">Agregar al Carrito</a><td><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/plato/eliminar/}+${plato.id}" class="btn btn-danger btn-xl">Baja</a></td> -->
-            </tr>
+            < <tr th:each="orden :${listaOrdenes}">
+                <td th:text="${orden.plato.nombre}"></td>
+                <!-- <td th:text="${plato.key.precio}"></td> -->
+                <td th:text="${orden.Cantidad}"></td>
+                
+            </tr> 
         </tbody>
     </table>
-    <a href="/" class="btn btn-primary btn-xl">Volver</a>
+    <a th:href="${'/resto/menu/'+idResto+'/'+idCarrito}" class="btn btn-primary btn-xl">Volver</a>
 </body>
 </html>

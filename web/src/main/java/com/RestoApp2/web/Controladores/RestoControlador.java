@@ -78,21 +78,21 @@ public class RestoControlador {
 
     }
 
-    @GetMapping("/menu/{idResto}/car/{idCarrito}")   
+    @GetMapping("/menu/{idResto}/{idCarrito}")   
     public String menu(HttpSession session,@PathVariable("idCarrito")String idCarrito,@PathVariable("idResto") String idResto, ModelMap model) {
         try {
             List<Plato> platos = platoServi.listaPlatoResto(idResto);
             Usuario usuario =(Usuario) session.getAttribute("usuariosession");
             if(idCarrito.equals("0")){
                Carrito carrito =  cS.crearCarrito(idResto, usuario.getId());
-               model.put("carrito",carrito);
+               model.put("carritoId",carrito.getId());
             }else{
                 Carrito carrito = cS.buscarCarrito(idCarrito);
-                model.put("carrito",carrito);
+                model.put("carritoId",carrito.getId());
             }
             
             model.put("platos", platos);
-            model.put("idResto", idResto);
+            
             
             model.put("exito","Se creó y cargo el carrito con éxito.");
             return "menu";

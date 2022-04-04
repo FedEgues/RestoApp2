@@ -1,7 +1,9 @@
 package com.RestoApp2.web.Controladores;
 
+import com.RestoApp2.web.Entidades.Carrito;
 import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Usuario;
+import com.RestoApp2.web.Servicios.CarritoServicio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class PlatoControlador {
 
     @Autowired
     private PlatoServicio platoServi;
+    @Autowired
+    private CarritoServicio carritoServi;
 
     @GetMapping("/restoInicio")
     public String index(@RequestParam(required = false) String logout, ModelMap modelo) {
@@ -138,33 +142,24 @@ public class PlatoControlador {
         return "platoListarInactivos";
     }
 
-    @GetMapping("/verPlato/{idPlato}/var/{idResto}/car/{idCarrito}")
-    public String verUnPlato(@PathVariable("idCarrito")String idCarrito,@PathVariable("idPlato") String idPlato,@PathVariable("idResto")String idResto, ModelMap modelo) {
+    @GetMapping("/verPlato/{idPlato}/{idCarrito}")
+    public String verUnPlato(@PathVariable("idCarrito")String idCarrito,@PathVariable("idPlato") String idPlato, ModelMap modelo) {
         Plato plato;
+        
         try {
             plato = platoServi.buscarPorId(idPlato);
+            Carrito carrito = carritoServi.buscarCarrito(idCarrito);
+            modelo.put("idCarrito",idCarrito);
+            modelo.put("platos", plato);
+             modelo.put("idResto",carrito.getResto().getId());
         } catch (ErrorServicio e) {
-            //plato=null;
+            modelo.put("error",e.getMessage());
             return "menu";
         }
-        modelo.put("idCarrito",idCarrito);
-        modelo.put("platos", plato);
-        modelo.put("idResto",idResto);
+        
         return "platoUnitario";
     }
 
-    @GetMapping("/carrito/{id}")
-    public String listaCarrito(@PathVariable("id") String id, ModelMap modelo) {
-        List<Plato> carrito = new ArrayList<>();
-        try {
-            Plato plato = platoServi.buscarPorId(id);
-            carrito.add(plato);
-        }catch(ErrorServicio e){
-            modelo.put("error", "No se pudo agregar el carrito");
-            return "menu";
-        }
-        modelo.put("carrito", carrito);
-        return "carrito";
-    }
+    
 
 }

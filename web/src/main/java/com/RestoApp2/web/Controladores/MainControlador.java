@@ -35,8 +35,14 @@ public class MainControlador {
         }
         if (id != null) {
 
-            carriServi.eliminarCarritos();
-            modelo.put("exito", "Carrito eliminado con éxito.");
+            try {
+                carriServi.eliminarCarritos(id);
+                
+                modelo.put("exito", "Carrito eliminado con éxito junto con sus ordenes.");
+            } catch (ErrorServicio ex) {
+                modelo.put("error",ex.getMessage());
+            }
+            
 
         }
         modelo.put("restos", restoServi.listaResto());

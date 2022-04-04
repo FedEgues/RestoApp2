@@ -1,7 +1,7 @@
 package com.RestoApp2.web.Entidades;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,19 +13,19 @@ import org.hibernate.annotations.GenericGenerator;
  *
  * @author Federico
  */
-
 @Entity
 public class Carrito implements Serializable {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
-    private LinkedHashMap<String,Integer> listaDePlatos;
-    
+
+    private ArrayList<String> IdOrden;
+
     @ManyToOne
     private Resto resto;
+
     @ManyToOne
     private Usuario usuario;
 
@@ -33,14 +33,12 @@ public class Carrito implements Serializable {
         return id;
     }
 
-  
-
-    public LinkedHashMap<String, Integer> getListaDePlatos() {
-        return listaDePlatos;
+    public ArrayList<String> getIdOrden() {
+        return IdOrden;
     }
 
-    public void setListaDePlatos(LinkedHashMap<String, Integer> listaDePlatos) {
-        this.listaDePlatos = listaDePlatos;
+    public void setIdOrden(ArrayList<String> IdOrden) {
+        this.IdOrden = IdOrden;
     }
 
     public Resto getResto() {
@@ -58,6 +56,5 @@ public class Carrito implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
+
 }

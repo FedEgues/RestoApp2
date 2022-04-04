@@ -15,7 +15,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarritoRepositorio extends JpaRepository<Carrito,String> {
  
+     
+    @Query("SELECT c FROM Carrito c WHERE c.usuario.id = :idUsuario")
+    public Carrito buscarCarritoUsuario(@Param("idUsuario") String idUsuario);
     
+    
+     
     
     
 }
