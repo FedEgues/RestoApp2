@@ -6,7 +6,6 @@ import com.RestoApp2.web.Entidades.Resto;
 import com.RestoApp2.web.Enums.Categoria;
 import com.RestoApp2.web.Repositorios.PlatoRepositorio;
 import com.RestoApp2.web.Repositorios.RestoRepositorio;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -116,7 +115,7 @@ public class PlatoServicio {
             Plato plato = rta.get();
             return plato;
         } else {
-            throw new ErrorServicio("Plato NO ENCOMTRADO");
+            throw new ErrorServicio("Plato NO ENCONTRADO");
         }
     }
 

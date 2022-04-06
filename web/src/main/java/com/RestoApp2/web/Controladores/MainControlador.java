@@ -1,18 +1,14 @@
 package com.RestoApp2.web.Controladores;
 
-import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.CarritoServicio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.UsuarioServicio;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,7 +25,7 @@ public class MainControlador {
     CarritoServicio carriServi;
 
     @GetMapping("/")
-    public String index(@RequestParam(required = false) String logout, @RequestParam(required = false) String id, ModelMap modelo, HttpSession session) {
+    public String index(@RequestParam(required = false) String logout,@RequestParam(required  = false)String id, ModelMap modelo, HttpSession session) {
         if (logout != null) {
             modelo.put("logout", "Ha cerrado sesión");
         }
@@ -47,12 +43,7 @@ public class MainControlador {
         }
         modelo.put("restos", restoServi.listaResto());
 
-//        try{
-//            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-//        modelo.put("resto", restoServi.buscarResto(usuario.getId()));
-//        }catch(ErrorServicio e){
-//            
-//        }
+
         return "index";
     }
 

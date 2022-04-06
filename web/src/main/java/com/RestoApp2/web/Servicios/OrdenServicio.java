@@ -1,25 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Orden;
-import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Repositorios.CarritoRepositorio;
 import com.RestoApp2.web.Repositorios.OrdenRepositorio;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Federico
- */
+
 @Service
 public class OrdenServicio {
 
@@ -33,11 +23,12 @@ public class OrdenServicio {
     @Transactional
     public Orden crearOrden(String idPlato, Integer cantidad) throws ErrorServicio {
 
+        
         Orden orden = new Orden();
-        Plato plato = new Plato();
         orden.setPlato(platoServicio.buscarPorId(idPlato));
         orden.setCantidad(cantidad);
         ordenRepositorio.save(orden);
+       
         return orden;
     }
 

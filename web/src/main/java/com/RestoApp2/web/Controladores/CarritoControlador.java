@@ -10,8 +10,6 @@ import com.RestoApp2.web.Servicios.PlatoServicio;
 import com.RestoApp2.web.Servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -38,16 +36,16 @@ public class CarritoControlador {
     public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
         System.out.println("HASTA ACA LLEGO BIEN?");
         try {
-            System.out.println("Hasta aca llego bien0");
+            
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
-            System.out.println("Hasta aca llego bien1");
+           
             Orden orden = ordenServicio.crearOrden(idPlato, 1);
-            System.out.println("Hasta aca llego bien2");
+            
             carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
-            System.out.println("Hasta aca llego bien3");
+          
 
             List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
-            System.out.println("Hasta aca llego bien4");
+            
 
             modelo.put("platos", platos);
             modelo.put("idResto", carrito.getResto().getId());

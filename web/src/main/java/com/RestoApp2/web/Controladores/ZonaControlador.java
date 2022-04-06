@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Zona;
@@ -20,10 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- *
- * @author Federico
- */
+
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/zona")

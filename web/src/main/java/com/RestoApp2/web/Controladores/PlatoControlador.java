@@ -6,7 +6,6 @@ import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.CarritoServicio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

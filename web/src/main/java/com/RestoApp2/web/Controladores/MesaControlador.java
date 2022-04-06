@@ -1,7 +1,6 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Mesa;
-import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.MesaServicio;

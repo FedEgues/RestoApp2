@@ -11,8 +11,6 @@ import com.RestoApp2.web.Servicios.PlatoServicio;
 import com.RestoApp2.web.Servicios.RestoServicio;
 import com.RestoApp2.web.Servicios.ZonaServicio;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,10 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author Federico
- */
 @PreAuthorize("hasAnyRole('ROLE_SELLER','ROLE_ADMIN','ROLE_USER')")
 @Controller
 @RequestMapping("/resto")
@@ -86,6 +80,7 @@ public class RestoControlador {
             if(idCarrito.equals("0")){
                Carrito carrito =  cS.crearCarrito(idResto, usuario.getId());
                model.put("carritoId",carrito.getId());
+               model.put("exito","Se creó y cargo el carrito con éxito.");
             }else{
                 Carrito carrito = cS.buscarCarrito(idCarrito);
                 model.put("carritoId",carrito.getId());
@@ -94,10 +89,10 @@ public class RestoControlador {
             model.put("platos", platos);
             
             
-            model.put("exito","Se creó y cargo el carrito con éxito.");
+           
             return "menu";
         } catch (ErrorServicio ex) {
-            Logger.getLogger(RestoControlador.class.getName()).log(Level.SEVERE, null, ex);
+            model.put("error",ex.getMessage());
         }
            model.put("error","no se pudo crear carrito");
            return "menu";

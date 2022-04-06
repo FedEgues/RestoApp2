@@ -9,10 +9,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author Federico
- */
+
 @Entity
 public class Carrito implements Serializable {
 
