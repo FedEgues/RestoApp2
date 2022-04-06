@@ -14,7 +14,7 @@
                     <table class="table table-light table-hover">
                         <thead>
                             <tr class="bg-blue">
-                                <th>Id Mesa</th>
+                                <th>Denominacón</th>
                                 <th>Capacidad</th>
                                 <th>Disponibilidad</th>
                                 <th>Alta</th>
@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="mesa : ${mesas}">
-                                <td th:text="${mesa.id}"></td>
+                                <td th:text="${mesa.denominacion}"></td>
                                 <td th:text="${mesa.capacidad}"></td>
                                 <td th:text="${mesa.disponible}"></td>
                                 <td>

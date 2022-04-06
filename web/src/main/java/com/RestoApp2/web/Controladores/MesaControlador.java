@@ -1,7 +1,6 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Mesa;
-import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.ErrorServicio;
 import com.RestoApp2.web.Servicios.MesaServicio;
@@ -40,9 +39,9 @@ public class MesaControlador {
     }
 
     @PostMapping("/guardarMesa")
-    public String guardarMesa(ModelMap modelo, @RequestParam Integer capacidad, @RequestParam String idResto) {
+    public String guardarMesa(ModelMap modelo, @RequestParam Integer capacidad,@RequestParam String denominacion, @RequestParam String idResto) {
         try {
-            mesaServi.crearMesa(capacidad, idResto);
+            mesaServi.crearMesa(capacidad,denominacion, idResto);
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             return "crearMesa";

@@ -115,7 +115,7 @@ public class PlatoServicio {
             Plato plato = rta.get();
             return plato;
         } else {
-            throw new ErrorServicio("Plato NO ENCOMTRADO");
+            throw new ErrorServicio("Plato NO ENCONTRADO");
         }
     }
 
@@ -130,5 +130,6 @@ public class PlatoServicio {
     public List<Plato> listaPlatosInactivos(String idResto) {
         return platoRepo.buscarPlatosInactivos(idResto);
     }
+    
 
 }

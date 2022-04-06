@@ -5,26 +5,25 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
-public class Zona implements Serializable {
-
+public class Orden implements Serializable {
+    
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String nombre;
-    private Boolean alta;
+    
+    
+    @OneToOne
+    private Plato plato;
+    
+    private Integer cantidad;
 
-    public Zona() {
-    }
-
-    public Zona( String nombre, Boolean alta) {
-        
-        this.nombre = nombre;
-        this.alta = alta;
+    public Orden() {
     }
 
     public String getId() {
@@ -35,21 +34,22 @@ public class Zona implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Plato getPlato() {
+        return plato;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setPlato(Plato plato) {
+        this.plato = plato;
     }
 
-    public Boolean getAlta() {
-        return alta;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
-    
+
+ 
     
 }

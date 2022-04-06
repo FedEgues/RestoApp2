@@ -15,6 +15,7 @@ public class Mesa implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+    private String denominacion;
     private Integer capacidad;
     private Boolean disponible;
     @ManyToOne
@@ -23,12 +24,7 @@ public class Mesa implements Serializable {
     public Mesa() {
     }
 
-    public Mesa(Integer capacidad, Boolean disponible, Resto resto) {
-        this.capacidad = capacidad;
-        this.disponible = disponible;
-        this.resto = resto;
-    }
-
+    
     public String getId() {
         return id;
     }
@@ -60,4 +56,13 @@ public class Mesa implements Serializable {
     public void setResto(Resto resto) {
         this.resto = resto;
     }
+
+    public String getDenominacion() {
+        return denominacion;
+    }
+
+    public void setDenominacion(String denominación) {
+        this.denominacion = denominación;
+    }
+    
 }
