@@ -32,20 +32,19 @@ public class CarritoControlador {
     @Autowired
     OrdenServicio ordenServicio;
 
+    //esta esta en la pagina del platoUnitario.html
     @GetMapping("/agregar/{idPlato}/{idCarrito}")
     public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
         System.out.println("HASTA ACA LLEGO BIEN?");
         try {
-            
+
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
-           
+
             Orden orden = ordenServicio.crearOrden(idPlato, 1);
-            
+
             carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
-          
 
             List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
-            
 
             modelo.put("platos", platos);
             modelo.put("idResto", carrito.getResto().getId());
@@ -94,6 +93,45 @@ public class CarritoControlador {
         }
 
         return "carrito";
+    }
+
+    //este esta en la pagina de carrito.html
+    @GetMapping("/eliminar/{idPlato}/{idCarrito}")
+    public String eliminarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
+        System.out.println("HASTA ACA LLEGO BIEN?");
+        try {
+
+            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
+
+            Orden orden = ordenServicio.crearOrden(idPlato, 0);
+
+            carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
+
+            List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+
+            modelo.put("platos", platos);
+            modelo.put("idResto", carrito.getResto().getId());
+            modelo.put("carritoId", carrito.getId());
+            modelo.put("exito", "Se cargo el plato con éxito.");
+
+            return "menu";
+        } catch (ErrorServicio ex) {
+            Carrito carrito;
+            try {
+                carrito = carritoServicio.buscarCarrito(idCarrito);
+                List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+                modelo.put("error", ex.getMessage());
+                modelo.put("platos", platos);
+                modelo.put("idResto", carrito.getResto().getId());
+                return "menu";
+            } catch (ErrorServicio ex1) {
+                modelo.put("error", ex1.getMessage());
+                return "index";
+
+            }
+
+        }
+
     }
 
 }
