@@ -22,16 +22,15 @@
                 <th>Descripcion</th> -->
                 <th>Cantidad</th>
                 <!-- <th>Foto</th> -->
-                <th></th>
+                <!-- <th>Eliminar</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr th:each="orden :${listaOrdenes}">
+            < <tr th:each="orden :${listaOrdenes}">
                 <td th:text="${orden.plato.nombre}"></td>
-                <td th:if="${orden.Cantidad != 0}" th:text="${orden.Cantidad}"></td>
-                <td>
-                    <a th:href="${'/carrito/eliminar/'+plato.id+'/'+idCarrito}" class="btn btn-success btn-xl">Eliminar</a>
-                </td>
+                <!-- <td th:text="${plato.key.precio}"></td> -->
+                <td th:text="${orden.Cantidad}"></td>
+                
             </tr> 
         </tbody>
     </table>

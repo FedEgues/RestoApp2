@@ -3,7 +3,6 @@ package com.RestoApp2.web.Servicios;
 import com.RestoApp2.web.Entidades.Carrito;
 import com.RestoApp2.web.Entidades.Orden;
 import com.RestoApp2.web.Repositorios.CarritoRepositorio;
-import com.RestoApp2.web.Repositorios.OrdenRepositorio;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -23,8 +22,6 @@ public class CarritoServicio {
     private PlatoServicio pS;
     @Autowired
     private OrdenServicio oS;
-    @Autowired
-    private OrdenRepositorio oR;
 
     @Transactional
     public Carrito crearCarrito(String idResto, String idUsuario) throws ErrorServicio {
@@ -71,19 +68,6 @@ public class CarritoServicio {
             throw new ErrorServicio("No se encontró el carrito.");
         }
     }
-    
-//    @Transactional
-//    public void bajaOrden(String idOrden) throws ErrorServicio {
-//        Optional<Orden> rta = oR.findById(idOrden);
-//        if (rta.isPresent()) {
-//            Orden orden = rta.get();
-//            orden.setCantidad(0);
-//            oR.save(orden);
-//        }else{
-//            throw new ErrorServicio("Orden NO ENCOMTRADA");
-//        }
-//        
-//    }
 
     @Transactional
     public void eliminarCarritos(String idUsuario) throws ErrorServicio {
