@@ -21,9 +21,7 @@ public class OrdenServicio {
     private OrdenRepositorio ordenRepositorio;
 
     @Transactional
-    public Orden crearOrden(String idPlato, Integer cantidad) throws ErrorServicio {
-
-        
+    public Orden crearOrden(String idPlato, Integer cantidad) throws ErrorServicio { 
         Orden orden = new Orden();
         orden.setPlato(platoServicio.buscarPorId(idPlato));
         orden.setCantidad(cantidad);
@@ -43,6 +41,8 @@ public class OrdenServicio {
         }
 
     }
+    
+    @Transactional
     public void borrarOrden(String id)throws ErrorServicio{
         
        try{
@@ -51,5 +51,17 @@ public class OrdenServicio {
        }catch(Exception e){
         throw new ErrorServicio("No se encontro la orden buscada.");
       }
+    }
+    
+    @Transactional
+    public void bajaOrden(String idOrden) throws ErrorServicio {
+        Optional<Orden> rta = ordenRepositorio.findById(idOrden);
+        if (rta.isPresent()) {
+            Orden orden = rta.get();
+            orden.setCantidad(0);
+            ordenRepositorio.save(orden);
+        } else {
+            throw new ErrorServicio("Ordeb NO ENCOMTRADA");
+        }
     }
 }

@@ -2,7 +2,9 @@ package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Carrito;
 import com.RestoApp2.web.Entidades.Orden;
+import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Repositorios.CarritoRepositorio;
+import com.RestoApp2.web.Repositorios.OrdenRepositorio;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -22,6 +24,8 @@ public class CarritoServicio {
     private PlatoServicio pS;
     @Autowired
     private OrdenServicio oS;
+    @Autowired
+    private OrdenRepositorio oR;
 
     @Transactional
     public Carrito crearCarrito(String idResto, String idUsuario) throws ErrorServicio {

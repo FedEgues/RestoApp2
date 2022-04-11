@@ -151,6 +151,7 @@ public class PlatoControlador {
             modelo.put("idCarrito",idCarrito);
             modelo.put("platos", plato);
              modelo.put("idResto",carrito.getResto().getId());
+             modelo.put("idCarrito", idCarrito); //no me mostraba el carrito xq faltaba esta linea.
         } catch (ErrorServicio e) {
             modelo.put("error",e.getMessage());
             return "menu";
