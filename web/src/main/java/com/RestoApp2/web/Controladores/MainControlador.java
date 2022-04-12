@@ -20,12 +20,12 @@ public class MainControlador {
 
     @Autowired
     RestoServicio restoServi;
-    
+
     @Autowired
     CarritoServicio carriServi;
 
     @GetMapping("/")
-    public String index(@RequestParam(required = false) String logout,@RequestParam(required  = false)String id, ModelMap modelo, HttpSession session) {
+    public String index(@RequestParam(required = false) String logout, @RequestParam(required = false) String id, ModelMap modelo, HttpSession session) {
         if (logout != null) {
             modelo.put("logout", "Ha cerrado sesión");
         }
@@ -33,16 +33,14 @@ public class MainControlador {
 
             try {
                 carriServi.eliminarCarritos(id);
-                
+
                 modelo.put("exito", "Carrito eliminado con éxito junto con sus ordenes.");
             } catch (ErrorServicio ex) {
-                modelo.put("error",ex.getMessage());
+                modelo.put("error", ex.getMessage());
             }
-            
 
         }
         modelo.put("restos", restoServi.listaResto());
-
 
         return "index";
     }
