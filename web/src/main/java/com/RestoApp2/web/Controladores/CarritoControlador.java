@@ -35,13 +35,13 @@ public class CarritoControlador {
     @GetMapping("/agregar/{idPlato}/{idCarrito}")
     public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
         System.out.println("HASTA ACA LLEGO BIEN?");
-        try {            
-            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);         
-            Orden orden = ordenServicio.crearOrden(idPlato, 1);           
+        try {
+            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
+            Orden orden = ordenServicio.crearOrden(idPlato, 1);
             carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
-          
+
             List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
-            
+
             modelo.put("platos", platos);
             modelo.put("idResto", carrito.getResto().getId());
             modelo.put("carritoId", carrito.getId());
@@ -65,10 +65,11 @@ public class CarritoControlador {
         }
     }
 
-    @GetMapping("/verCarrito/{id}")
-    public String listaCarrito(@PathVariable("id") String id, ModelMap modelo) {
+    @GetMapping("/verCarrito/{idUsuario}")
+    public String listaCarrito(@PathVariable("idUsuario") String idUsuario,
+            ModelMap modelo) {
         try {
-            Carrito carrito = carritoServicio.buscarCarritoIdUsuario(id);
+            Carrito carrito = carritoServicio.buscarCarritoIdUsuario(idUsuario);
             String idResto = carrito.getResto().getId();
             String idCarrito = carrito.getId();
             ArrayList<String> IdOrdenes = carrito.getIdOrden();
@@ -85,17 +86,27 @@ public class CarritoControlador {
         }
         return "carrito";
     }
-    
-    @GetMapping("/eliminar/{idOrden}")
-    public String bajaPlato(@PathVariable ("idOrden") String idOrden, ModelMap model){
-        try{
-            ordenServicio.borrarOrden(idOrden);
-        }catch(ErrorServicio e){
-            model.put("error", e.getMessage());
+
+    @GetMapping("/eliminar/{idPlato}/{idCarrito}")
+    public String eliminarOrden(@PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito, ModelMap model) {
+
+        try {
+            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
+            Orden orden = ordenServicio.buscarOrdenPorIdPlato(idPlato);
+            ordenServicio.borrarOrden(orden.getId());
+
+            List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+            model.put("platos", platos);
+            model.put("idResto", carrito.getResto().getId());
+            model.put("carritoId", carrito.getId());
             
+            model.put("exito", "Orden eliminada con exito");
+            return "menu";
+        } catch (ErrorServicio e) {
+            model.put("error", e.getMessage());
+            return "index";
         }
-        model.put("exito", "Orden eliminada con exito");
-        return "menu";
+
     }
-    
+
 }
