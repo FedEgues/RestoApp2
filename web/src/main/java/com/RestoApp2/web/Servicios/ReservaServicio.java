@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class ReservaSerivcio implements Serializable {
+public class ReservaServicio implements Serializable {
     
     
     @Autowired
-    private ReservaRepositorio reservaR;
+    private ReservaRepositorio reservaRepositorio;
     
     @Transactional
     public void crearReserva(){
