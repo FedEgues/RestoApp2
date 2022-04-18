@@ -93,6 +93,9 @@ public class CarritoControlador {
         try {
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
             Orden orden = ordenServicio.buscarOrdenPorIdPlato(idPlato);
+            carrito = carritoServicio.eliminarPlato(idCarrito, orden.getId());
+            
+            //Este es solo para que me elimine la orden de la BD y que este igual que en carrito
             ordenServicio.borrarOrden(orden.getId());
 
             List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
@@ -104,7 +107,7 @@ public class CarritoControlador {
             return "menu";
         } catch (ErrorServicio e) {
             model.put("error", e.getMessage());
-            return "index";
+            return "carrito";
         }
 
     }

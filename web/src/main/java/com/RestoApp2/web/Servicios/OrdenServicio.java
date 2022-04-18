@@ -60,15 +60,4 @@ public class OrdenServicio {
         } 
     }
 
-    @Transactional
-    public void bajaOrden(String idOrden) throws ErrorServicio {
-        Optional<Orden> rta = ordenRepositorio.findById(idOrden);
-        if (rta.isPresent()) {
-            Orden orden = rta.get();
-            orden.setCantidad(0);
-            ordenRepositorio.save(orden);
-        } else {
-            throw new ErrorServicio("Ordeb NO ENCOMTRADA");
-        }
-    }
 }

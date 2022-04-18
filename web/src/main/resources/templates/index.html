@@ -49,21 +49,17 @@
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/zona/crearZona">Crear Zona</a> 
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/zona/listarZonas">Listar Zonas Cargadas</a>
             <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_SELLER','ROLE_ADMIN')"  th:href="@{/buscador/buscadorResto/}">Buscador</a> -->
-<<<<<<< Updated upstream
             <br>
             <br>
             <form action="/buscador/resultadoBusquedaResto" method="POST">
-=======
             <form  sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" action="/buscador/resultadoBusquedaResto" method="POST">
->>>>>>> Stashed changes
                 <input type="search" name="busquedaResto" placeholder="Buscá tu plato . ." pattern="[A-Za-z0-9]{4,20}">
                 <input type="submit" value="Ver">         
             </form>
             
         </div>
     </section>
-    <br>
-    
+    <br>  
     <br>
     <section>
         <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">

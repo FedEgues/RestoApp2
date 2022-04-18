@@ -2,9 +2,7 @@ package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Carrito;
 import com.RestoApp2.web.Entidades.Orden;
-import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Repositorios.CarritoRepositorio;
-import com.RestoApp2.web.Repositorios.OrdenRepositorio;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -21,11 +19,7 @@ public class CarritoServicio {
     @Autowired
     private RestoServicio rS;
     @Autowired
-    private PlatoServicio pS;
-    @Autowired
     private OrdenServicio oS;
-    @Autowired
-    private OrdenRepositorio oR;
 
     @Transactional
     public Carrito crearCarrito(String idResto, String idUsuario) throws ErrorServicio {
@@ -64,6 +58,31 @@ public class CarritoServicio {
             ordenes.add(orden.getId());
 
             carrito.setIdOrden(ordenes);
+
+            cR.save(carrito);
+
+            return carrito;
+        } else {
+            throw new ErrorServicio("No se encontró el carrito.");
+        }
+    }
+    
+    @Transactional
+    public Carrito eliminarPlato(String idCarrito, String idOrden) throws ErrorServicio {
+        Optional<Carrito> respuesta = cR.findById(idCarrito);
+        System.out.println("idCarrito: "+respuesta);
+        
+        if (respuesta.isPresent()) {
+            Carrito carrito = respuesta.get();
+
+            Orden orden = oS.buscarOrden(idOrden);
+            System.out.println("idOrden: "+idOrden);
+
+            ArrayList<String> ordenes = carrito.getIdOrden();
+
+            ordenes.remove(orden.getId());
+
+            //carrito.setIdOrden(ordenes);
 
             cR.save(carrito);
 
