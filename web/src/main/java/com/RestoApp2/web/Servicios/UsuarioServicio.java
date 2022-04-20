@@ -54,6 +54,9 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio uR;
     @Autowired
     private RestoRepositorio rR;
+    
+    @Autowired
+    private MailServicio mS;
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
@@ -92,6 +95,8 @@ public class UsuarioServicio implements UserDetailsService {
 
         usuario.setRol(Role.USER);
         uR.save(usuario);
+        
+        mS.enviarMail("Registro exitoso", "RestoApp", usuario.getMail());
     }
 
     @Transactional
