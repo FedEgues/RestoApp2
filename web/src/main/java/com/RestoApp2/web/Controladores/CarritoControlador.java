@@ -34,7 +34,7 @@ public class CarritoControlador {
 
     @GetMapping("/agregar/{idPlato}/{idCarrito}")
     public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
-        System.out.println("HASTA ACA LLEGO BIEN?");
+        
         try {
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
             Orden orden = ordenServicio.crearOrden(idPlato, 1);
@@ -69,7 +69,7 @@ public class CarritoControlador {
     public String listaCarrito(@PathVariable("idUsuario") String idUsuario,
             ModelMap modelo) {
         try {
-            Carrito carrito = carritoServicio.buscarCarritoIdUsuario(idUsuario);
+            Carrito carrito = carritoServicio.buscarUnCarritoIdUsuario(idUsuario);
             String idResto = carrito.getResto().getId();
             String idCarrito = carrito.getId();
             ArrayList<String> IdOrdenes = carrito.getIdOrden();

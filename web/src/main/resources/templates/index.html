@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en"  xmlns="http://www.thymeleaf.org">
+<html lang="es"  xmlns="http://www.thymeleaf.org">
 
 <head>
     <title>RestoApp</title>
@@ -39,7 +39,7 @@
     <section>
         <div th:if="${session.usuariosession != null}">
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a>
-            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER')"  th:href="@{/Reserva/listarReservas/} + ${session.usuariosession.id}">Mis reservas</a>
+            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER')"  th:href="@{/reserva/listarReservas/}">Mis reservas</a>
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/resto/modificarResto">Personaliza tu Resto</a>
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/plato/crearPlato">Crear Plato</a>
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" th:href="@{/plato/listarPlatoResto/}+${session.usuariosession.id}">Listar Platos</a> 
@@ -49,9 +49,12 @@
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/zona/crearZona">Crear Zona</a> 
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/zona/listarZonas">Listar Zonas Cargadas</a>
             <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_SELLER','ROLE_ADMIN')"  th:href="@{/buscador/buscadorResto/}">Buscador</a> -->
+<<<<<<< Updated upstream
             <br>
             <br>
             <form action="/buscador/resultadoBusquedaResto" method="POST">
+=======
+>>>>>>> Stashed changes
             <form  sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" action="/buscador/resultadoBusquedaResto" method="POST">
                 <input type="search" name="busquedaResto" placeholder="Buscá tu plato . ." pattern="[A-Za-z0-9]{4,20}">
                 <input type="submit" value="Ver">         

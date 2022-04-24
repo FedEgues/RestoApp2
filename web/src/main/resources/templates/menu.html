@@ -51,7 +51,7 @@
     
             <div >
                 <a th:href="${'/carrito/verCarrito/'+ session.usuariosession.id}" class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">Ver Carrito</a>                            
-                <a th:href="${'/?id=' + session.usuariosession.id}" class="btn btn-primary btn-xl">Volver</a><span>Al volver se perdera lo guardado en el carrito</span>
+                <a th:href="${'/?id=' + carritoId}" class="btn btn-primary btn-xl">Volver</a><span>Al volver se perdera lo guardado en el carrito</span>
             </div>
         </section>
     </body>

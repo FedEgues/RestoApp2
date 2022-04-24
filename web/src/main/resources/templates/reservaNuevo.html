@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns="http://www.thymeleaf.org">
+<html lang="es"  xmlns="http://www.thymeleaf.org">
     <head>
-        <title>Carrito</title>
+        <title>Reserva</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,16 +38,39 @@
                     <div class="mb-3">
                         <p style="color:black" th:if="${session.usuariosession != null}"
                             th:text="${session.usuariosession.nombre +' '+session.usuariosession.apellido}"></p>
-                        <input type="hidden" name="nombre" th:value="${session.usuariosession.nombre}">
+                        <!-- <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}"> -->
+                        <input type="hidden" name="idCarrito" th:value="${idCarrito}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Cantidad de personas</label>
-                        <input type="number" class="form-control" name="cantidad" th:value="${cantidad}">
+                        <label  class="form-label">Cantidad de personas</label>
+                        <input type="number" class="form-control" name="cantidad" min="1"  th:value="${cantidad}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Fecha de reserva</label>
-                        <input type="date" class="form-control" name="dia" th:value="${dia}" required
+                        <label  class="form-label">Fecha de reserva</label>
+                        <input type="date" class="form-control" name="dia" min="datetime-local" th:value="${dia}" required
                             pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Hora reserva</label>
+                        <input type="time" class="form-control" name="hora"  th:value="${hora}" required>
+                    </div>
+                    <div>
+                        <table class="table table-light table-hover">
+                            <thead>
+                                <tr class="bg-blue">
+                                    <th>Numero Mesa</th>
+                                    <th>Capacidad</th>
+                                    <th>Seleccione una</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="mesa :${mesas}">
+                                    <td th:text="${mesa.denominacion}"></td>
+                                    <td th:text="${mesa.capacidad}"></td>
+                                    <td><input type="radio" name="idMesa" th:value="${mesa.id}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <p>El total a abonar es: <span th:text="${total}"></span></p>
                     <p>El local donde va a cenar es: <span th:text="${nombreResto}"></span></p>

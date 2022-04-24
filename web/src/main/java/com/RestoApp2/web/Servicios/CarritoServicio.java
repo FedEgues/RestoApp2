@@ -4,6 +4,7 @@ import com.RestoApp2.web.Entidades.Carrito;
 import com.RestoApp2.web.Entidades.Orden;
 import com.RestoApp2.web.Repositorios.CarritoRepositorio;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,22 +98,48 @@ public class CarritoServicio {
         /*Borra todos los carritos esto pasa cuando salis de algun restaurante y decidis buscar en otro.
         Borra solo el carrito del usuario logueado y sus ordenes relacionadas*/
         try {
-            Carrito carrito = cR.buscarCarritoUsuario(idUsuario);
-            ArrayList<String> ordenes = carrito.getIdOrden();
-            for (String ordene : ordenes) {
-                oS.borrarOrden(ordene);
+            List<Carrito> carrito = cR.buscarCarritoUsuario(idUsuario);
+            for (Carrito carrito1 : carrito) {
+
+                ArrayList<String> ordenes = carrito1.getIdOrden();
+                for (String ordene : ordenes) {
+                    oS.borrarOrden(ordene);
+                }
+                cR.deleteById(carrito1.getId());
             }
-            cR.deleteById(carrito.getId());
 
         } catch (ErrorServicio e) {
-            throw new ErrorServicio("no se encontro un carrito asociado a su usuario.");
+            throw new ErrorServicio("no se encontro un o más carrito asociado a su usuario.");
         }
 
     }
+    @Transactional
+    public void eliminarCarrito(String idCarrito)throws ErrorServicio{
+        try{
+            Carrito carrito = cR.getById(idCarrito);
+            ArrayList<String> ordenes= carrito.getIdOrden();
+            for (String ordene : ordenes) {
+                oS.borrarOrden(ordene);
+            }
+            cR.delete(carrito);
+        }catch(Exception e){
+            throw new ErrorServicio("No se pudo borrar el carrito");
+        }
+    }
 
-    public Carrito buscarCarritoIdUsuario(String idUsuario) throws ErrorServicio {
+    public List<Carrito> buscarCarritoIdUsuario(String idUsuario) throws ErrorServicio {
         try {
-            Carrito carrito = cR.buscarCarritoUsuario(idUsuario);
+            List<Carrito> carrito = cR.buscarCarritoUsuario(idUsuario);
+            return carrito;
+        } catch (Exception e) {
+            throw new ErrorServicio("No se encontró un carrito asociado a su usuario.");
+        }
+
+    }
+    
+    public Carrito buscarUnCarritoIdUsuario(String idUsuario) throws ErrorServicio {
+        try {
+            Carrito carrito = cR.buscarUnCarritoUsuario(idUsuario);
             return carrito;
         } catch (Exception e) {
             throw new ErrorServicio("No se encontró un carrito asociado a su usuario.");

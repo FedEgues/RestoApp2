@@ -32,7 +32,7 @@ public class MainControlador {
         if (id != null) {
 
             try {
-                carriServi.eliminarCarritos(id);
+                carriServi.eliminarCarrito(id);
 
                 modelo.put("exito", "Carrito eliminado con éxito junto con sus ordenes.");
             } catch (ErrorServicio ex) {
