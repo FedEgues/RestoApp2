@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
+    <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
     <br>
     <div class="card-header">
         Elija tipo de usuario

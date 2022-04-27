@@ -66,7 +66,7 @@ public class MainControlador {
             modeloUsu.put("mail", mail);
             modeloUsu.put("clave1", clave1);
             modeloUsu.put("clave2", clave2);
-            return "registroUsuario";
+            return "registroIntermedio";
         }
         modeloUsu.put("exito", "Usuario registrado exitorsamente");
         return "index";
@@ -88,7 +88,7 @@ public class MainControlador {
             modeloUsu.put("mail", mail);
             modeloUsu.put("clave1", clave1);
             modeloUsu.put("clave2", clave2);
-            return "registroUsuarioResto";
+            return "registroIntermedio";
         }
         modeloUsu.put("exito", "Usuario registrado exitorsamente");
         return "index";
