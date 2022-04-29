@@ -10,7 +10,7 @@ spring:
                     required: true
                     enable: true
     username: restoapp4@gmail.com
-    password: RestoApp4@
+    password: Resto123!
 
   datasource: 
     url: jdbc:mysql://localhost:3306/restoapp2?allowPublicKeyRetrieval=true&useSSL=false&useTimezone=true&serverTimezone=GMT&characterEncoding=UTF-8

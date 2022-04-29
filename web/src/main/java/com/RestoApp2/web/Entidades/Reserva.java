@@ -3,6 +3,7 @@ package com.RestoApp2.web.Entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,6 +36,18 @@ public class Reserva implements Serializable {
     
     @OneToOne
     private Mesa mesa;
+    
+    private Integer cantidad;
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+    
+   
 
     public Reserva() {  
     }

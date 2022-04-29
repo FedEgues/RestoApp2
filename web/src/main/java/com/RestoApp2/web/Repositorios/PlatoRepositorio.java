@@ -18,4 +18,7 @@ public interface PlatoRepositorio extends JpaRepository<Plato, String>{
     
     @Query("SELECT c FROM Plato c WHERE c.resto.id = :idResto and c.alta = true")
     public List<Plato> buscarPlatoResto(@Param("idResto") String idResto);
+    
+     @Query("SELECT c FROM Plato c WHERE c.nombre LIKE %:busquedaResto%")
+    public List<Plato> buscarPlatosEnResto(@Param("busquedaResto") String busquedaResto);
 }

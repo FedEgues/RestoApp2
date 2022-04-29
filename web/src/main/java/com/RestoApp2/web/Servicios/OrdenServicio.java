@@ -1,4 +1,3 @@
-
 package com.RestoApp2.web.Servicios;
 
 import com.RestoApp2.web.Entidades.Orden;
@@ -8,7 +7,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class OrdenServicio {
@@ -22,13 +20,11 @@ public class OrdenServicio {
 
     @Transactional
     public Orden crearOrden(String idPlato, Integer cantidad) throws ErrorServicio {
-
-        
         Orden orden = new Orden();
         orden.setPlato(platoServicio.buscarPorId(idPlato));
         orden.setCantidad(cantidad);
         ordenRepositorio.save(orden);
-       
+
         return orden;
     }
 
@@ -43,13 +39,25 @@ public class OrdenServicio {
         }
 
     }
-    public void borrarOrden(String id)throws ErrorServicio{
-        
-       try{
-           Orden orden = ordenRepositorio.getById(id);
-           ordenRepositorio.delete(orden);
-       }catch(Exception e){
-        throw new ErrorServicio("No se encontro la orden buscada.");
-      }
+
+    @Transactional
+    public void borrarOrden(String id) throws ErrorServicio {
+
+        try {
+            Orden orden = ordenRepositorio.getById(id);
+            ordenRepositorio.delete(orden);
+        } catch (Exception e) {
+            throw new ErrorServicio("No se encontro la orden buscada.");
+        }
     }
+
+    public Orden buscarOrdenPorIdPlato(String idPlato) throws ErrorServicio{  
+        try {
+            Orden orden = ordenRepositorio.buscarOrdenPorIdPlato(idPlato);
+            return orden;
+        } catch (Exception e) {
+            throw new ErrorServicio("No se encontró un carrito asociado a su usuario.");
+        } 
+    }
+
 }

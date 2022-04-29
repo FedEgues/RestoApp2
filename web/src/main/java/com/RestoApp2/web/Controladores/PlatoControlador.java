@@ -150,7 +150,7 @@ public class PlatoControlador {
             Carrito carrito = carritoServi.buscarCarrito(idCarrito);
             modelo.put("idCarrito",idCarrito);
             modelo.put("platos", plato);
-             modelo.put("idResto",carrito.getResto().getId());
+            modelo.put("idResto",carrito.getResto().getId());
         } catch (ErrorServicio e) {
             modelo.put("error",e.getMessage());
             return "menu";

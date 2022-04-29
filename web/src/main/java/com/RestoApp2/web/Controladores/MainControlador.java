@@ -20,29 +20,27 @@ public class MainControlador {
 
     @Autowired
     RestoServicio restoServi;
-    
+
     @Autowired
     CarritoServicio carriServi;
 
     @GetMapping("/")
-    public String index(@RequestParam(required = false) String logout,@RequestParam(required  = false)String id, ModelMap modelo, HttpSession session) {
+    public String index(@RequestParam(required = false) String logout, @RequestParam(required = false) String id, ModelMap modelo, HttpSession session) {
         if (logout != null) {
             modelo.put("logout", "Ha cerrado sesión");
         }
         if (id != null) {
 
             try {
-                carriServi.eliminarCarritos(id);
-                
+                carriServi.eliminarCarrito(id);
+
                 modelo.put("exito", "Carrito eliminado con éxito junto con sus ordenes.");
             } catch (ErrorServicio ex) {
-                modelo.put("error",ex.getMessage());
+                modelo.put("error", ex.getMessage());
             }
-            
 
         }
         modelo.put("restos", restoServi.listaResto());
-
 
         return "index";
     }
@@ -68,7 +66,7 @@ public class MainControlador {
             modeloUsu.put("mail", mail);
             modeloUsu.put("clave1", clave1);
             modeloUsu.put("clave2", clave2);
-            return "registroUsuario";
+            return "registroIntermedio";
         }
         modeloUsu.put("exito", "Usuario registrado exitorsamente");
         return "index";
@@ -90,7 +88,7 @@ public class MainControlador {
             modeloUsu.put("mail", mail);
             modeloUsu.put("clave1", clave1);
             modeloUsu.put("clave2", clave2);
-            return "registroUsuarioResto";
+            return "registroIntermedio";
         }
         modeloUsu.put("exito", "Usuario registrado exitorsamente");
         return "index";

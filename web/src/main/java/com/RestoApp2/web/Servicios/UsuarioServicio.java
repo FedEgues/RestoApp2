@@ -55,6 +55,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private RestoRepositorio rR;
 
+    @Autowired
+    private MailServicio mS;
+
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
@@ -79,61 +82,83 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registroUsuarioUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(/*nombre, apellido, mail,*/clave1, clave2);
+        validar(clave1, clave2);
 
-        Usuario usuario = new Usuario();
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
-        usuario.setMail(mail);
+        Usuario usuario = uR.buscarPorMail(mail);
+        if (usuario == null) {
+            usuario = new Usuario();
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setMail(mail);
 
-        String encriptada = new BCryptPasswordEncoder().encode(clave1);
-        usuario.setClave(encriptada);
-        usuario.setAlta(new Date());
+            String encriptada = new BCryptPasswordEncoder().encode(clave1);
+            usuario.setClave(encriptada);
+            usuario.setAlta(new Date());
 
-        usuario.setRol(Role.USER);
-        uR.save(usuario);
+            usuario.setRol(Role.USER);
+            uR.save(usuario);
+
+            mS.enviarMail("Registro exitoso", "RestoApp", usuario.getMail());
+        } else {
+            throw new ErrorServicio("MAIL YA REGISTRADO");
+        }
     }
 
     @Transactional
     public void registroRestoUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(/*nombre, apellido, mail,*/clave1, clave2);
+        validar(clave1, clave2);
 
-        Usuario usuario = new Usuario();
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
-        usuario.setMail(mail);
+        Usuario usuario = uR.buscarPorMail(mail);
+        if (usuario == null) {
+            usuario = new Usuario();
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setMail(mail);
 
-        String encriptada = new BCryptPasswordEncoder().encode(clave1);
-        usuario.setClave(encriptada);
-        usuario.setAlta(new Date());
+            String encriptada = new BCryptPasswordEncoder().encode(clave1);
+            usuario.setClave(encriptada);
+            usuario.setAlta(new Date());
 
-        usuario.setRol(Role.SELLER);
+            usuario.setRol(Role.SELLER);
 
-        uR.save(usuario);
-        /*Crear el nuevo resto, este resto tendra el mismo del id del usuario que se esta creando.*/
-        String idUsuario = uR.buscarPorMail(mail).getId();
-        Resto resto = new Resto();
-        resto.setAbierto(true);
-        resto.setFoto(null);
-        resto.setId(idUsuario);
-        rR.save(resto);
+            uR.save(usuario);
+            /*Crear el nuevo resto, este resto tendra el mismo del id del usuario que se esta creando.*/
+            String idUsuario = uR.buscarPorMail(mail).getId();
+            Resto resto = new Resto();
+            resto.setAbierto(true);
+            resto.setFoto(null);
+            resto.setId(idUsuario);
+            rR.save(resto);
+
+            mS.enviarMail("Registro exitoso", "RestoApp", usuario.getMail());
+        } else {
+            throw new ErrorServicio("MAIL YA REGISTRADO");
+        }
     }
 
     @Transactional
     public void registroAdminUsuario(String nombre, String apellido, String mail, String clave1, String clave2) throws ErrorServicio {
-        validar(/*nombre, apellido, mail,*/clave1, clave2);
+        validar(clave1, clave2);
 
-        Usuario usuario = new Usuario();
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
-        usuario.setMail(mail);
+        Usuario usuario = uR.buscarPorMail(mail);
+        if (usuario == null) {
+            usuario = new Usuario();
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setMail(mail);
 
-        String encriptada = new BCryptPasswordEncoder().encode(clave1);
-        usuario.setClave(encriptada);
-        usuario.setAlta(new Date());
+            String encriptada = new BCryptPasswordEncoder().encode(clave1);
+            usuario.setClave(encriptada);
+            usuario.setAlta(new Date());
 
-        usuario.setRol(Role.ADMIN);
-        uR.save(usuario);
+            usuario.setRol(Role.ADMIN);
+            uR.save(usuario);
+
+            mS.enviarMail("Registro exitoso", "RestoApp", usuario.getMail());
+        } else {
+            throw new ErrorServicio("MAIL YA REGISTRADO");
+        }
+
     }
 
     @Transactional
@@ -150,14 +175,14 @@ public class UsuarioServicio implements UserDetailsService {
          String value = Optional.ofNullable(nullName).orElseThrow(NullPointerException::new);
          */
  /*Pongo la validación previa a todo el proceso para no continuar el codigo si ya no cumple con los requisitos minimos*/
-        validar(/*nombre, apellido, mail,*/clave1, clave1);
+        validar(clave1, clave1);
         Optional<Usuario> respuesta = uR.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
 
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            
+
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(encriptada);
             uR.save(usuario);
@@ -175,7 +200,7 @@ public class UsuarioServicio implements UserDetailsService {
         Optional<Usuario> respuesta = uR.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
-           
+
             uR.delete(usuario);
         } else {
             throw new ErrorServicio("El usuario buscado no fue encontrado");
@@ -184,7 +209,6 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     public Usuario buscarUsuarioPorId(String id) throws ErrorServicio {
-
         try {
             Usuario usuario = uR.getById(id);
             return usuario;
@@ -194,7 +218,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
-    private void validar(/*String nombre, String apellido, String mail,*/String clave1, String clave2) throws ErrorServicio {
+    private void validar(String clave1, String clave2) throws ErrorServicio {
 
         if (clave1 == null || clave1.isEmpty()) {
             throw new ErrorServicio("La clave no puede estar vacia");
@@ -207,15 +231,5 @@ public class UsuarioServicio implements UserDetailsService {
         } else {
             throw new ErrorServicio("Las claves deben ser iguales");
         }
-//        if (nombre == null || nombre.isEmpty()) {
-//            throw new ErrorServicio("El nombre no puede estar vacío");
-//        }
-//        if (apellido == null || apellido.isEmpty()) {
-//            throw new ErrorServicio("El apellido no puede estar vacío");
-//        }
-//        if (mail == null || mail.isEmpty()) {
-//            throw new ErrorServicio("El mail no puede estar vacío");
-//        }
     }
-
 }
