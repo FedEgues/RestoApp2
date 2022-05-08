@@ -48,6 +48,7 @@
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" th:href="@{/mesa/listarMesaResto/}+${session.usuariosession.id}">Listar Mesas</a>
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/zona/crearZona">Crear Zona</a> 
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/zona/listarZonas">Listar Zonas Cargadas</a>
+            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/reserva/verReservasResto">Ver Reservas</a>
             <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_SELLER','ROLE_ADMIN')"  th:href="@{/buscador/buscadorResto/}">Buscador</a> -->
             <br>
             <br>
