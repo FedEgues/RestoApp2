@@ -121,7 +121,8 @@ public class CarritoServicio {
             for (String ordene : ordenes) {
                 oS.borrarOrden(ordene);
             }
-            cR.delete(carrito);
+            cR.deleteById(idCarrito);
+            
         }catch(Exception e){
             throw new ErrorServicio("No se pudo borrar el carrito");
         }

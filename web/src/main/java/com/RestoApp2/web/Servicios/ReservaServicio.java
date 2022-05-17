@@ -112,4 +112,14 @@ public class ReservaServicio implements Serializable {
             throw new ErrorServicio("No se encontro o no se pudo borrar la reserva.");
         }
     }
+    public List<Reserva> buscarReservaResto(String idresto)throws ErrorServicio{
+        
+        try{
+            List<Reserva> reservas = reservaRepo.buscarReservasResto(idresto);
+            return reservas;
+        }catch(Exception e){
+        throw new ErrorServicio("No se encontraron reservas relacionadas a su restorán.");
+        }
+        
+    }
 }

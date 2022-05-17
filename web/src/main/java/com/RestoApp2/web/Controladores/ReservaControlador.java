@@ -11,15 +11,9 @@ import com.RestoApp2.web.Servicios.MesaServicio;
 import com.RestoApp2.web.Servicios.OrdenServicio;
 import com.RestoApp2.web.Servicios.ReservaServicio;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javax.persistence.TemporalType.DATE;
-import static javax.persistence.TemporalType.TIMESTAMP;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -172,6 +166,36 @@ public class ReservaControlador {
         }
         modelo.put("exito","La reserva fue eliminada con éxito.");
       return "listarReservas";
+    }
+    
+    @GetMapping("/verReservasResto")
+    public String verReservasResto (ModelMap modelo,HttpSession session){
+        
+        try{
+         Usuario login = (Usuario) session.getAttribute("usuariosession");
+         List<Reserva> reservas = reservaServicio.buscarReservaResto(login.getId());
+         modelo.put("reservas",reservas);
+         return "verReservasResto";
+        }catch(ErrorServicio e){
+            modelo.put("error",e);
+            return "verReservasResto";
+        } 
+    }
+    
+    @GetMapping("/darBajaReservaResto/{idReserva}")
+    public String darBajaReservaResto(ModelMap modelo, @PathVariable("idReserva") String idReserva) {
+        /*Para eliminar la reserva, no basta con eliminar la reserva, si no vamos a dejar un carrito con sus reservas en la BD
+        por esto primero eliminamos la reserva, luego las ordenes y luego el carrito(si eliminaramos en otro orden no podriamos ya que la reserva
+        tiene clave foranea el carrito, MySql no me permite eliminar una clave foraena*/
+
+        try {
+            reservaServicio.eliminarReserva(idReserva);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+        }
+        modelo.put("exito","La reserva fue eliminada con éxito.");
+        return "redirect:/reserva/verReservasResto";
+     
     }
 
 }
