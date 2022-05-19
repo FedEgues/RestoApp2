@@ -1,10 +1,12 @@
 package com.RestoApp2.web.Controladores;
 
 import com.RestoApp2.web.Entidades.Carrito;
+import com.RestoApp2.web.Entidades.Orden;
 import com.RestoApp2.web.Entidades.Plato;
 import com.RestoApp2.web.Entidades.Usuario;
 import com.RestoApp2.web.Servicios.CarritoServicio;
 import com.RestoApp2.web.Servicios.ErrorServicio;
+import com.RestoApp2.web.Servicios.OrdenServicio;
 import com.RestoApp2.web.Servicios.PlatoServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -26,8 +28,12 @@ public class PlatoControlador {
 
     @Autowired
     private PlatoServicio platoServi;
+
     @Autowired
     private CarritoServicio carritoServi;
+
+    @Autowired
+    private OrdenServicio ordenServi;
 
     @GetMapping("/restoInicio")
     public String index(@RequestParam(required = false) String logout, ModelMap modelo) {
@@ -142,23 +148,54 @@ public class PlatoControlador {
     }
 
     @GetMapping("/verPlato/{idPlato}/{idCarrito}")
-    public String verUnPlato(@PathVariable("idCarrito")String idCarrito,@PathVariable("idPlato") String idPlato, ModelMap modelo) {
+    public String verUnPlato(@PathVariable("idCarrito") String idCarrito, @PathVariable("idPlato") String idPlato, ModelMap modelo) {
         Plato plato;
-        
+
         try {
             plato = platoServi.buscarPorId(idPlato);
             Carrito carrito = carritoServi.buscarCarrito(idCarrito);
-            modelo.put("idCarrito",idCarrito);
+            modelo.put("idCarrito", idCarrito);
             modelo.put("platos", plato);
-            modelo.put("idResto",carrito.getResto().getId());
+            modelo.put("idResto", carrito.getResto().getId());
         } catch (ErrorServicio e) {
-            modelo.put("error",e.getMessage());
+            modelo.put("error", e.getMessage());
             return "menu";
         }
-        
+
         return "platoUnitario";
     }
 
-    
+    @PostMapping("/agregarPlatoCarrito/{idPlato}/{idCarrito}")
+    public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito, @RequestParam Integer cantidad) {
 
+        try {
+            Carrito carrito = carritoServi.buscarCarrito(idCarrito);
+            Orden orden = ordenServi.crearOrden(idPlato, cantidad);
+            carrito = carritoServi.agregarPlato(idCarrito, orden.getId());
+
+            List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+
+            modelo.put("platos", platos);
+            modelo.put("idResto", carrito.getResto().getId());
+            modelo.put("carritoId", carrito.getId());
+            modelo.put("exito", "Se cargo el plato con éxito.");
+
+            return "menu";
+        } catch (ErrorServicio ex) {
+            Carrito carrito;
+            try {
+                carrito = carritoServi.buscarCarrito(idCarrito);
+                List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
+                modelo.put("error", ex.getMessage());
+                modelo.put("platos", platos);
+                modelo.put("idResto", carrito.getResto().getId());
+                modelo.put("carritoId", carrito.getId());
+                return "menu";
+            } catch (ErrorServicio ex1) {
+                modelo.put("error", ex1.getMessage());
+                return "index";
+            }
+        }
+
+    }
 }

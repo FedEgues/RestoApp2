@@ -16,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SELLER', 'ROLE_USER')")
 @Controller
@@ -37,6 +39,7 @@ public class CarritoControlador {
         
         try {
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
+            Integer cantidad;
             Orden orden = ordenServicio.crearOrden(idPlato, 1);
             carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
 
@@ -64,6 +67,10 @@ public class CarritoControlador {
             }
         }
     }
+//    @PostMapping("/cantidad")
+//    public String cantidad(@RequestParam Integer cantidad ){
+//        
+//    }
 
     @GetMapping("/verCarrito/{idUsuario}")
     public String listaCarrito(@PathVariable("idUsuario") String idUsuario,

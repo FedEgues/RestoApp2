@@ -17,6 +17,7 @@
                 <td>Nombre</td>
                 <td>Precio</td>
                 <td>Descripcion</td>
+                <td>Cantidad</td>
                 <td>Foto</td>
                 <td></td>
             </tr>
@@ -26,6 +27,11 @@
                 <td th:text="${plato.nombre}"></td>
                 <td th:text="${plato.precio}"></td>
                 <td th:text="${plato.descri}"></td>
+                <td>
+                    <form action="/carrito/cantidad">
+                        <input type="text" class="form-control" name="cantidad" th:value="${orden.cantidad}" required>
+                    </form>
+                </td>
                 <td>
                     <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto/' + plato.id}"
                         class="rounded float-start"  width="50">
