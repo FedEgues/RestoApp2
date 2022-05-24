@@ -111,8 +111,8 @@ public class PlatoControlador {
             return "platoModificar";
             //en el form poner th:value="${nombre.variable}" para conservar los datos l
         }
-        model.put("exito", "El plato fue modificado con éxito");
-        return "restoInicio";
+        model.put("exito", "El plato fue modificado con exitosamente");
+        return "index";
     }
 
     @GetMapping("/baja/{id}")
@@ -163,39 +163,5 @@ public class PlatoControlador {
         }
 
         return "platoUnitario";
-    }
-
-    @PostMapping("/agregarPlatoCarrito/{idPlato}/{idCarrito}")
-    public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito, @RequestParam Integer cantidad) {
-
-        try {
-            Carrito carrito = carritoServi.buscarCarrito(idCarrito);
-            Orden orden = ordenServi.crearOrden(idPlato, cantidad);
-            carrito = carritoServi.agregarPlato(idCarrito, orden.getId());
-
-            List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
-
-            modelo.put("platos", platos);
-            modelo.put("idResto", carrito.getResto().getId());
-            modelo.put("carritoId", carrito.getId());
-            modelo.put("exito", "Se cargo el plato con éxito.");
-
-            return "menu";
-        } catch (ErrorServicio ex) {
-            Carrito carrito;
-            try {
-                carrito = carritoServi.buscarCarrito(idCarrito);
-                List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
-                modelo.put("error", ex.getMessage());
-                modelo.put("platos", platos);
-                modelo.put("idResto", carrito.getResto().getId());
-                modelo.put("carritoId", carrito.getId());
-                return "menu";
-            } catch (ErrorServicio ex1) {
-                modelo.put("error", ex1.getMessage());
-                return "index";
-            }
-        }
-
     }
 }

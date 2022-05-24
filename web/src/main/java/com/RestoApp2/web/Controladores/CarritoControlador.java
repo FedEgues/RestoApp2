@@ -34,13 +34,12 @@ public class CarritoControlador {
     @Autowired
     OrdenServicio ordenServicio;
 
-    @GetMapping("/agregar/{idPlato}/{idCarrito}")
-    public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato, @PathVariable("idCarrito") String idCarrito) {
-        
+    @GetMapping("/agregar/{idPlato}/{idCarrito}/{cantidad}")
+    public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato,
+            @PathVariable("idCarrito") String idCarrito, @PathVariable("cantidad") Integer cantidad) {
         try {
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
-            Integer cantidad;
-            Orden orden = ordenServicio.crearOrden(idPlato, 1);
+            Orden orden = ordenServicio.crearOrden(idPlato, cantidad);
             carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
 
             List<Plato> platos = platoServi.listaPlatoResto(carrito.getResto().getId());
@@ -67,9 +66,16 @@ public class CarritoControlador {
             }
         }
     }
-//    @PostMapping("/cantidad")
-//    public String cantidad(@RequestParam Integer cantidad ){
-//        
+
+//    @PostMapping("/agregarAlCarrito")
+//    public String agregarAlCarrito(ModelMap model, @RequestParam Integer cantidad, @RequestParam String idPlato, @RequestParam String idCarrito) throws ErrorServicio {
+//        try {
+//            Orden orden = ordenServicio.crearOrden(idPlato, cantidad);
+//            carritoServicio.agregarPlato(idCarrito, orden.getId());
+//        } catch (ErrorServicio e) {
+//            model.put("error", e.getMessage());
+//            return "index";
+//        }
 //    }
 
     @GetMapping("/verCarrito/{idUsuario}")
@@ -101,7 +107,7 @@ public class CarritoControlador {
             Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
             Orden orden = ordenServicio.buscarOrdenPorIdPlato(idPlato);
             carrito = carritoServicio.eliminarPlato(idCarrito, orden.getId());
-            
+
             //Este es solo para que me elimine la orden de la BD y que este igual que en carrito
             ordenServicio.borrarOrden(orden.getId());
 
@@ -109,7 +115,7 @@ public class CarritoControlador {
             model.put("platos", platos);
             model.put("idResto", carrito.getResto().getId());
             model.put("carritoId", carrito.getId());
-            
+
             model.put("exito", "Orden eliminada con exito");
             return "menu";
         } catch (ErrorServicio e) {
