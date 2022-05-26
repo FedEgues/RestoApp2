@@ -34,7 +34,7 @@ public class CarritoControlador {
     @Autowired
     OrdenServicio ordenServicio;
     
-    @GetMapping("/agregar/{idPlato}")
+    @GetMapping("/agregar/{idPlato}/{idCarrito}")
     public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato,
             @PathVariable("idCarrito") String idCarrito, @RequestParam("cantidad") Integer cantidad) {
         try {
