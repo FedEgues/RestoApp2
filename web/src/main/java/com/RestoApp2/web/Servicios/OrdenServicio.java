@@ -27,6 +27,17 @@ public class OrdenServicio {
 
         return orden;
     }
+    
+//    @Transactional
+//    public Orden agregarCantidad(String idOrden, Integer cantidad){
+//        Optional<Orden> rta = ordenRepositorio.findById(idOrden);
+//        if (rta.isPresent()) {
+//            Orden orden = rta.get();
+//            orden.setCantidad(cantidad);
+//            return orden;
+//        }
+//        return null;
+//    }
 
     public Orden buscarOrden(String idOrden) throws ErrorServicio {
 

@@ -33,12 +33,12 @@ public class CarritoControlador {
     UsuarioServicio usuarioServicio;
     @Autowired
     OrdenServicio ordenServicio;
-
-    @GetMapping("/agregar/{idPlato}/{idCarrito}/{cantidad}")
+    
+    @GetMapping("/agregar/{idPlato}")
     public String agregarPlatoCarrito(ModelMap modelo, @PathVariable("idPlato") String idPlato,
-            @PathVariable("idCarrito") String idCarrito, @PathVariable("cantidad") Integer cantidad) {
+            @PathVariable("idCarrito") String idCarrito, @RequestParam("cantidad") Integer cantidad) {
         try {
-            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);
+            Carrito carrito = carritoServicio.buscarCarrito(idCarrito);       
             Orden orden = ordenServicio.crearOrden(idPlato, cantidad);
             carrito = carritoServicio.agregarPlato(idCarrito, orden.getId());
 
@@ -67,8 +67,8 @@ public class CarritoControlador {
         }
     }
 
-//    @PostMapping("/agregarAlCarrito")
-//    public String agregarAlCarrito(ModelMap model, @RequestParam Integer cantidad, @RequestParam String idPlato, @RequestParam String idCarrito) throws ErrorServicio {
+//    @PostMapping("/agregarPlato")
+//    public String agregarAlCarrito(ModelMap model, @RequestParam Integer cantidad){
 //        try {
 //            Orden orden = ordenServicio.crearOrden(idPlato, cantidad);
 //            carritoServicio.agregarPlato(idCarrito, orden.getId());

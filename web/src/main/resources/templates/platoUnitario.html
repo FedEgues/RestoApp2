@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <form action="/carrito/agregar/+plato.id/+idCarrito" method="get">
         <table class="table table-light table-hover">
             <thead>
                 <tr class="bg-blue">
@@ -28,20 +29,21 @@
                     <td th:text="${plato.precio}"></td>
                     <td th:text="${plato.descri}"></td>
                     <td>
-                        <input type="text" class="form-control" name="cantidad" th:value="${cantidad}" required>
+                        <input type="number" class="form-control" name="cantidad" th:value="${cantidad}" required> 
                     </td>
                     <td>
                         <img th:if="${plato.foto != null}" th:src="${'/foto/platoFoto/' + plato.id}"
                             class="rounded float-start"  width="50">
                     </td>
                     <td>
-                        <a th:href="${'/carrito/agregar/'+plato.id+'/'+idCarrito+'/'+cantidad}" class="btn btn-success btn-xl">Agregar</a>
-                        <!-- <button type="submit" th:href="${'/carrito/agregar/'+plato.id+'/'+idCarrito+'/'+cantidad}" class="btn btn-primary">Agregar</button> -->
+                        <!-- <a th:href="${'/carrito/agregar/'+plato.id+'/'+idCarrito+'/'+cantidad}" class="btn btn-success btn-xl">Agregar</a> -->
+                        <button type="submit" class="btn btn-primary">Agregar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <a th:href="${'/resto/menu/'+idResto+'/'+idCarrito}" class="btn btn-primary btn-xl">Volver</a> 
+    </form>
+    <a th:href="${'/resto/menu/'+idResto+'/'+idCarrito}" class="btn btn-primary btn-xl">Volver</a> 
 </body>
 
 </html>
