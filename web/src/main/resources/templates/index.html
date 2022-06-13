@@ -13,11 +13,47 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">RestoApp</a>
+            <button class="navbar-toggler navbar-toggler-rigth" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto ">
+                    <li class="nav-item active">
+                        <a sec:authorize="!isAuthenticated()" href="/registro"><button type="button" class="btn btn-outline-secondary">Registrate</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="!isAuthenticated()" href="/login"><button type="button" class="btn btn-outline-secondary">Iniciar Sesión</button></a>
+                    </li>
+                    <li class="nav-item" th:if="${session.usuariosession != null}">
+                        <a sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}"><button type="button" class="btn btn-outline-secondary">Opciones Usuario</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/reserva/listarReservas/}"><button type="button" class="btn btn-outline-secondary">Mis reservas</button></a>
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Opciones
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a sec:authorize="isAuthenticated()" href="/logout"><button type="button" class="btn btn-outline-secondary">Cerrar Sesión</button></a>
+                    </li>
+                </ul>
+            </div>
+        </div>  
+      </nav>
 <div>
     <header>
-        <div>
-            <p> RESTO APP</p>
-        </div>
+        
         <div>
             <a sec:authorize="!isAuthenticated()" href="/registro"><button type="button" class="btn btn-outline-secondary">Registrate</button></a>
             <a sec:authorize="!isAuthenticated()" href="/login"><button type="button" class="btn btn-outline-secondary">Iniciar Sesión</button></a>
@@ -38,8 +74,8 @@
     
     <section>
         <div th:if="${session.usuariosession != null}">
-            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a>
-            <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER')"  th:href="@{/reserva/listarReservas/}">Mis reservas</a>
+            <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a> -->
+            <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER')"  th:href="@{/reserva/listarReservas/}">Mis reservas</a> -->
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/resto/modificarResto">Personaliza tu Resto</a>
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/plato/crearPlato">Crear Plato</a>
             <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" th:href="@{/plato/listarPlatoResto/}+${session.usuariosession.id}">Listar Platos</a> 
