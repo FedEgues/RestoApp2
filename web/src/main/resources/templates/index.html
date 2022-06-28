@@ -45,6 +45,9 @@
                             </div>
                         </li> -->
                         <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link js-scroll-trigger" sec:authorize="isAuthenticated()" href="/logout">Cerrar Sesión</a>
                         </li>
                     </ul>
@@ -62,16 +65,16 @@
             <p  th:if= "${logout != null}" th:text = "${logout}" style="color:green"></p>
             <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
             <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
-            <div class="fs-2 mb-3">
+            <!-- <div class="fs-2 mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-fill" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
                 </svg>
-                <!-- <p class='usuario'>@Usuario</p> -->
+                /*<p class='usuario'>@Usuario</p> */
                 <p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></p>
-                <!-- <p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.id}"></p> -->
-            </div>   
+                /*<p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.id}"></p>*/
+            </div>    -->
         </header>
-        
+        <br>
         <section>
             <div th:if="${session.usuariosession != null}">
                 <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a> -->
@@ -99,7 +102,7 @@
         <br>  
         <br>
         <section>
-            <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+            <div class="row row-cols-1 row-cols-md-3 g-4"> <!--th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')"-->
                 <div th:each="resto :${restos}" class="container"  >
                     <!-- cartas de los diferentes restaruantes-->
                     <div class="flex-item">
