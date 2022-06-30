@@ -19,21 +19,24 @@
                 <button class="navbar-toggler navbar-toggler-rigth" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">  <!--id="navbarNavDropdown"-->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-link">
                             <a class="nav-link js-scroll-trigger" sec:authorize="!isAuthenticated()" href="/registro">Registrate</a>
                         </li>
-                        <li class="nav-item">
+                        <li cclass="nav-link">
                             <a class="nav-link js-scroll-trigger" sec:authorize="!isAuthenticated()" href="/login">Iniciar Sesión</a>
                         </li>
-                        <!-- <li class="nav-item" th:if="${session.usuariosession != null}">
-                            <a sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}"><button type="button" class="btn btn-outline-secondary">Opciones Usuario</button></a>
+                        <li class="nav-link">
+                            <a class="nav-link js-scroll-trigger" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></a>
                         </li>
-                        <li class="nav-item">
-                            <a sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/reserva/listarReservas/}"><button type="button" class="btn btn-outline-secondary">Mis reservas</button></a>
+                        <li class="nav-link" th:if="${session.usuariosession != null}">
+                            <a class="nav-link js-scroll-trigger" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a>
                         </li>
-                        <li class="nav-item dropdown" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')">
+                        <li class="nav-link">
+                            <a class="nav-link js-scroll-trigger" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/reserva/listarReservas/}">Mis reservas</a>
+                        </li>
+                        <!-- <li class="nav-item dropdown" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
                             Opciones
                             </a>
@@ -44,19 +47,23 @@
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></a>
-                        </li>
-                        <li class="nav-item">
+                        <li class="nav-link">
                             <a class="nav-link js-scroll-trigger" sec:authorize="isAuthenticated()" href="/logout">Cerrar Sesión</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <form class="form-inline" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" action="/buscador/resultadoBusquedaResto" method="POST">
+                            <!-- <form class="form-inline my-2 my-lg-0" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" action="/buscador/resultadoBusquedaResto" method="POST"> -->
+                                <input class="form-control mr-sm-2" type="search" aria-label="Search" name="busquedaResto" placeholder="Buscá tu plato . ." pattern="[A-Za-z0-9]{4,20}">
+                                <input class="btn btn-outline-success my-3 my-sm-0" type="submit" value="Ver">
+                                <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ver</button>          -->
+                        </form>
+                    </ul>                   
                 </div>
             </div>  
         </nav>
 
-        <header>
-            
+        <header>   
             <!-- <div>
                 <a sec:authorize="!isAuthenticated()" href="/registro"><button type="button" class="btn btn-outline-secondary">Registrate</button></a>
                 <a sec:authorize="!isAuthenticated()" href="/login"><button type="button" class="btn btn-outline-secondary">Iniciar Sesión</button></a>
@@ -74,11 +81,11 @@
                 /*<p class='usuario' th:if="${session.usuariosession != null}" th:text="${session.usuariosession.id}"></p>*/
             </div>    -->
         </header>
-        <br>
+        <br><br><br><br>
         <section>
             <div th:if="${session.usuariosession != null}">
-                <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a> -->
-                <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER')"  th:href="@{/reserva/listarReservas/}">Mis reservas</a> -->
+                <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER','ROLE_USER','ROLE_ADMIN')" th:href="@{/usuario/editarPerfil/}+${session.usuariosession.id}">Opciones Usuario</a>
+                <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER')"  th:href="@{/reserva/listarReservas/}">Mis reservas</a> -->
                 <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/resto/modificarResto">Personaliza tu Resto</a>
                 <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" href="/plato/crearPlato">Crear Plato</a>
                 <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_SELLER')" th:href="@{/plato/listarPlatoResto/}+${session.usuariosession.id}">Listar Platos</a> 
@@ -91,11 +98,11 @@
                 <!-- <a class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_SELLER','ROLE_ADMIN')"  th:href="@{/buscador/buscadorResto/}">Buscador</a> -->
                 <br>
                 <br>
-                <form action="/buscador/resultadoBusquedaResto" method="POST">
+                <!-- <form action="/buscador/resultadoBusquedaResto" method="POST">
                 <form  sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" action="/buscador/resultadoBusquedaResto" method="POST">
                     <input type="search" name="busquedaResto" placeholder="Buscá tu plato . ." pattern="[A-Za-z0-9]{4,20}">
                     <input type="submit" value="Ver">         
-                </form>
+                </form> -->
                 
             </div>
         </section>
